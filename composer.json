@@ -23,8 +23,7 @@
         "laravel-doctrine/orm": "~1.0",
         "laravel-doctrine/acl": "~1.0",
 
-        "ai/module-installer-plugin": "dev-master",
-        "ai/module-access-infrastructure": "dev-master"
+        "schweppesale/components": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
