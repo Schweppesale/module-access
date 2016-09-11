@@ -6,8 +6,8 @@
   "active": 1,
   "order": 0,
   "providers": [
-    "Step\\Access\\Application\\Providers\\AccessServiceProvider",
-    "Step\\Access\\Application\\Providers\\EventServiceProvider",
+    "Schweppesale\\Access\\Application\\Providers\\AccessServiceProvider",
+    "Schweppesale\\Access\\Application\\Providers\\EventServiceProvider",
     "LaravelDoctrine\\ORM\\DoctrineServiceProvider",
     "LaravelDoctrine\\ACL\\AclServiceProvider"
   ],
