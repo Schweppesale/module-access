@@ -1,0 +1,41 @@
+{
+    "name": "step/module-access",
+    "description": "",
+    "type": "project",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "John Tripi",
+            "email": "tripij1@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Step\\Access\\": "src"
+        }
+    },
+    "require": {
+        "laravel/framework": "~5.1",
+        "illuminate/html": "5.*",
+        "laravel/socialite": "~2.0",
+        "creativeorange/gravatar": "~1.0",
+        "predis/predis": "1.0.3",
+        "laravel-doctrine/orm": "~1.0",
+        "laravel-doctrine/acl": "~1.0",
+
+        "ai/module-installer-plugin": "dev-master",
+        "ai/module-access-infrastructure": "dev-master"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~4.0",
+        "phpspec/phpspec": "~2.1",
+        "pingpong/testing": "~2.0"
+    },
+    "extra": {
+        "map": [
+            ["*", "Access/Application"]
+        ]
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Access Module",
+  "alias": "access",
+  "description": "",
+  "keywords": [],
+  "active": 1,
+  "order": 0,
+  "providers": [
+    "Step\\Access\\Application\\Providers\\AccessServiceProvider",
+    "Step\\Access\\Application\\Providers\\EventServiceProvider",
+    "LaravelDoctrine\\ORM\\DoctrineServiceProvider",
+    "LaravelDoctrine\\ACL\\AclServiceProvider"
+  ],
+  "aliases": [],
+  "files": [
+    "Application/Support/helpers.php"
+  ]
+}
