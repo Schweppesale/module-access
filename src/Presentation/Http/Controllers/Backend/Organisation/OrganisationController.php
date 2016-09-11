@@ -1,15 +1,15 @@
 <?php
-namespace Step\Access\Presentation\Http\Controllers\Backend\Organisation;
+namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Organisation;
 
-use Step\Access\Application\Services\Companies\Companies as CompanyService;
-use Step\Access\Domain\Repositories\OrganisationRepository;
+use Schweppesale\Access\Application\Services\Companies\Companies as CompanyService;
+use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 /**
  * Class OrganisationController
  *
- * @package Step\Access\Presentation\Http\Controllers\Backend\Access\Organisation
+ * @package Schweppesale\Access\Presentation\Http\Controllers\Backend\Access\Organisation
  */
 class OrganisationController extends Controller
 {

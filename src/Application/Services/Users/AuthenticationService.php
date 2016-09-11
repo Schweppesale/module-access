@@ -1,11 +1,11 @@
 <?php
 
-namespace Step\Access\Application\Services\Users;
+namespace Schweppesale\Access\Application\Services\Users;
 
-use Step\Access\Application\Events\User\UserLoggedIn;
-use Step\Access\Application\Events\User\UserLoggedOut;
-use Step\Access\Domain\Entities\User;
-use Step\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Access\Application\Events\User\UserLoggedIn;
+use Schweppesale\Access\Application\Events\User\UserLoggedOut;
+use Schweppesale\Access\Domain\Entities\User;
+use Schweppesale\Access\Domain\Repositories\UserRepository;
 use App\Exceptions\GeneralException;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 /**
  * Class AuthenticationService
  *
- * @package Step\Access\Application\Services\Users
+ * @package Schweppesale\Access\Application\Services\Users
  */
 class AuthenticationService
 {

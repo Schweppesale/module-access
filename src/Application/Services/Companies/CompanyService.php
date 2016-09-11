@@ -1,15 +1,15 @@
 <?php
-namespace Step\Access\Application\Services\Companies;
+namespace Schweppesale\Access\Application\Services\Companies;
 
-use Step\Access\Domain\Entities\OrganisationLogo;
-use Step\Access\Domain\Repositories\OrganisationRepository;
+use Schweppesale\Access\Domain\Entities\OrganisationLogo;
+use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class CompanyService
  *
- * @package Step\Access\Application\Services\Companies
+ * @package Schweppesale\Access\Application\Services\Companies
  */
 class CompanyService
 {

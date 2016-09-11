@@ -1,8 +1,8 @@
-<?php namespace Step\Access\Presentation\Http\Controllers\Frontend\Auth;
+<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Frontend\Auth;
 
-use Step\Access\Application\Services\Users\AuthenticationService;
-use Step\Access\Presentation\Entities\User;
-use Step\Access\Presentation\Http\Requests\Frontend\Access\ChangePasswordRequest;
+use Schweppesale\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Access\Presentation\Entities\User;
+use Schweppesale\Access\Presentation\Http\Requests\Frontend\Access\ChangePasswordRequest;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

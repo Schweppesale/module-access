@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
 use App\Http\Controllers\Backend\Project\Access\ProjectAccessController;
 use Illuminate\Database\Seeder;
@@ -9,16 +9,16 @@ class PermissionTableSeeder extends Seeder
 {
 
     /**
-     * @var \Step\Access\Application\Services\Permissions\PermissionService
+     * @var \Schweppesale\Access\Application\Services\Permissions\PermissionService
      */
     private $permissionService;
 
     /**
      * PermissionTableSeeder constructor.
      *
-     * @param \Step\Access\Application\Services\Permissions\PermissionService $permissionService
+     * @param \Schweppesale\Access\Application\Services\Permissions\PermissionService $permissionService
      */
-    public function __construct(\Step\Access\Application\Services\Permissions\PermissionService $permissionService)
+    public function __construct(\Schweppesale\Access\Application\Services\Permissions\PermissionService $permissionService)
     {
         $this->permissionService = $permissionService;
     }

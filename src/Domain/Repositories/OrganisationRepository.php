@@ -1,7 +1,7 @@
 <?php
-namespace Step\Access\Domain\Repositories;
+namespace Schweppesale\Access\Domain\Repositories;
 
-use Step\Access\Domain\Entities\Organisation;
+use Schweppesale\Access\Domain\Entities\Organisation;
 
 /**
  * Interface OrganisationRepository

@@ -1,11 +1,11 @@
-<?php namespace Step\Access\Presentation\Http\Controllers\Backend\Role;
+<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Role;
 
-use Step\Access\Application\Services\Roles\RoleService;
-use Step\Access\Presentation\Http\Requests\Backend\Role\CreateRoleRequest;
-use Step\Access\Presentation\Http\Requests\Backend\Role\DeleteRoleRequest;
-use Step\Access\Presentation\Http\Requests\Backend\Role\EditRoleRequest;
-use Step\Access\Presentation\Http\Requests\Backend\Role\StoreRoleRequest;
-use Step\Access\Presentation\Http\Requests\Backend\Role\UpdateRoleRequest;
+use Schweppesale\Access\Application\Services\Roles\RoleService;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\CreateRoleRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\DeleteRoleRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\EditRoleRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\StoreRoleRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\UpdateRoleRequest;
 use App\Http\Controllers\Controller;
 
 /**

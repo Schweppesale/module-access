@@ -1,19 +1,19 @@
-<?php namespace Step\Access\Presentation\Http\Controllers\Backend\User;
+<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\User;
 
-use Step\Access\Application\Services\Users\AuthenticationService;
-use Step\Access\Application\Services\Users\ConfirmationService;
-use Step\Access\Application\Services\Users\UserService;
-use Step\Access\Presentation\Http\Requests\Backend\User\ChangeUserPasswordRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\CreateUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\DeleteUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\EditUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\MarkUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\PermanentlyDeleteUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\ResendConfirmationEmailRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\RestoreUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\StoreUserRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\UpdateUserPasswordRequest;
-use Step\Access\Presentation\Http\Requests\Backend\User\UpdateUserRequest;
+use Schweppesale\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Access\Application\Services\Users\ConfirmationService;
+use Schweppesale\Access\Application\Services\Users\UserService;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\ChangeUserPasswordRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\CreateUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\DeleteUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\EditUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\MarkUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\PermanentlyDeleteUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\ResendConfirmationEmailRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\RestoreUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\StoreUserRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\UpdateUserPasswordRequest;
+use Schweppesale\Access\Presentation\Http\Requests\Backend\User\UpdateUserRequest;
 use App\Http\Controllers\Controller;
 
 //use App\Repositories\Backend\Permission\Group\PermissionGroupRepositoryContract;

@@ -1,11 +1,11 @@
-<?php namespace Step\Access\Presentation\Http\Requests\Backend\Permission;
+<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\Permission;
 
 use App\Http\Requests\Request;
 
 /**
  * Class DeletePermissionRequest
  *
- * @package Step\Access\Presentation\Http\Requests\Backend\Permission
+ * @package Schweppesale\Access\Presentation\Http\Requests\Backend\Permission
  */
 class DeletePermissionRequest extends Request
 {

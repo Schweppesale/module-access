@@ -1,17 +1,17 @@
 <?php
 
-namespace Step\Access\Presentation\Http\Controllers\Backend\Profile;
+namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Profile;
 
-use Step\Access\Application\Services\Users\AuthenticationService;
-use Step\Access\Application\Services\Users\UserService;
-use Step\Access\Presentation\Http\Requests\Frontend\User\UpdateProfileRequest;
+use Schweppesale\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Access\Application\Services\Users\UserService;
+use Schweppesale\Access\Presentation\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 
 /**
  * Class ProfileController
  *
- * @package Step\Access\Presentation\Http\Controllers\Backend\Profile
+ * @package Schweppesale\Access\Presentation\Http\Controllers\Backend\Profile
  */
 class ProfileController extends Controller
 {
@@ -54,7 +54,7 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         $user = $this->auth->getUser();
-        if (!$user instanceof \Step\Access\Presentation\Entities\User) {
+        if (!$user instanceof \Schweppesale\Access\Presentation\Entities\User) {
             throw new \UnexpectedValueException('Invalid User Entity');
         }
         dd($request->all());

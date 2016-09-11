@@ -1,20 +1,20 @@
 <?php
-namespace Step\Access\Application\Services\Users;
+namespace Schweppesale\Access\Application\Services\Users;
 
-use Step\Access\Application\Services\Access;
-use Step\Access\Domain\Entities\User;
-use Step\Access\Domain\Repositories\OrganisationRepository;
-use Step\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
-use Step\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
-use Step\Access\Domain\Repositories\PermissionGroupRepository;
-use Step\Access\Domain\Repositories\PermissionRepository;
-use Step\Access\Domain\Repositories\RoleRepository;
-use Step\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Access\Application\Services\Access;
+use Schweppesale\Access\Domain\Entities\User;
+use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
+use Schweppesale\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
+use Schweppesale\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
+use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Access\Domain\Repositories\UserRepository;
 
 /**
  * Class UserService
  *
- * @package Step\Access\Application\Services\Users
+ * @package Schweppesale\Access\Application\Services\Users
  */
 class UserService
 {
@@ -212,7 +212,7 @@ class UserService
     }
 
     /**
-     * @return \Step\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Access\Domain\Entities\User[]
      */
     public function fetchAll()
     {
@@ -220,7 +220,7 @@ class UserService
     }
 
     /**
-     * @return \Step\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Access\Domain\Entities\User[]
      */
     public function findBanned()
     {
@@ -228,7 +228,7 @@ class UserService
     }
 
     /**
-     * @return \Step\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Access\Domain\Entities\User[]
      */
     public function findDeactivated()
     {
@@ -236,7 +236,7 @@ class UserService
     }
 
     /**
-     * @return \Step\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Access\Domain\Entities\User[]
      */
     public function findDeleted()
     {

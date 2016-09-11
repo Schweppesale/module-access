@@ -1,13 +1,13 @@
 <?php
-namespace Step\Access\Application\Services\Permissions;
+namespace Schweppesale\Access\Application\Services\Permissions;
 
-use Step\Access\Domain\Entities\PermissionGroup;
-use Step\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Access\Domain\Entities\PermissionGroup;
+use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository;
 
 /**
  * Class PermissionService
  *
- * @package Step\Access\Application\Services\Permissions
+ * @package Schweppesale\Access\Application\Services\Permissions
  */
 class PermissionGroupService
 {
@@ -56,7 +56,7 @@ class PermissionGroupService
     }
 
     /**
-     * @return \Step\Access\Domain\Entities\Permission[]
+     * @return \Schweppesale\Access\Domain\Entities\Permission[]
      */
     public function fetchAll()
     {
@@ -64,7 +64,7 @@ class PermissionGroupService
     }
 
     /**
-     * @return \Step\Access\Domain\Entities\PermissionGroup[]
+     * @return \Schweppesale\Access\Domain\Entities\PermissionGroup[]
      */
     public function fetchAllParents()
     {

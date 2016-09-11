@@ -1,14 +1,14 @@
 <?php
-namespace Step\Access\Presentation\Http\Controllers\Backend\Organisation\Logo;
+namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Organisation\Logo;
 
-use Step\Access\Application\Services\Companies\Companies as CompanyService;
+use Schweppesale\Access\Application\Services\Companies\Companies as CompanyService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 /**
  * Class CompanyLogoController
  *
- * @package Step\Access\Presentation\Http\Controllers\Backend\Access\Organisation
+ * @package Schweppesale\Access\Presentation\Http\Controllers\Backend\Access\Organisation
  */
 class CompanyLogoController extends Controller
 {

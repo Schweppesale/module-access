@@ -1,7 +1,7 @@
 <?php
-namespace Step\Access\Domain\Entities;
+namespace Schweppesale\Access\Domain\Entities;
 
-use Step\Media\Domain\Entities\Image;
+use Schweppesale\Media\Domain\Entities\Image;
 use Doctrine\ORM\Mapping as ORM;
 use Watson\Validating\ValidationException;
 

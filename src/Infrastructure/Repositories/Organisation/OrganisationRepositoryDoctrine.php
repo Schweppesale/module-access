@@ -1,14 +1,14 @@
 <?php
-namespace Step\Access\Infrastructure\Repositories\Organisation;
+namespace Schweppesale\Access\Infrastructure\Repositories\Organisation;
 
-use Step\Access\Domain\Entities\Organisation;
-use Step\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
+use Schweppesale\Access\Domain\Entities\Organisation;
+use Schweppesale\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class OrganisationRepository
  *
- * @package Step\Access\Infrastructure\Repositories\Organisation
+ * @package Schweppesale\Access\Infrastructure\Repositories\Organisation
  */
 class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
 {

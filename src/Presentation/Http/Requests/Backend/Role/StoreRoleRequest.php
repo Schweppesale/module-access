@@ -1,11 +1,11 @@
-<?php namespace Step\Access\Presentation\Http\Requests\Backend\Role;
+<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\Role;
 
 use App\Http\Requests\Request;
 
 /**
  * Class StoreRoleRequest
  *
- * @package Step\Access\Presentation\Http\Requests\Backend\Role
+ * @package Schweppesale\Access\Presentation\Http\Requests\Backend\Role
  */
 class StoreRoleRequest extends Request
 {

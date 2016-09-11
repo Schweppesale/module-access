@@ -1,13 +1,13 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
-use Step\Access\Domain\Repositories\OrganisationRepository;
+use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
 use Illuminate\Database\Seeder;
 
 /**
  * Class OrganisationTableSeeder
  *
- * @package Step\Access\Application\Database\Seeders\Access
+ * @package Schweppesale\Access\Application\Database\Seeders\Access
  */
 class OrganisationTableSeeder extends Seeder
 {
@@ -30,11 +30,11 @@ class OrganisationTableSeeder extends Seeder
      */
     public function run()
     {
-        $organisation = new \Step\Access\Domain\Entities\Organisation('Alexander Interactive');
+        $organisation = new \Schweppesale\Access\Domain\Entities\Organisation('Alexander Interactive');
         $organisation->setDescription('Company Description');
         $this->organisations->save($organisation);
 
-        $organisation = new \Step\Access\Domain\Entities\Organisation('Client Company');
+        $organisation = new \Schweppesale\Access\Domain\Entities\Organisation('Client Company');
         $organisation->setDescription('This is a placeholder');
         $this->organisations->save($organisation);
     }

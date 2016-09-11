@@ -1,11 +1,11 @@
-<?php namespace Step\Access\Presentation\Http\Requests\Backend\Permission\Group;
+<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group;
 
 use App\Http\Requests\Request;
 
 /**
  * Class EditPermissionGroupRequest
  *
- * @package Step\Access\Presentation\Http\Requests\Backend\Permission\Group
+ * @package Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group
  */
 class EditPermissionGroupRequest extends Request
 {

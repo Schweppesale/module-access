@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
 use Carbon\Carbon as Carbon;
 use Illuminate\Database\Seeder;

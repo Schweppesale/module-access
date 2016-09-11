@@ -1,9 +1,9 @@
 <?php
-namespace Step\Access\Infrastructure\Repositories\User;
+namespace Schweppesale\Access\Infrastructure\Repositories\User;
 
-use Step\Access\Domain\Entities\User;
-use Step\Access\Domain\Repositories\UserRepository;
-use Step\ProjectManagement\Application\Support\Collections\Collection;
+use Schweppesale\Access\Domain\Entities\User;
+use Schweppesale\Access\Domain\Repositories\UserRepository;
+use Schweppesale\ProjectManagement\Application\Support\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**

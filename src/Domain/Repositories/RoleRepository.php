@@ -1,12 +1,12 @@
 <?php
-namespace Step\Access\Domain\Repositories;
+namespace Schweppesale\Access\Domain\Repositories;
 
-use Step\Access\Domain\Entities\Role;
+use Schweppesale\Access\Domain\Entities\Role;
 
 /**
  * Interface RoleRepository
  *
- * @package Step\Access\Domain\Repositories\Role
+ * @package Schweppesale\Access\Domain\Repositories\Role
  */
 interface RoleRepository
 {

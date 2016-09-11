@@ -1,14 +1,14 @@
 <?php
-namespace Step\Access\Infrastructure\Repositories\PermissionDependency;
+namespace Schweppesale\Access\Infrastructure\Repositories\PermissionDependency;
 
-use Step\Access\Domain\Entities\PermissionDependency;
+use Schweppesale\Access\Domain\Entities\PermissionDependency;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Contracts\Queue\EntityNotFoundException;
 
 /**
  * Class PermissionDependencyRepositoryDoctrine
  *
- * @package Step\Access\Infrastructure\Repositories\PermissionDependency
+ * @package Schweppesale\Access\Infrastructure\Repositories\PermissionDependency
  */
 class PermissionDependencyRepositoryDoctrine implements PermissionDependencyRepository
 {

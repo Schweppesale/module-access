@@ -1,11 +1,11 @@
-<?php namespace Step\Access\Presentation\Http\Requests\Frontend\Access;
+<?php namespace Schweppesale\Access\Presentation\Http\Requests\Frontend\Access;
 
 use App\Http\Requests\Request;
 
 /**
  * Class RegisterRequest
  *
- * @package Step\Access\Presentation\Http\Requests\Frontend\Access
+ * @package Schweppesale\Access\Presentation\Http\Requests\Frontend\Access
  */
 class RegisterRequest extends Request
 {

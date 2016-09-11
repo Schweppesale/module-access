@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -17,7 +17,7 @@ class PermissionDependencyTableSeeder extends Seeder
     private $projectService;
 
     /**
-     * @var \Step\Access\Application\Services\Permissions\PermissionGroupService
+     * @var \Schweppesale\Access\Application\Services\Permissions\PermissionGroupService
      */
     private $permissionGroupService;
 
@@ -26,7 +26,7 @@ class PermissionDependencyTableSeeder extends Seeder
      *
      * @param \Modules\Peggy\Services\Projects\PermissionService $permissionService
      */
-    public function __construct(\Modules\Peggy\Services\Projects\PermissionService $projectService, \Step\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
+    public function __construct(\Modules\Peggy\Services\Projects\PermissionService $projectService, \Schweppesale\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
     {
         $this->projectService = $projectService;
         $this->permissionGroupService = $permissionGroupService;

@@ -1,13 +1,13 @@
-<?php namespace Step\Access\Application\Events\User;
+<?php namespace Schweppesale\Access\Application\Events\User;
 
-use Step\Access\Domain\Entities\User;
+use Schweppesale\Access\Domain\Entities\User;
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Class UserLoggedIn
  *
- * @package Step\Access\Application\Events\User
+ * @package Schweppesale\Access\Application\Events\User
  */
 class UserLoggedIn extends Event
 {

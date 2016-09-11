@@ -6,6 +6,6 @@ if (!function_exists('access')) {
      */
     function access()
     {
-        return app('Step\Access\Application\Services\Access');
+        return app('Schweppesale\Access\Application\Services\Access');
     }
 }

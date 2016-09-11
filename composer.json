@@ -1,5 +1,5 @@
 {
-    "name": "step/module-access",
+    "name": "schweppesale/module-access",
     "description": "",
     "type": "project",
     "minimum-stability": "dev",
@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Step\\Access\\": "src"
+            "Schweppesale\\Access\\": "src"
         }
     },
     "require": {

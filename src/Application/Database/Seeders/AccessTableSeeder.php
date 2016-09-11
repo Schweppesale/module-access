@@ -1,12 +1,12 @@
-<?php namespace Step\Access\Application\Database\Seeders;
+<?php namespace Schweppesale\Access\Application\Database\Seeders;
 
-use Step\Access\Application\Database\Seeders\Access\OrganisationTableSeeder;
-use Step\Access\Application\Database\Seeders\Access\PermissionDependencyTableSeeder;
-use Step\Access\Application\Database\Seeders\Access\PermissionGroupTableSeeder;
-use Step\Access\Application\Database\Seeders\Access\PermissionTableSeeder;
-use Step\Access\Application\Database\Seeders\Access\RoleTableSeeder;
-use Step\Access\Application\Database\Seeders\Access\UserRoleSeeder;
-use Step\Access\Application\Database\Seeders\Access\UserTableSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\OrganisationTableSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\PermissionDependencyTableSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\PermissionGroupTableSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\PermissionTableSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\RoleTableSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\UserRoleSeeder;
+use Schweppesale\Access\Application\Database\Seeders\Access\UserTableSeeder;
 use Illuminate\Database\Seeder;
 
 class AccessTableSeeder extends Seeder

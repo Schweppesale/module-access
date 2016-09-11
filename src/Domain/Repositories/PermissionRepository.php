@@ -1,12 +1,12 @@
 <?php
-namespace Step\Access\Domain\Repositories;
+namespace Schweppesale\Access\Domain\Repositories;
 
-use Step\Access\Domain\Entities\Permission;
+use Schweppesale\Access\Domain\Entities\Permission;
 
 /**
  * Interface PermissionGroupInterface
  *
- * @package Step\Access\Domain\Repositories\PermissionGroup
+ * @package Schweppesale\Access\Domain\Repositories\PermissionGroup
  */
 interface PermissionRepository
 {

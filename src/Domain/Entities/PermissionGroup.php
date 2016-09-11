@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Domain\Entities;
+namespace Schweppesale\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;

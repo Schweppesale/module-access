@@ -9,7 +9,7 @@
 // * Frontend Routes
 // * Namespaces indicate folder structure
 // */
-Route::group(['namespace' => 'Step\Access\Presentation\Http\Controllers\Frontend'], function () {
+Route::group(['namespace' => 'Schweppesale\Access\Presentation\Http\Controllers\Frontend'], function () {
     require(__DIR__ . "/Routes/Frontend/Frontend.php");
     require(__DIR__ . "/Routes/Frontend/Access.php");
 });
@@ -18,7 +18,7 @@ Route::group(['namespace' => 'Step\Access\Presentation\Http\Controllers\Frontend
 // * Backend Routes
 // * Namespaces indicate folder structure
 // */
-Route::group(['namespace' => 'Step\Access\Presentation\Http\Controllers\Backend'], function () {
+Route::group(['namespace' => 'Schweppesale\Access\Presentation\Http\Controllers\Backend'], function () {
 
     Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 

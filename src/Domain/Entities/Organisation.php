@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Domain\Entities;
+namespace Schweppesale\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -42,7 +42,7 @@ class Organisation implements \JsonSerializable, OrganisationContract
 
     /**
      * @var CompanyLogo
-     * @OneToOne(targetEntity="\Step\Access\Domain\Entities\OrganisationLogo", cascade={"all"}, orphanRemoval=true, fetch="EAGER")
+     * @OneToOne(targetEntity="\Schweppesale\Access\Domain\Entities\OrganisationLogo", cascade={"all"}, orphanRemoval=true, fetch="EAGER")
      * @JoinColumn(name="logo_image_id", referencedColumnName="id")
      */
     private $logo;

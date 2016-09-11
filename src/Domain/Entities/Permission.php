@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Domain\Entities;
+namespace Schweppesale\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -59,7 +59,7 @@ class Permission implements \JsonSerializable, PermissionContract
     /**
      * @var PermissionGroup
      *
-     * @ManyToOne(targetEntity="\Step\Access\Domain\Entities\PermissionGroup", inversedBy="permissions", cascade={"all"}, fetch="EAGER")
+     * @ManyToOne(targetEntity="\Schweppesale\Access\Domain\Entities\PermissionGroup", inversedBy="permissions", cascade={"all"}, fetch="EAGER")
      * @JoinColumn(name="group_id", referencedColumnName="id")
      */
     private $permissionGroup;

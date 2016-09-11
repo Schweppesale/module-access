@@ -1,7 +1,7 @@
-<?php namespace Step\Access\Presentation\Http\Controllers\Backend\Permission;
+<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Permission;
 
-use Step\Access\Application\Services\Permissions\PermissionGroupService;
-use Step\Access\Application\Services\Permissions\PermissionService;
+use Schweppesale\Access\Application\Services\Permissions\PermissionGroupService;
+use Schweppesale\Access\Application\Services\Permissions\PermissionService;
 use App\Http\Controllers\Controller;
 
 /**

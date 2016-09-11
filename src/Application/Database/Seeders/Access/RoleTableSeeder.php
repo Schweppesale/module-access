@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -8,16 +8,16 @@ class RoleTableSeeder extends Seeder
 {
 
     /**
-     * @var \Step\Access\Application\Services\Roles\RoleService
+     * @var \Schweppesale\Access\Application\Services\Roles\RoleService
      */
     private $roleService;
 
     /**
      * RoleTableSeeder constructor.
      *
-     * @param \Step\Access\Application\Services\Roles\RoleService $roleService
+     * @param \Schweppesale\Access\Application\Services\Roles\RoleService $roleService
      */
-    public function __construct(\Step\Access\Application\Services\Roles\RoleService $roleService)
+    public function __construct(\Schweppesale\Access\Application\Services\Roles\RoleService $roleService)
     {
         $this->roleService = $roleService;
     }

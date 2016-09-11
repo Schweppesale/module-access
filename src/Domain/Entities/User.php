@@ -1,8 +1,8 @@
 <?php
-namespace Step\Access\Domain\Entities;
+namespace Schweppesale\Access\Domain\Entities;
 
-use Step\Access\Domain\Entities\Traits\CanBeAuthenticated;
-use Step\Access\Domain\Entities\Traits\HasPermissions;
+use Schweppesale\Access\Domain\Entities\Traits\CanBeAuthenticated;
+use Schweppesale\Access\Domain\Entities\Traits\HasPermissions;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Contracts\Auth\Authenticatable;

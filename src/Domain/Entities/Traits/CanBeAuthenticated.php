@@ -1,10 +1,10 @@
 <?php
-namespace Step\Access\Domain\Entities\Traits;
+namespace Schweppesale\Access\Domain\Entities\Traits;
 
 /**
  * Class CanBeAuthenticated
  *
- * @package Step\Access\Domain\Entities\Traits
+ * @package Schweppesale\Access\Domain\Entities\Traits
  */
 trait CanBeAuthenticated
 {

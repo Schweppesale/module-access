@@ -1,16 +1,16 @@
 <?php
-namespace Step\Access\Infrastructure\Repositories\Role;
+namespace Schweppesale\Access\Infrastructure\Repositories\Role;
 
-use Step\Access\Domain\Entities\Role;
-use Step\Access\Domain\Entities\User;
-use Step\Access\Domain\Repositories\RoleRepository;
-use Step\ProjectManagement\Application\Support\Collections\Collection;
+use Schweppesale\Access\Domain\Entities\Role;
+use Schweppesale\Access\Domain\Entities\User;
+use Schweppesale\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\ProjectManagement\Application\Support\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class RoleRepositoryDoctrine
  *
- * @package Step\Access\Infrastructure\Repositories\User
+ * @package Schweppesale\Access\Infrastructure\Repositories\User
  */
 class RoleRepositoryDoctrine implements RoleRepository
 {

@@ -1,4 +1,4 @@
-<?php namespace Step\Access\Application\Providers;
+<?php namespace Schweppesale\Access\Application\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,11 +20,11 @@ class EventServiceProvider extends ServiceProvider
         /**
          * Frontend Events
          */
-        'Step\Access\Application\Events\User\UserLoggedIn' => [
-            'Step\Access\Application\Listeners\User\UserLoggedInHandler',
+        'Schweppesale\Access\Application\Events\User\UserLoggedIn' => [
+            'Schweppesale\Access\Application\Listeners\User\UserLoggedInHandler',
         ],
-        'Step\Access\Application\Events\User\UserLoggedOut' => [
-            'Step\Access\Application\Listeners\User\UserLoggedOutHandler',
+        'Schweppesale\Access\Application\Events\User\UserLoggedOut' => [
+            'Schweppesale\Access\Application\Listeners\User\UserLoggedOutHandler',
         ],
     ];
 

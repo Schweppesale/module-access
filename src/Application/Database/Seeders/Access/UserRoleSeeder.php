@@ -1,8 +1,8 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
-use Step\Access\Domain\Repositories\RoleRepository;
-use Step\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Access\Domain\Repositories\UserRepository;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

@@ -1,5 +1,5 @@
 <?php
-namespace Step\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Access\Application\Database\Seeders\Access;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +9,7 @@ class PermissionGroupTableSeeder extends Seeder
 
     private $permissionGroupService;
 
-    public function __construct(\Step\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
+    public function __construct(\Schweppesale\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
     {
         $this->permissionGroupService = $permissionGroupService;
     }

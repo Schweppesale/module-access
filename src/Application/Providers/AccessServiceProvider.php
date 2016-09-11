@@ -1,15 +1,15 @@
-<?php namespace Step\Access\Application\Providers;
+<?php namespace Schweppesale\Access\Application\Providers;
 
-use Step\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
-use Step\Access\Domain\Repositories\PermissionGroupRepository as PermissionGroupRepositoryInterface;
-use Step\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
-use Step\Access\Domain\Repositories\RoleRepository as RoleRepositoryInterface;
-use Step\Access\Domain\Repositories\UserRepository as UserRepositoryInterface;
-use Step\Access\Infrastructure\Repositories\Organisation\OrganisationRepositoryDoctrine;
-use Step\Access\Infrastructure\Repositories\PermissionGroup\PermissionGroupRepositoryDoctrine;
-use Step\Access\Infrastructure\Repositories\Permission\PermissionRepositoryDoctrine;
-use Step\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
-use Step\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
+use Schweppesale\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
+use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository as PermissionGroupRepositoryInterface;
+use Schweppesale\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
+use Schweppesale\Access\Domain\Repositories\RoleRepository as RoleRepositoryInterface;
+use Schweppesale\Access\Domain\Repositories\UserRepository as UserRepositoryInterface;
+use Schweppesale\Access\Infrastructure\Repositories\Organisation\OrganisationRepositoryDoctrine;
+use Schweppesale\Access\Infrastructure\Repositories\PermissionGroup\PermissionGroupRepositoryDoctrine;
+use Schweppesale\Access\Infrastructure\Repositories\Permission\PermissionRepositoryDoctrine;
+use Schweppesale\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
+use Schweppesale\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -181,7 +181,7 @@ class AccessServiceProvider extends ServiceProvider
     {
         $this->app->booting(function () {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Access', \Step\Access\Application\Services\Facades\Access::class);
+            $loader->alias('Access', \Schweppesale\Access\Application\Services\Facades\Access::class);
         });
     }
 }

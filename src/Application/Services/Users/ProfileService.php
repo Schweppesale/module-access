@@ -1,15 +1,15 @@
 <?php
-namespace Step\Access\Application\Services\Users;
+namespace Schweppesale\Access\Application\Services\Users;
 
-use Step\Access\Domain\Entities\User;
-use Step\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
-use Step\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
-use Step\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Access\Domain\Entities\User;
+use Schweppesale\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
+use Schweppesale\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
+use Schweppesale\Access\Domain\Repositories\UserRepository;
 
 /**
  * Class ProfileService
  *
- * @package Step\Access\Application\Services\Users
+ * @package Schweppesale\Access\Application\Services\Users
  */
 class ProfileService
 {
