@@ -13,7 +13,7 @@ use Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup\Permi
 use Schweppesale\Module\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
 
-class AccessServiceProvider extends ServiceProvider
+class ApplicationServiceProvider extends ServiceProvider
 {
 
     /**
@@ -30,11 +30,14 @@ class AccessServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
         $this->registerConfig();
         $this->registerRepositories();
-        $this->registerBladeExtensions();
         $this->registerFacade();
+        $this->registerMappings();
+    }
+
+    public function registerMappings() {
+
     }
 
     /**
@@ -63,22 +66,6 @@ class AccessServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = base_path('resources/lang/modules/access');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'access');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'access');
-        }
-    }
-
-    /**
      * Get the services provided by the provider.
      *
      * @return array
@@ -98,57 +85,6 @@ class AccessServiceProvider extends ServiceProvider
         $this->app->bind(PermissionGroupRepositoryInterface::class, PermissionGroupRepositoryDoctrine::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepositoryDoctrine::class);
         $this->app->bind(PermissionRepositoryInterface::class, PermissionRepositoryDoctrine::class);
-    }
-
-    /**
-     * Register the blade extender to use new blade sections
-     */
-    protected function registerBladeExtensions()
-    {
-        /**
-         * Role based blade extensions
-         * Accepts either string of Role Name or Role ID
-         */
-        Blade::directive('role', function ($role) {
-            return "<?php if (access()->hasRole{$role}): ?>";
-        });
-
-        /**
-         * Accepts array of names or id's
-         */
-        Blade::directive('roles', function ($roles) {
-            return "<?php if (access()->hasRoles{$roles}): ?>";
-        });
-
-        Blade::directive('needsroles', function ($roles) {
-            return "<?php if (access()->hasRoles(" . $roles . ", true)): ?>";
-        });
-
-        /**
-         * Permission based blade extensions
-         * Accepts wither string of Permission Name or Permission ID
-         */
-        Blade::directive('permission', function ($permission) {
-            return "<?php if (access()->can{$permission}): ?>";
-        });
-
-        /**
-         * Accepts array of names or id's
-         */
-        Blade::directive('permissions', function ($permissions) {
-            return "<?php if (access()->canMultiple{$permissions}): ?>";
-        });
-
-        Blade::directive('needspermissions', function ($permissions) {
-            return "<?php if (access()->canMultiple(" . $permissions . ", true)): ?>";
-        });
-
-        /**
-         * Generic if closer to not interfere with built in blade
-         */
-        Blade::directive('endauth', function () {
-            return "<?php endif; ?>";
-        });
     }
 
     /**
