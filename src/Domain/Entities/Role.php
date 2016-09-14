@@ -1,17 +1,19 @@
 <?php
-namespace Schweppesale\Access\Domain\Entities;
+namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use LaravelDoctrine\ACL\Contracts\Role as RoleContract;
 use LaravelDoctrine\ACL\Permissions\HasPermissions;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-
 
 /**
  * Class Role
  *
- * @package Modules\Peggy\Entities
+ * @package Schweppesale\Domain\Entities
  *
  * @ORM\Entity
  * @ORM\Table(name="roles")

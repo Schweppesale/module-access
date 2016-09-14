@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Frontend\Access;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\Access;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class RegisterRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Frontend\Access
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\Access
  */
 class RegisterRequest extends Request
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Schweppesale\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -12,21 +12,21 @@ class PermissionDependencyTableSeeder extends Seeder
 {
 
     /**
-     * @var \Modules\Peggy\Services\Projects\PermissionService
+     * @var \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService
      */
     private $projectService;
 
     /**
-     * @var \Schweppesale\Access\Application\Services\Permissions\PermissionGroupService
+     * @var \Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService
      */
     private $permissionGroupService;
 
     /**
      * PermissionGroupTableSeeder constructor.
      *
-     * @param \Modules\Peggy\Services\Projects\PermissionService $permissionService
+     * @param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService
      */
-    public function __construct(\Modules\Peggy\Services\Projects\PermissionService $projectService, \Schweppesale\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
+    public function __construct(\Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $projectService, \Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
     {
         $this->projectService = $projectService;
         $this->permissionGroupService = $permissionGroupService;
@@ -37,20 +37,16 @@ class PermissionDependencyTableSeeder extends Seeder
      */
     public function run()
     {
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        if (env('DB_DRIVER') == 'mysql') {
-            DB::table(config('access.permission_dependencies_table'))->truncate();
-        } elseif (env('DB_DRIVER') == 'sqlite') {
-            DB::statement("DELETE FROM " . config('access.permission_dependencies_table'));
-        } else { //For PostgreSQL or anything else
-            DB::statement("TRUNCATE TABLE " . config('access.permission_dependencies_table') . " CASCADE");
-        }
+//        if (env('DB_DRIVER') == 'mysql') {
+//            DB::table('permission_dependencies')->truncate();
+//        } elseif (env('DB_DRIVER') == 'sqlite') {
+//            DB::statement("DELETE FROM " . 'permission_dependencies');
+//        } else { //For PostgreSQL or anything else
+//            DB::statement("TRUNCATE TABLE " . 'permission_dependencies' . " CASCADE");
+//        }
 
         //View access management needs view backend
-        DB::table(config('access.permission_dependencies_table'))->insert([
+        DB::table('permission_dependencies')->insert([
             'permission_id' => 2,
             'dependency_id' => 1,
             'created_at' => Carbon::now(),
@@ -59,14 +55,14 @@ class PermissionDependencyTableSeeder extends Seeder
 
         //All of the access permissions need view access management and view backend
         for ($i = 3; $i <= 17; $i++) {
-            DB::table(config('access.permission_dependencies_table'))->insert([
+            DB::table('permission_dependencies')->insert([
                 'permission_id' => $i,
                 'dependency_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
 
-            DB::table(config('access.permission_dependencies_table'))->insert([
+            DB::table('permission_dependencies')->insert([
                 'permission_id' => $i,
                 'dependency_id' => 2,
                 'created_at' => Carbon::now(),
@@ -77,7 +73,7 @@ class PermissionDependencyTableSeeder extends Seeder
 
         //All of the access permissions need view access management and view backend
         for ($i = 19; $i <= 23; $i++) {
-            DB::table(config('access.permission_dependencies_table'))->insert([
+            DB::table('permission_dependencies')->insert([
                 'permission_id' => $i,
                 'dependency_id' => 1,
                 'created_at' => Carbon::now(),
@@ -91,8 +87,5 @@ class PermissionDependencyTableSeeder extends Seeder
 
         $this->permissionGroupService->create('Projects', 1);
         $this->projectService->create(12731);
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

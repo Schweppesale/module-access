@@ -1,10 +1,10 @@
 <?php
-namespace Schweppesale\Access\Application\Services\Roles;
+namespace Schweppesale\Module\Access\Application\Services\Roles;
 
-use Schweppesale\Access\Domain\Entities\Role;
-use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository;
-use Schweppesale\Access\Domain\Repositories\PermissionRepository;
-use Schweppesale\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Module\Access\Domain\Entities\Role;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 
 /**
  * Class RoleService
@@ -44,7 +44,7 @@ class RoleService
     }
 
     /**
-     * @return \Schweppesale\Access\Domain\Entities\Role[]
+     * @return \Schweppesale\Module\Access\Domain\Entities\Role[]
      */
     public function fetchAll()
     {
@@ -100,7 +100,7 @@ class RoleService
     /**
      * @param $roleId
      * @param array $criteria
-     * @return \Schweppesale\Access\Domain\Entities\Role
+     * @return \Schweppesale\Module\Access\Domain\Entities\Role
      */
     public function update($roleId, array $criteria)
     {

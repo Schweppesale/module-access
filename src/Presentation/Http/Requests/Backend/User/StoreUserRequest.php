@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\User;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\User;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class StoreUserRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Backend\User
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\User
  */
 class StoreUserRequest extends Request
 {
@@ -28,8 +28,8 @@ class StoreUserRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:\Schweppesale\Access\Presentation\Entities\User',
-            'email' => 'required|email|unique:\Schweppesale\Access\Presentation\Entities\User',
+            'name' => 'required|unique:\Schweppesale\Module\Access\Presentation\Entities\User',
+            'email' => 'required|email|unique:\Schweppesale\Module\Access\Presentation\Entities\User',
             'password' => 'required|alpha_num|min:6|confirmed',
             'password_confirmation' => 'required|alpha_num|min:6',
         ];

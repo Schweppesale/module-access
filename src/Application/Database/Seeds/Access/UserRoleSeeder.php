@@ -1,10 +1,9 @@
 <?php
-namespace Schweppesale\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
-use Schweppesale\Access\Domain\Repositories\RoleRepository;
-use Schweppesale\Access\Domain\Repositories\UserRepository;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 
 class UserRoleSeeder extends Seeder
 {
@@ -33,16 +32,12 @@ class UserRoleSeeder extends Seeder
 
     public function run()
     {
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::table(config('access.assigned_roles_table'))->truncate();
-        elseif (env('DB_DRIVER') == 'sqlite')
-            DB::statement("DELETE FROM " . config('access.assigned_roles_table'));
-        else //For PostgreSQL or anything else
-            DB::statement("TRUNCATE TABLE " . config('access.assigned_roles_table') . " CASCADE");
+//        if (env('DB_DRIVER') == 'mysql')
+//            DB::table('assigned_roles')->truncate();
+//        elseif (env('DB_DRIVER') == 'sqlite')
+//            DB::statement("DELETE FROM " . 'assigned_roles');
+//        else //For PostgreSQL or anything else
+//            DB::statement("TRUNCATE TABLE " . 'assigned_roles' . " CASCADE");
 
         //Attach admin role to admin user
         $users = $this->users->fetchAll();
@@ -55,8 +50,5 @@ class UserRoleSeeder extends Seeder
         for ($i = 0; $i <= 2; $i++) {
             $this->users->save($users[$i]);
         }
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

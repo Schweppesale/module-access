@@ -12,8 +12,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.user_management') }}
-                <!--  <small>{{ trans('menus.edit_role') }}</small> -->
+    {{ trans('menus.user_management') }}
+    <!--  <small>{{ trans('menus.edit_role') }}</small> -->
     </h1>
     @include('access::backend.includes.partials.header-buttons')
 @endsection

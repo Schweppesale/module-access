@@ -1,14 +1,18 @@
 <?php
-namespace Schweppesale\Access\Domain\Entities;
+namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+
 
 /**
  * Class Company
  *
- * @package Modules\Peggy\Entities
+ * @package Schweppesale\Domain\Entities
  *
  * @ORM\Entity
  * @ORM\Table(name="permission_groups")

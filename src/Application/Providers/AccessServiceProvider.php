@@ -1,17 +1,17 @@
-<?php namespace Schweppesale\Access\Application\Providers;
+<?php namespace Schweppesale\Module\Access\Application\Providers;
 
-use Schweppesale\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
-use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository as PermissionGroupRepositoryInterface;
-use Schweppesale\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
-use Schweppesale\Access\Domain\Repositories\RoleRepository as RoleRepositoryInterface;
-use Schweppesale\Access\Domain\Repositories\UserRepository as UserRepositoryInterface;
-use Schweppesale\Access\Infrastructure\Repositories\Organisation\OrganisationRepositoryDoctrine;
-use Schweppesale\Access\Infrastructure\Repositories\PermissionGroup\PermissionGroupRepositoryDoctrine;
-use Schweppesale\Access\Infrastructure\Repositories\Permission\PermissionRepositoryDoctrine;
-use Schweppesale\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
-use Schweppesale\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository as PermissionGroupRepositoryInterface;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
+use Schweppesale\Module\Access\Domain\Repositories\RoleRepository as RoleRepositoryInterface;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository as UserRepositoryInterface;
+use Schweppesale\Module\Access\Infrastructure\Repositories\Organisation\OrganisationRepositoryDoctrine;
+use Schweppesale\Module\Access\Infrastructure\Repositories\Permission\PermissionRepositoryDoctrine;
+use Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup\PermissionGroupRepositoryDoctrine;
+use Schweppesale\Module\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
+use Schweppesale\Module\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
 
 class AccessServiceProvider extends ServiceProvider
 {
@@ -32,7 +32,6 @@ class AccessServiceProvider extends ServiceProvider
     {
         $this->registerTranslations();
         $this->registerConfig();
-        $this->registerViews();
         $this->registerRepositories();
         $this->registerBladeExtensions();
         $this->registerFacade();
@@ -61,26 +60,6 @@ class AccessServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../Config/config.php', 'access'
         );
-    }
-
-    /**
-     * Register views.
-     *
-     * @return void
-     */
-    public function registerViews()
-    {
-//		$viewPath = base_path('resources/views/modules/access');
-//
-//		$sourcePath = __DIR__.'/../Resources/views';
-//
-//		$this->publishes([
-//			$sourcePath => $viewPath
-//		]);
-//
-//		$this->loadViewsFrom(array_merge(array_map(function ($path) {
-//			return $path . '/modules/access';
-//		}, \Config::get('view.paths')), [$sourcePath]), 'access');
     }
 
     /**
@@ -181,7 +160,7 @@ class AccessServiceProvider extends ServiceProvider
     {
         $this->app->booting(function () {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Access', \Schweppesale\Access\Application\Services\Facades\Access::class);
+            $loader->alias('Access', \Schweppesale\Module\Access\Application\Services\Facades\Access::class);
         });
     }
 }

@@ -1,8 +1,8 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Frontend;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Frontend;
 
-use Schweppesale\Access\Presentation\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\User\UserContract;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\User\UpdateProfileRequest;
 
 /**
  * Class ProfileController

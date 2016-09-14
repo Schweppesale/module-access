@@ -1,12 +1,12 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Role;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Role;
 
-use Schweppesale\Access\Application\Services\Roles\RoleService;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\CreateRoleRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\DeleteRoleRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\EditRoleRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\StoreRoleRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Role\UpdateRoleRequest;
 use App\Http\Controllers\Controller;
+use Schweppesale\Module\Access\Application\Services\Roles\RoleService;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role\CreateRoleRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role\DeleteRoleRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role\EditRoleRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role\StoreRoleRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role\UpdateRoleRequest;
 
 /**
  * Class RoleController

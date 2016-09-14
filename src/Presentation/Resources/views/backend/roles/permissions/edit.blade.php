@@ -17,8 +17,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.user_management') }}
-                <!-- <small>{{ trans('menus.edit_permission') }}</small> -->
+    {{ trans('menus.user_management') }}
+    <!-- <small>{{ trans('menus.edit_permission') }}</small> -->
     </h1>
 
     @include('access::backend.includes.partials.header-buttons')
@@ -47,8 +47,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    {!! Form::label('name', trans('validation.attributes.permission_name'), ['class' => 'control-label']) !!}
-                                            <!-- <div class="col-lg-10"> -->
+                                {!! Form::label('name', trans('validation.attributes.permission_name'), ['class' => 'control-label']) !!}
+                                <!-- <div class="col-lg-10"> -->
                                     <input type="text" name="name" class="form-control"
                                            placeholder="{{ trans('validation.attributes.permission_name') }}"
                                            {{$permission->system == 1 ? 'readonly' : ''}} value="{{$permission->name}}"/>
@@ -56,17 +56,17 @@
                                 </div><!--form control-->
 
                                 <div class="form-group">
-                                    {!! Form::label('display_name', trans('validation.attributes.display_name'), ['class' => 'control-label']) !!}
-                                            <!-- <div class="col-lg-10">-->
-                                    {!! Form::text('display_name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.display_name')]) !!}
-                                            <!-- </div> -->
+                                {!! Form::label('display_name', trans('validation.attributes.display_name'), ['class' => 'control-label']) !!}
+                                <!-- <div class="col-lg-10">-->
+                                {!! Form::text('display_name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.display_name')]) !!}
+                                <!-- </div> -->
                                 </div><!--form control-->
                             </div> <!-- col-md-6 names end _____________________  -->
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    {!! Form::label('group', trans('validation.attributes.group'), ['class' => 'control-label']) !!}
-                                            <!-- <div class="col-lg-10">-->
+                                {!! Form::label('group', trans('validation.attributes.group'), ['class' => 'control-label']) !!}
+                                <!-- <div class="col-lg-10">-->
                                     <select name="group" class="form-control selectpicker">
                                         <option value="">None</option>
 
@@ -78,10 +78,10 @@
                                 </div><!--form control-->
 
                                 <div class="form-group">
-                                    {!! Form::label('sort', trans('validation.attributes.group-sort'), ['class' => 'control-label']) !!}
-                                            <!-- <div class="col-lg-10"> -->
-                                    {!! Form::text('sort', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.group-sort')]) !!}
-                                            <!-- </div>-->
+                                {!! Form::label('sort', trans('validation.attributes.group-sort'), ['class' => 'control-label']) !!}
+                                <!-- <div class="col-lg-10"> -->
+                                {!! Form::text('sort', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.group-sort')]) !!}
+                                <!-- </div>-->
                                 </div><!--form control-->
                             </div> <!-- col-md-6  groups end _____________________ -->
 

@@ -1,6 +1,5 @@
-<?php namespace Schweppesale\Access\Application\Providers;
+<?php namespace Schweppesale\Module\Access\Application\Providers;
 
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 /**
@@ -20,23 +19,22 @@ class EventServiceProvider extends ServiceProvider
         /**
          * Frontend Events
          */
-        'Schweppesale\Access\Application\Events\User\UserLoggedIn' => [
-            'Schweppesale\Access\Application\Listeners\User\UserLoggedInHandler',
+        'Schweppesale\Module\Access\Application\Events\User\UserLoggedIn' => [
+            'Schweppesale\Module\Access\Application\Listeners\User\UserLoggedInHandler',
         ],
-        'Schweppesale\Access\Application\Events\User\UserLoggedOut' => [
-            'Schweppesale\Access\Application\Listeners\User\UserLoggedOutHandler',
+        'Schweppesale\Module\Access\Application\Events\User\UserLoggedOut' => [
+            'Schweppesale\Module\Access\Application\Listeners\User\UserLoggedOutHandler',
         ],
     ];
 
     /**
-     * Register any other events for your application.
+     * Register any events for your application.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher $events
      * @return void
      */
-    public function boot(DispatcherContract $events)
+    public function boot()
     {
-        parent::boot($events);
+        parent::boot();
 
         //
     }

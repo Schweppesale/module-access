@@ -1,18 +1,28 @@
 {
-  "name": "Access Module",
-  "alias": "access",
-  "description": "",
-  "keywords": [],
-  "active": 1,
-  "order": 0,
-  "providers": [
-    "Schweppesale\\Access\\Application\\Providers\\AccessServiceProvider",
-    "Schweppesale\\Access\\Application\\Providers\\EventServiceProvider",
-    "LaravelDoctrine\\ORM\\DoctrineServiceProvider",
-    "LaravelDoctrine\\ACL\\AclServiceProvider"
-  ],
-  "aliases": [],
-  "files": [
-    "Application/Support/helpers.php"
-  ]
+    "name": "Access",
+    "alias": "access",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "migration": {
+        "path": "src/Application/Database/Migrations",
+        "seeds": [
+            "Schweppesale\\Access\\Application\\Database\\Seeds\\AccessDatabaseSeeder"
+        ]
+    },
+    "providers": [
+        "Collective\\Html\\HtmlServiceProvider",
+
+        "Schweppesale\\Access\\Application\\Providers\\AccessServiceProvider",
+        "Schweppesale\\Access\\Application\\Providers\\EventServiceProvider",
+        "Schweppesale\\Access\\Presentation\\Providers\\PresentationServiceProvider",
+        "LaravelDoctrine\\ORM\\DoctrineServiceProvider",
+        "LaravelDoctrine\\ACL\\AclServiceProvider"
+    ],
+    "aliases": [],
+    "files": [
+        "src\/Application\/Support\/helpers.php",
+        "src\/Presentation\/Http\/routes.php"
+    ]
 }

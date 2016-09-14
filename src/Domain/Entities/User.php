@@ -1,23 +1,26 @@
 <?php
-namespace Schweppesale\Access\Domain\Entities;
+namespace Schweppesale\Module\Access\Domain\Entities;
 
-use Schweppesale\Access\Domain\Entities\Traits\CanBeAuthenticated;
-use Schweppesale\Access\Domain\Entities\Traits\HasPermissions;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use JsonSerializable;
 use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
 use LaravelDoctrine\ACL\Mappings as ACL;
-use Modules\Access\Services\Access;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Schweppesale\Module\Access\Domain\Entities\Traits\CanBeAuthenticated;
+use Schweppesale\Module\Access\Domain\Entities\Traits\HasPermissions;
 
 /**
  * Class User
  *
- * @package Modules\Peggy\Entities
+ * @package Schweppesale\Domain\Entities
  *
  * @ORM\Entity
  * @ORM\Table(
@@ -101,8 +104,12 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
 
     /**
      * @var Permission[]
+     * @ManyToMany(targetEntity="Permission", inversedBy="users")
+     * @JoinTable(name="user_permissions",
+     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="permission_id", referencedColumnName="id", unique=true)}
+     *      )
      *
-     * @ACL\HasPermissions
      */
     private $permissions;
 
@@ -164,6 +171,16 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
         $this->setStatus($status);
         $this->setPermissions($permissions);
         $this->setRoles($roles);
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return $this->getEmail();
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        // TODO: Implement sendPasswordResetNotification() method.
     }
 
     /**

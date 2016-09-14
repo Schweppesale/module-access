@@ -16,8 +16,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.banned_users') }}
-                <!-- <small>{{ trans('menus.banned_users') }}</small> -->
+    {{ trans('menus.banned_users') }}
+    <!-- <small>{{ trans('menus.banned_users') }}</small> -->
     </h1>
 @endsection
 

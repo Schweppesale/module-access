@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Frontend\User;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\User;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class UpdateProfileRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Frontend\User
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\User
  */
 class UpdateProfileRequest extends Request
 {

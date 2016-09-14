@@ -1,12 +1,12 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Frontend\Auth;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Frontend\Auth;
 
-use Schweppesale\Access\Application\Services\Users\AuthenticationService;
-use Schweppesale\Access\Presentation\Entities\User;
-use Schweppesale\Access\Presentation\Http\Requests\Frontend\Access\ChangePasswordRequest;
-use App\Exceptions\GeneralException;
+use Schweppesale\Module\Core\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Module\Access\Presentation\Entities\User;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\Access\ChangePasswordRequest;
 
 /**
  * Class PasswordController

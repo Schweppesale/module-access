@@ -1,13 +1,13 @@
-<?php namespace Schweppesale\Access\Application\Listeners\User;
+<?php namespace Schweppesale\Module\Access\Application\Listeners\User;
 
-use Schweppesale\Access\Application\Events\User\UserLoggedIn;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Schweppesale\Module\Access\Application\Events\User\UserLoggedIn;
 
 /**
  * Class UserLoggedInHandler
  *
- * @package Schweppesale\Access\Application\Listeners\User
+ * @package Schweppesale\Module\Access\Application\Listeners\User
  */
 class UserLoggedInHandler implements ShouldQueue
 {

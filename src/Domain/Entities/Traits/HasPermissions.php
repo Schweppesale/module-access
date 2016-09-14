@@ -1,12 +1,12 @@
 <?php
-namespace Schweppesale\Access\Domain\Entities\Traits;
+namespace Schweppesale\Module\Access\Domain\Entities\Traits;
 
-use Schweppesale\Access\Domain\Entities\Role;
+use Schweppesale\Module\Access\Domain\Entities\Role;
 
 /**
  * Class HasPermissions
  *
- * @package Schweppesale\Access\Domain\Entities\Traits
+ * @package Schweppesale\Module\Access\Domain\Entities\Traits
  */
 trait HasPermissions
 {

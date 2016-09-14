@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Application\Services;
+<?php namespace Schweppesale\Module\Access\Application\Services;
 
 use Illuminate\Foundation\Application;
 
 /**
  * Class Access
  *
- * @package Schweppesale\Access\Application\Services
+ * @package Schweppesale\Module\Access\Application\Services
  */
 class Access
 {

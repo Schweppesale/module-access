@@ -13,8 +13,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.create_role') }}
-                <!-- <small>{{ trans('menus.create_role') }}</small> -->
+    {{ trans('menus.create_role') }}
+    <!-- <small>{{ trans('menus.create_role') }}</small> -->
     </h1>
 
     @include('access::backend.includes.partials.header-buttons')
@@ -56,13 +56,13 @@
 
                     <div class="form-group col-md-6 col-xs-6">
 
-                        {!! Form::label('name', trans('validation.attributes.role_name'), ['class' => 'control-label']) !!}
+                    {!! Form::label('name', trans('validation.attributes.role_name'), ['class' => 'control-label']) !!}
 
-                                <!-- <div class=""> -->
+                    <!-- <div class=""> -->
 
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.role_name')]) !!}
+                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.role_name')]) !!}
 
-                                <!-- </div> -->
+                    <!-- </div> -->
 
                     </div><!--form control-->
 
@@ -112,7 +112,7 @@
 
                 </div><!-- end of col-12 which houses dropdown and submit buttons -->
 
-                <!--   <div class="well">
+            <!--   <div class="well">
                        <div class="pull-left">
                             <a href="{!! route('admin.access.roles.index') !!}" class="btn btn-danger btn-xs">{{ trans('strings.cancel_button') }}</a>
                         </div>

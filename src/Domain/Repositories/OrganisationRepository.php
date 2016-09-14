@@ -1,7 +1,7 @@
 <?php
-namespace Schweppesale\Access\Domain\Repositories;
+namespace Schweppesale\Module\Access\Domain\Repositories;
 
-use Schweppesale\Access\Domain\Entities\Organisation;
+use Schweppesale\Module\Access\Domain\Entities\Organisation;
 
 /**
  * Interface OrganisationRepository

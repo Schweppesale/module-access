@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master')
+@extends('access::frontend.layouts.master')
 
 @section('content')
 
@@ -47,9 +47,6 @@
 
                     {!! Form::close() !!}
 
-                    <div class="row text-center">
-                        {!! $socialite_links !!}
-                    </div>
                 </div><!-- panel body -->
 
             </div><!-- panel -->

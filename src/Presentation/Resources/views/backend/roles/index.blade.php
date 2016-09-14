@@ -16,8 +16,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.user_management') }}
-                <!-- <small>{{ trans('menus.role_management') }}</small> -->
+    {{ trans('menus.user_management') }}
+    <!-- <small>{{ trans('menus.role_management') }}</small> -->
     </h1>
 @endsection
 

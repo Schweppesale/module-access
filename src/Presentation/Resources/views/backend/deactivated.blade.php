@@ -16,8 +16,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.deactivated_users') }}
-                <!-- <small>{{ trans('menus.deactivated_users') }}</small> -->
+    {{ trans('menus.deactivated_users') }}
+    <!-- <small>{{ trans('menus.deactivated_users') }}</small> -->
     </h1>
 @endsection
 

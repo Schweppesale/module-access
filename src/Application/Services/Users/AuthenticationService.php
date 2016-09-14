@@ -1,21 +1,21 @@
 <?php
 
-namespace Schweppesale\Access\Application\Services\Users;
+namespace Schweppesale\Module\Access\Application\Services\Users;
 
-use Schweppesale\Access\Application\Events\User\UserLoggedIn;
-use Schweppesale\Access\Application\Events\User\UserLoggedOut;
-use Schweppesale\Access\Domain\Entities\User;
-use Schweppesale\Access\Domain\Repositories\UserRepository;
-use App\Exceptions\GeneralException;
+use Schweppesale\Module\Core\Exceptions\GeneralException;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
+use Schweppesale\Module\Access\Application\Events\User\UserLoggedIn;
+use Schweppesale\Module\Access\Application\Events\User\UserLoggedOut;
+use Schweppesale\Module\Access\Domain\Entities\User;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 
 /**
  * Class AuthenticationService
  *
- * @package Schweppesale\Access\Application\Services\Users
+ * @package Schweppesale\Module\Access\Application\Services\Users
  */
 class AuthenticationService
 {

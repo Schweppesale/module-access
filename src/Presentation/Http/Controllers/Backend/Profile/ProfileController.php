@@ -1,17 +1,17 @@
 <?php
 
-namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Profile;
+namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Profile;
 
-use Schweppesale\Access\Application\Services\Users\AuthenticationService;
-use Schweppesale\Access\Application\Services\Users\UserService;
-use Schweppesale\Access\Presentation\Http\Requests\Frontend\User\UpdateProfileRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
+use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Module\Access\Application\Services\Users\UserService;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\User\UpdateProfileRequest;
 
 /**
  * Class ProfileController
  *
- * @package Schweppesale\Access\Presentation\Http\Controllers\Backend\Profile
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Profile
  */
 class ProfileController extends Controller
 {
@@ -22,7 +22,7 @@ class ProfileController extends Controller
     private $auth;
 
     /**
-     * @var UserContract
+     * @var UserService
      */
     private $userService;
 
@@ -44,7 +44,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = $this->auth->getUser();
-        return view('access::backend.profile.edit')->with('user', $user);
+        return view('access::backend.profile.edit', ['user' => $user]);
     }
 
     /**
@@ -54,10 +54,10 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request)
     {
         $user = $this->auth->getUser();
-        if (!$user instanceof \Schweppesale\Access\Presentation\Entities\User) {
+        if (!$user instanceof \Schweppesale\Module\Access\Domain\Entities\User) {
             throw new \UnexpectedValueException('Invalid User Entity');
         }
-        dd($request->all());
+
         $this->userService->update($user->getId(), $request);
         return redirect(route('admin.profile.edit'))->withFlashSuccess("Your profile has been successfully updated.");
     }

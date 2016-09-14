@@ -1,8 +1,8 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Permission;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Permission;
 
-use Schweppesale\Access\Application\Services\Permissions\PermissionGroupService;
-use Schweppesale\Access\Application\Services\Permissions\PermissionService;
 use App\Http\Controllers\Controller;
+use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;
+use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
 
 /**
  * Class PermissionController

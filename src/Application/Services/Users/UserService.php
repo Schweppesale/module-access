@@ -1,20 +1,20 @@
 <?php
-namespace Schweppesale\Access\Application\Services\Users;
+namespace Schweppesale\Module\Access\Application\Services\Users;
 
-use Schweppesale\Access\Application\Services\Access;
-use Schweppesale\Access\Domain\Entities\User;
-use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
-use Schweppesale\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
-use Schweppesale\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
-use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository;
-use Schweppesale\Access\Domain\Repositories\PermissionRepository;
-use Schweppesale\Access\Domain\Repositories\RoleRepository;
-use Schweppesale\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Access\Application\Services\Access;
+use Schweppesale\Module\Access\Domain\Entities\User;
+use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 
 /**
  * Class UserService
  *
- * @package Schweppesale\Access\Application\Services\Users
+ * @package Schweppesale\Module\Access\Application\Services\Users
  */
 class UserService
 {
@@ -212,7 +212,7 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
      */
     public function fetchAll()
     {
@@ -220,7 +220,7 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
      */
     public function findBanned()
     {
@@ -228,7 +228,7 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
      */
     public function findDeactivated()
     {
@@ -236,7 +236,7 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Access\Domain\Entities\User[]
+     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
      */
     public function findDeleted()
     {

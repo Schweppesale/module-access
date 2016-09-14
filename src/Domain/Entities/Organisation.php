@@ -1,16 +1,17 @@
 <?php
-namespace Schweppesale\Access\Domain\Entities;
+namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use LaravelDoctrine\ACL\Contracts\Organisation as OrganisationContract;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
+use LaravelDoctrine\ACL\Contracts\Organisation as OrganisationContract;
 
 
 /**
  * Class Company
  *
- * @package Modules\Peggy\Entities
+ * @package Schweppesale\Domain\Entities
  *
  * @ORM\Entity
  * @ORM\Table(name="companies")
@@ -39,19 +40,6 @@ class Organisation implements \JsonSerializable, OrganisationContract
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var CompanyLogo
-     * @OneToOne(targetEntity="\Schweppesale\Access\Domain\Entities\OrganisationLogo", cascade={"all"}, orphanRemoval=true, fetch="EAGER")
-     * @JoinColumn(name="logo_image_id", referencedColumnName="id")
-     */
-    private $logo;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $logo_image_id;
 
     /**
      * @var string
@@ -121,38 +109,6 @@ class Organisation implements \JsonSerializable, OrganisationContract
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return CompanyLogo
-     */
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param CompanyLogo $logo
-     */
-    public function setLogo(OrganisationLogo $logo)
-    {
-        $this->logo = $logo;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLogoImageId()
-    {
-        return $this->logo_image_id;
-    }
-
-    /**
-     * @param int $logo_image_id
-     */
-    public function setLogoImageId($logo_image_id)
-    {
-        $this->logo_image_id = $logo_image_id;
     }
 
     /**

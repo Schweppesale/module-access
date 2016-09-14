@@ -17,8 +17,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.permission_management') }}
-                <!-- <small>{{ trans('menus.edit_permission_group') }}</small> -->
+    {{ trans('menus.permission_management') }}
+    <!-- <small>{{ trans('menus.edit_permission_group') }}</small> -->
     </h1>
 
     @include('access::backend.includes.partials.header-buttons')
@@ -33,10 +33,10 @@
                     {!! Form::model($group, ['route' => ['admin.access.roles.permission-group.update', $group->id], 'class' => '', 'role' => 'form', 'method' => 'patch']) !!}
 
                     <div class="form-group col-md-12">
-                        {!! Form::label('name', trans('validation.attributes.permission_group_name'), ['class' => 'control-label']) !!}
-                                <!--<div class="col-lg-10">-->
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.permission_group_name')]) !!}
-                                <!--</div>-->
+                    {!! Form::label('name', trans('validation.attributes.permission_group_name'), ['class' => 'control-label']) !!}
+                    <!--<div class="col-lg-10">-->
+                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.permission_group_name')]) !!}
+                    <!--</div>-->
                     </div><!--form control-->
 
                     <div class="form-group col-md-12">

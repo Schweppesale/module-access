@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master')
+@extends('access::frontend.layouts.master')
 
 @section('content')
 

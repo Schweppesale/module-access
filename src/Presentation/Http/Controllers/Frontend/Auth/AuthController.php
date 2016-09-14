@@ -1,15 +1,15 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Frontend\Auth;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Frontend\Auth;
 
-use Schweppesale\Access\Application\Services\Users\AuthenticationService;
-use Schweppesale\Access\Presentation\Http\Requests\Frontend\Access\LoginRequest;
-use App\Exceptions\GeneralException;
+use Schweppesale\Module\Core\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\Access\LoginRequest;
 
 /**
  * Class AuthController
  *
- * @package Schweppesale\Access\Presentation\Http\Controllers\Frontend\Auth
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Frontend\Auth
  */
 class AuthController extends Controller
 {
@@ -34,7 +34,7 @@ class AuthController extends Controller
     /**
      * @param $token
      * @return mixed
-     * @throws \App\Exceptions\GeneralException
+     * @throws \Schweppesale\Module\Core\Exceptions\GeneralException
      */
     public function confirmAccount($token)
     {
@@ -52,7 +52,7 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
-        return view('access::frontend.auth.login')->withSocialiteLinks($this->getSocialLinks());
+        return view('frontend.auth.login');
     }
 
     /**
@@ -127,6 +127,11 @@ class AuthController extends Controller
 
             return redirect()->back()->withInput()->withFlashDanger($e->getMessage());
         }
+    }
+
+    public function show()
+    {
+        return view('access::frontend.auth.login');
     }
 
     /**

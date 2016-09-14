@@ -12,8 +12,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.create_user') }}
-                <!-- <small>{{ trans('menus.create_user') }}</small> -->
+    {{ trans('menus.create_user') }}
+    <!-- <small>{{ trans('menus.create_user') }}</small> -->
     </h1>
 
     @include('access::backend.includes.partials.header-buttons')
@@ -89,8 +89,8 @@
                             @endforeach
                         @else
                             No Roles to set
-                            @endif
-                                    <!--  </div>-->
+                    @endif
+                    <!--  </div>-->
                     </div><!--form control-->
 
                     <div class="col-md-12 ">

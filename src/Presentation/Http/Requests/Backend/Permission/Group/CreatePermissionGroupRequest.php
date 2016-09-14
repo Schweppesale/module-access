@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class CreatePermissionGroupRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
  */
 class CreatePermissionGroupRequest extends Request
 {

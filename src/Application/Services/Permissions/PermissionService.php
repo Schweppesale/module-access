@@ -1,14 +1,14 @@
 <?php
-namespace Schweppesale\Access\Application\Services\Permissions;
+namespace Schweppesale\Module\Access\Application\Services\Permissions;
 
-use Schweppesale\Access\Domain\Entities\Permission;
-use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository;
-use Schweppesale\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Module\Access\Domain\Entities\Permission;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 
 /**
  * Class PermissionService
  *
- * @package Schweppesale\Access\Application\Services\Permissions
+ * @package Schweppesale\Module\Access\Application\Services\Permissions
  */
 class PermissionService
 {
@@ -77,7 +77,7 @@ class PermissionService
     }
 
     /**
-     * @return \Schweppesale\Access\Domain\Entities\Permission[]
+     * @return \Schweppesale\Module\Access\Domain\Entities\Permission[]
      */
     public function fetchAll()
     {

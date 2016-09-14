@@ -1,17 +1,16 @@
 <?php
-namespace Schweppesale\Access\Application\Services\Companies;
+namespace Schweppesale\Module\Access\Application\Services\Organisations;
 
-use Schweppesale\Access\Domain\Entities\OrganisationLogo;
-use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Schweppesale\Module\Access\Domain\Entities\Organisation;
+use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 
 /**
- * Class CompanyService
+ * Class OrganisationService
  *
- * @package Schweppesale\Access\Application\Services\Companies
+ * @package Schweppesale\Module\Access\Application\Services\Organisations
  */
-class CompanyService
+class OrganisationService
 {
 
     /**
@@ -35,26 +34,13 @@ class CompanyService
     }
 
     /**
-     * @param $organisationId
-     * @param UploadedFile $uploadedFile
-     * @return Company
-     */
-    public function attachLogo($organisationId, UploadedFile $uploadedFile)
-    {
-        $organisation = $this->organisations->getCompany($organisationId);
-        $logo = CompanyLogo::upload($uploadedFile);
-        $organisation->setLogo($logo);
-        return $this->organisations->save($organisation);
-    }
-
-    /**
      * @param $organisationName
      * @param null $description
-     * @return Company
+     * @return Organisation
      */
     public function create($organisationName, $description = null)
     {
-        $organisation = new Company($organisationName);
+        $organisation = new Organisation($organisationName);
         $organisation->setDescription($description);
         return $this->organisations->save($organisation);
     }
@@ -63,7 +49,7 @@ class CompanyService
      * @param $organisationid
      * @param $organisationName
      * @param null $description
-     * @return Company
+     * @return Organisation
      */
     public function update($organisationid, $organisationName, $description = null)
     {

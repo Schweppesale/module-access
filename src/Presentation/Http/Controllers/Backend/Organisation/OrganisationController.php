@@ -1,15 +1,15 @@
 <?php
-namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Organisation;
+namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Organisation;
 
-use Schweppesale\Access\Application\Services\Companies\Companies as CompanyService;
-use Schweppesale\Access\Domain\Repositories\OrganisationRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Schweppesale\Module\Access\Application\Services\Organisations\OrganisationService;
+use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 
 /**
  * Class OrganisationController
  *
- * @package Schweppesale\Access\Presentation\Http\Controllers\Backend\Access\Organisation
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Access\Organisation
  */
 class OrganisationController extends Controller
 {
@@ -61,10 +61,10 @@ class OrganisationController extends Controller
 
     /**
      * @param Request $request
-     * @param CompanyService $organisationService
+     * @param OrganisationService $organisationService
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request, CompanyService $organisationService)
+    public function store(Request $request, OrganisationService $organisationService)
     {
         $organisationName = $request->get('name');
         $description = $request->get('description');
@@ -76,10 +76,10 @@ class OrganisationController extends Controller
     /**
      * @param $organisationId
      * @param Request $request
-     * @param CompanyService $organisationService
+     * @param OrganisationService $organisationService
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update($organisationId, Request $request, CompanyService $organisationService)
+    public function update($organisationId, Request $request, OrganisationService $organisationService)
     {
         $organisationName = $request->get('name');
         $description = $request->get('description');

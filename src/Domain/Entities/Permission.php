@@ -1,15 +1,19 @@
 <?php
-namespace Schweppesale\Access\Domain\Entities;
+namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use LaravelDoctrine\ACL\Contracts\Permission as PermissionContract;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use LaravelDoctrine\ACL\Contracts\Permission as PermissionContract;
 
 /**
  * Class Permission
  *
- * @package Modules\Peggy\Entities
+ * @package Schweppesale\Domain\Entities
  *
  * @ORM\Entity
  * @ORM\Table(name="permissions")
@@ -56,13 +60,13 @@ class Permission implements \JsonSerializable, PermissionContract
      */
     private $name;
 
-    /**
-     * @var PermissionGroup
-     *
-     * @ManyToOne(targetEntity="\Schweppesale\Access\Domain\Entities\PermissionGroup", inversedBy="permissions", cascade={"all"}, fetch="EAGER")
-     * @JoinColumn(name="group_id", referencedColumnName="id")
-     */
-    private $permissionGroup;
+//    /**
+//     * @var PermissionGroup
+//     *
+//     * @ManyToOne(targetEntity="\Schweppesale\Module\Access\Domain\Entities\PermissionGroup", inversedBy="permissions", cascade={"all"}, fetch="EAGER")
+//     * @JoinColumn(name="group_id", referencedColumnName="id")
+//     */
+//    private $permissionGroup;
 
     /**
      * @var int
@@ -157,10 +161,10 @@ class Permission implements \JsonSerializable, PermissionContract
     /**
      * @return int
      */
-    public function getPermissionGroup()
-    {
-        return $this->permissionGroup;
-    }
+//    public function getPermissionGroup()
+//    {
+//        return $this->permissionGroup;
+//    }
 
     /**
      * @return int

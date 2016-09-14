@@ -8,14 +8,14 @@
             {{ trans('menus.dashboard') }}
         </a>
     </li>
-    <li>{!! link_to_route('admin.access.companies.index', 'Companies') !!}</li>
+    <li>{!! link_to_route('admin.access.companies.index', 'Organisations') !!}</li>
     <li class="active">Here</li>
 @stop
 
 @section('page-header')
     <h1>
         Company Management
-        <!-- <small>{{ trans('strings.backend.dashboard_title') }}</small> -->
+    <!-- <small>{{ trans('strings.backend.dashboard_title') }}</small> -->
     </h1>
 @endsection
 

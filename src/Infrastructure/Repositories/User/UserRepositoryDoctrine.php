@@ -1,10 +1,10 @@
 <?php
-namespace Schweppesale\Access\Infrastructure\Repositories\User;
+namespace Schweppesale\Module\Access\Infrastructure\Repositories\User;
 
-use Schweppesale\Access\Domain\Entities\User;
-use Schweppesale\Access\Domain\Repositories\UserRepository;
-use Schweppesale\ProjectManagement\Application\Support\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Schweppesale\Module\Access\Domain\Entities\User;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Core\Collections\Collection;
 
 /**
  * Class UserRepository

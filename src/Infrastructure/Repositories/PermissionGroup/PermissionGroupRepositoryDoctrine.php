@@ -1,15 +1,15 @@
 <?php
-namespace Schweppesale\Access\Infrastructure\Repositories\PermissionGroup;
+namespace Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup;
 
-use Schweppesale\Access\Domain\Entities\PermissionGroup;
-use Schweppesale\Access\Domain\Repositories\PermissionGroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Contracts\Queue\EntityNotFoundException;
+use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
+use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
 
 /**
  * Class PermissionGroupRepositoryDoctrine
  *
- * @package Schweppesale\Access\Infrastructure\Repositories\PermissionGroup
+ * @package Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup
  */
 class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
 {

@@ -17,8 +17,8 @@
 
 @section('page-header')
     <h1>
-        {{ trans('menus.permission_management') }}
-                <!--  <small>{{ trans('menus.create_permission_group') }}</small> -->
+    {{ trans('menus.permission_management') }}
+    <!--  <small>{{ trans('menus.create_permission_group') }}</small> -->
     </h1>
 
     @include('access::backend.includes.partials.header-buttons')
@@ -33,10 +33,10 @@
                 <div class="col-md-12 create-issue-descript">
                     {!! Form::open(['route' => 'admin.access.roles.permission-group.store', 'class' => ' ', 'role' => 'form', 'method' => 'post']) !!}
                     <div class="form-group">
-                        {!! Form::label('name', trans('validation.attributes.permission_group_name'), ['class' => 'control-label']) !!}
-                                <!-- <div class="col-lg-10"> -->
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.permission_group_name')]) !!}
-                                <!-- </div>-->
+                    {!! Form::label('name', trans('validation.attributes.permission_group_name'), ['class' => 'control-label']) !!}
+                    <!-- <div class="col-lg-10"> -->
+                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.permission_group_name')]) !!}
+                    <!-- </div>-->
                     </div><!--form control-->
                 </div><!--col -12 reate issue controls ends-->
 

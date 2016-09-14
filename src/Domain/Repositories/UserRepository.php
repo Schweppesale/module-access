@@ -1,12 +1,12 @@
 <?php
-namespace Schweppesale\Access\Domain\Repositories;
+namespace Schweppesale\Module\Access\Domain\Repositories;
 
-use Schweppesale\Access\Domain\Entities\User;
+use Schweppesale\Module\Access\Domain\Entities\User;
 
 /**
  * Interface UserRepository
  *
- * @package Schweppesale\Access\Domain\Repositories\User
+ * @package Schweppesale\Module\Access\Domain\Repositories\User
  */
 interface UserRepository
 {

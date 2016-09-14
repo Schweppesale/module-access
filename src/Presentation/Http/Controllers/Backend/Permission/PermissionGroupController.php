@@ -1,13 +1,13 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Permission;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Permission;
 
-use Schweppesale\Access\Application\Services\Permissions\PermissionGroupService;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group\CreatePermissionGroupRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group\DeletePermissionGroupRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group\EditPermissionGroupRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group\SortPermissionGroupRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group\StorePermissionGroupRequest;
-use Schweppesale\Access\Presentation\Http\Requests\Backend\Permission\Group\UpdatePermissionGroupRequest;
 use App\Http\Controllers\Controller;
+use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\CreatePermissionGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\DeletePermissionGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\EditPermissionGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\SortPermissionGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\StorePermissionGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\UpdatePermissionGroupRequest;
 
 /**
  * Class PermissionGroupController

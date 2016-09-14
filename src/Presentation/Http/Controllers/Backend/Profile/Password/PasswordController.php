@@ -1,15 +1,15 @@
 <?php
 
-namespace Schweppesale\Access\Presentation\Http\Controllers\Backend\Profile\Password;
+namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Profile\Password;
 
-use Schweppesale\Access\Application\Services\Users\ProfileService;
-use Schweppesale\Access\Presentation\Http\Requests\Frontend\Access\ChangePasswordRequest;
 use App\Http\Controllers\Controller;
+use Schweppesale\Module\Access\Application\Services\Users\ProfileService;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\Access\ChangePasswordRequest;
 
 /**
  * Class PasswordController
  *
- * @package Schweppesale\Access\Presentation\Http\Controllers\Backend\Profile
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Profile
  */
 class PasswordController extends Controller
 {

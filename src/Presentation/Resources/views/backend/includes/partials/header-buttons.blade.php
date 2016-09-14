@@ -2,10 +2,10 @@
 
     {{--<div class="btn-group">--}}
     {{--<button type="button" class="btn dropdown-toggle create-filters save-filter" data-toggle="dropdown" aria-expanded="false">--}}
-    {{--Companies <span class="caret"></span>--}}
+    {{--Organisations <span class="caret"></span>--}}
     {{--</button>--}}
     {{--<ul class="dropdown-menu" role="menu">--}}
-    {{--<li><a href="{{route('admin.access.companies.index')}}">All Companies</a></li>--}}
+    {{--<li><a href="{{route('admin.access.companies.index')}}">All Organisations</a></li>--}}
     {{--<li><a href="{{route('admin.access.companies.create')}}">Create Company</a></li>--}}
     {{--</ul>--}}
     {{--</div>--}}

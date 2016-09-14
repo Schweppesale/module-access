@@ -9,7 +9,7 @@ Route::group(['namespace' => 'Profile'], function ($router) {
 
         Route::get('profile/password', ['as' => 'admin.profile.password.edit', 'uses' => 'PasswordController@edit']);
         Route::patch('profile/password', ['as' => 'admin.profile.password.update',
-                                          'uses' => 'PasswordController@update']);
+            'uses' => 'PasswordController@update']);
     });
 
 });

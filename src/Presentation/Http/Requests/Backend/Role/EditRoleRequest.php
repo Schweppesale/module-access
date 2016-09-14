@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\Role;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class EditRoleRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Backend\Role
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Role
  */
 class EditRoleRequest extends Request
 {

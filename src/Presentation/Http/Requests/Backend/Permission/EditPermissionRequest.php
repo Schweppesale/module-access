@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\Permission;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class EditPermissionRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Backend\Permission
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission
  */
 class EditPermissionRequest extends Request
 {

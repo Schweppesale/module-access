@@ -1,47 +1,42 @@
 <?php
-namespace Schweppesale\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use App\Http\Controllers\Backend\Project\Access\ProjectAccessController;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PermissionTableSeeder extends Seeder
 {
 
     /**
-     * @var \Schweppesale\Access\Application\Services\Permissions\PermissionService
+     * @var \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService
      */
     private $permissionService;
 
     /**
      * PermissionTableSeeder constructor.
      *
-     * @param \Schweppesale\Access\Application\Services\Permissions\PermissionService $permissionService
+     * @param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService
      */
-    public function __construct(\Schweppesale\Access\Application\Services\Permissions\PermissionService $permissionService)
+    public function __construct(\Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService)
     {
         $this->permissionService = $permissionService;
     }
 
     public function run()
     {
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        if (env('DB_DRIVER') == 'mysql') {
-            DB::table(config('access.permissions_table'))->truncate();
-            DB::table(config('access.permission_role_table'))->truncate();
-            DB::table(config('access.permission_user_table'))->truncate();
-        } elseif (env('DB_DRIVER') == 'sqlite') {
-            DB::statement("DELETE FROM " . config('access.permissions_table'));
-            DB::statement("DELETE FROM " . config('access.permission_role_table'));
-            DB::statement("DELETE FROM " . config('access.permission_user_table'));
-        } else { //For PostgreSQL or anything else
-            DB::statement("TRUNCATE TABLE " . config('access.permissions_table') . " CASCADE");
-            DB::statement("TRUNCATE TABLE " . config('access.permission_role_table') . " CASCADE");
-            DB::statement("TRUNCATE TABLE " . config('access.permission_user_table') . " CASCADE");
-        }
+//        if (env('DB_DRIVER') == 'mysql') {
+//            DB::table('permissions')->truncate();
+//            DB::table('permission_role')->truncate();
+//            DB::table('user_permissions')->truncate();
+//        } elseif (env('DB_DRIVER') == 'sqlite') {
+//            DB::statement("DELETE FROM " . 'permissions');
+//            DB::statement("DELETE FROM " . 'permission_role');
+//            DB::statement("DELETE FROM " . 'user_permissions');
+//        } else { //For PostgreSQL or anything else
+//            DB::statement("TRUNCATE TABLE " . 'permissions' . " CASCADE");
+//            DB::statement("TRUNCATE TABLE " . 'permission_role' . " CASCADE");
+//            DB::statement("TRUNCATE TABLE " . 'user_permissions' . " CASCADE");
+//        }
 
         //Don't need to assign any permissions to administrator because the all flag is set to true
 
@@ -79,8 +74,5 @@ class PermissionTableSeeder extends Seeder
          */
         $this->permissionService->create('edit-permission-groups', 'Edit Permission Groups', 4, 2, null, true);
         $this->permissionService->create('delete-permission-groups', 'Delete Permission Groups', 4, 3, null, true);
-
-        if (env('DB_DRIVER') == 'mysql')
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

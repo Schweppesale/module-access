@@ -1,11 +1,11 @@
-<?php namespace Schweppesale\Access\Presentation\Http\Requests\Backend\User;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\User;
 
-use App\Http\Requests\Request;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class UpdateUserPasswordRequest
  *
- * @package Schweppesale\Access\Presentation\Http\Requests\Backend\User
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\User
  */
 class UpdateUserPasswordRequest extends Request
 {
