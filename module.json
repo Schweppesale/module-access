@@ -12,8 +12,6 @@
         ]
     },
     "providers": [
-        "Collective\\Html\\HtmlServiceProvider",
-
         "Schweppesale\\Access\\Application\\Providers\\AccessServiceProvider",
         "Schweppesale\\Access\\Application\\Providers\\EventServiceProvider",
         "Schweppesale\\Access\\Presentation\\Providers\\PresentationServiceProvider",
