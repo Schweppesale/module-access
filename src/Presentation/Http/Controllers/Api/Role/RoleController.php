@@ -1,4 +1,4 @@
-<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Role;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Role;
 
 use App\Http\Controllers\Controller;
 use Schweppesale\Module\Access\Application\Services\Roles\RoleService;
@@ -53,9 +53,9 @@ class RoleController extends Controller
 
     /**
      * @param $id
-     * @param PermissionGroupRepositoryContract $group
      * @param EditRoleRequest $request
      * @return mixed
+     * @internal param PermissionGroupRepositoryContract $group
      */
     public function edit($id, EditRoleRequest $request)
     {

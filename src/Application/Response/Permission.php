@@ -7,7 +7,7 @@ use DateTime;
  * Class Permission
  * @package Schweppesale\Module\Access\Application\Response
  */
-class Permission{
+class Permission implements \JsonSerializable {
 
     /**
      * @var DateTime
@@ -119,5 +119,21 @@ class Permission{
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'displayName' => $this->displayName,
+            'dependencyIds' => $this->dependencies,
+            'system' => $this->system,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
+        ];
     }
 }

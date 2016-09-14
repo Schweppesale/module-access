@@ -8,7 +8,6 @@ use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 
 /**
  * Class ProfileService
- *
  * @package Schweppesale\Module\Access\Application\Services\Users
  */
 class ProfileService

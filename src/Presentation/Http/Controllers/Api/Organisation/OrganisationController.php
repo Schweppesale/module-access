@@ -1,5 +1,5 @@
 <?php
-namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Organisation;
+namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Organisation;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 /**
  * Class OrganisationController
  *
- * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Access\Organisation
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Access\Organisation
  */
 class OrganisationController extends Controller
 {

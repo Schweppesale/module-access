@@ -39,8 +39,9 @@ class RoleRepositoryDoctrine implements RoleRepository
     }
 
     /**
-     * @param $userId
+     * @param $id
      * @return Role
+     * @internal param $userId
      */
     public function getById($id)
     {
@@ -63,8 +64,9 @@ class RoleRepositoryDoctrine implements RoleRepository
     }
 
     /**
-     * @param User $user
+     * @param Role $role
      * @return Role
+     * @internal param User $user
      */
     public function save(Role $role)
     {

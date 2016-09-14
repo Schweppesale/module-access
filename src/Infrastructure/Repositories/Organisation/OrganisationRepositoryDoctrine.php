@@ -44,7 +44,7 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
     }
 
     /**
-     * @param Company $organisation
+     * @param Organisation|Company $organisation
      * @return Company
      */
     public function save(Organisation $organisation)

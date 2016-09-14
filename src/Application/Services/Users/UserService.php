@@ -4,16 +4,14 @@ namespace Schweppesale\Module\Access\Application\Services\Users;
 use Schweppesale\Module\Access\Application\Services\Access;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class UserService
- *
  * @package Schweppesale\Module\Access\Application\Services\Users
  */
 class UserService
@@ -30,17 +28,17 @@ class UserService
     private $organisations;
 
     /**
-     * @var PermissionGroupInterface
+     * @var PermissionGroupRepository
      */
     private $permissionGroups;
 
     /**
-     * @var PermissionInterface
+     * @var PermissionRepository
      */
     private $permissions;
 
     /**
-     * @var RoleRepositoryContract
+     * @var RoleRepository
      */
     private $roles;
 
@@ -55,6 +53,11 @@ class UserService
     private $authenticationService;
 
     /**
+     * @var MapperInterface
+     */
+    private $mapper;
+
+    /**
      * UserService constructor.
      *
      * @param Access $access
@@ -67,6 +70,7 @@ class UserService
      */
     public function __construct(
         Access $access,
+        MapperInterface $mapper,
         UserRepository $users,
         OrganisationRepository $organisations,
         RoleRepository $roles,
@@ -76,6 +80,7 @@ class UserService
     )
     {
         $this->authenticationService = $authenticationService;
+        $this->mapper = $mapper;
         $this->access = $access;
         $this->users = $users;
         $this->organisations = $organisations;
@@ -96,9 +101,10 @@ class UserService
 
     /**
      * @param $userId
-     * @param $currentPassword
-     * @param $newPassword
+     * @param $password
      * @return User
+     * @internal param $currentPassword
+     * @internal param $newPassword
      */
     public function changePassword($userId, $password)
     {
@@ -212,15 +218,19 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
+     * @return User[]
      */
     public function fetchAll()
     {
-        return $this->users->fetchAll();
+        $result = $this->users->fetchAll();
+
+        return array_map(function(User $user) {
+            return $this->mapper->map($user, \Schweppesale\Module\Access\Application\Response\User::class);
+        }, $result->toArray());
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
+     * @return User[]
      */
     public function findBanned()
     {
@@ -228,7 +238,7 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
+     * @return User[]
      */
     public function findDeactivated()
     {
@@ -236,7 +246,7 @@ class UserService
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\User[]
+     * @return User[]
      */
     public function findDeleted()
     {

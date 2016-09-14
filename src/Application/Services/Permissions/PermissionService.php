@@ -40,8 +40,10 @@ class PermissionService
      * @param $label
      * @param null $groupId
      * @param null $sort
-     * @param array|null $dependencies
+     * @param array $dependencyIds
+     * @param bool $system
      * @return Permission
+     * @internal param array|null $dependencies
      */
     public function create($name, $label, $groupId = null, $sort, array $dependencyIds = null, $system = false)
     {

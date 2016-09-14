@@ -34,8 +34,9 @@ interface PermissionGroupRepository
     public function getById($id);
 
     /**
-     * @param $id
+     * @param $name
      * @return PermissionGroup
+     * @internal param $id
      */
     public function getByName($name);
 

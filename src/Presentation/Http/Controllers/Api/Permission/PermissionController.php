@@ -1,4 +1,4 @@
-<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Permission;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Permission;
 
 use App\Http\Controllers\Controller;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;

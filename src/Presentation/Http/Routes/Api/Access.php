@@ -2,7 +2,7 @@
 
 Route::group([
     'prefix' => 'access',
-    'middleware' => 'access.routeNeedsPermission:view-access-management'
+//    'middleware' => 'access.routeNeedsPermission:view-access-management'
 ], function () {
     /**
      * User Management

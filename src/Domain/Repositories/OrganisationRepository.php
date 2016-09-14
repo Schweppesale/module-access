@@ -23,7 +23,7 @@ interface OrganisationRepository
     public function getById($id);
 
     /**
-     * @param Company $organisation
+     * @param Organisation|Company $organisation
      * @return Company
      */
     public function save(Organisation $organisation);

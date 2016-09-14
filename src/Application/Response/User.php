@@ -2,12 +2,13 @@
 namespace Schweppesale\Module\Access\Application\Response;
 
 use DateTime;
+use JsonSerializable;
 
 /**
  * Class User
  * @package Schweppesale\Module\Access\Application\Response
  */
-class User
+class User implements JsonSerializable
 {
 
     /**
@@ -21,7 +22,7 @@ class User
     private $createdAt;
 
     /**
-     * @var DateTime
+     * @var mixed
      */
     private $deletedAt;
 
@@ -70,10 +71,10 @@ class User
      * @param array $permissions
      * @param array $roles
      * @param DateTime $createdAt
-     * @param DateTime $deletedAt
+     * @param mixed $deletedAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $confirmed, $email, $status, array $permissions, array $roles, DateTime $createdAt, DateTime $deletedAt, DateTime $updatedAt)
+    public function __construct($id, $name, $confirmed, $email, $status, array $permissions, array $roles, DateTime $createdAt, $deletedAt, DateTime $updatedAt)
     {
         $this->confirmed = $confirmed;
         $this->createdAt = $createdAt;
@@ -104,9 +105,9 @@ class User
     }
 
     /**
-     * @return DateTime
+     * @return mixed
      */
-    public function getDeletedAt(): DateTime
+    public function getDeletedAt()
     {
         return $this->deletedAt;
     }
@@ -165,5 +166,24 @@ class User
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'emailAddress' => $this->email,
+            'status' => $this->status,
+            'confirmed' => $this->confirmed,
+            'roles' => $this->roles,
+            'permissions' => $this->permissions,
+            'createdAt' => $this->createdAt,
+            'deletedAt' => $this->deletedAt,
+            'updatedAt' => $this->updatedAt,
+        ];
     }
 }

@@ -24,7 +24,9 @@ class PermissionDependencyTableSeeder extends Seeder
     /**
      * PermissionGroupTableSeeder constructor.
      *
-     * @param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService
+     * @param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $projectService
+     * @param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService
+     * @internal param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService
      */
     public function __construct(\Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $projectService, \Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
     {

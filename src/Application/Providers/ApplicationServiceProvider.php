@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Papper\Papper;
+use Schweppesale\Module\Access\Domain\Entities\Organisation;
+use Schweppesale\Module\Access\Domain\Entities\Permission;
+use Schweppesale\Module\Access\Domain\Entities\Role;
+use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository as PermissionGroupRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
@@ -12,6 +17,8 @@ use Schweppesale\Module\Access\Infrastructure\Repositories\Permission\Permission
 use Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup\PermissionGroupRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
+use Schweppesale\Module\Core\Mapper\Papper\Mapper;
 
 class ApplicationServiceProvider extends ServiceProvider
 {
@@ -36,8 +43,70 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->registerMappings();
     }
 
-    public function registerMappings() {
+    public function registerMappings()
+    {
+        $this->app->bind(MapperInterface::class, Mapper::class);
+        $mapper = $this->app->make(MapperInterface::class);
 
+        Papper::createMap(Permission::class, \Schweppesale\Module\Access\Application\Response\Permission::class)
+            ->constructUsing(function(Permission $permission) use ($mapper) {
+                return new \Schweppesale\Module\Access\Application\Response\Permission(
+                    $permission->getId(),
+                    $permission->getName(),
+                    $permission->getDisplayName(),
+                    array_map(function(Permission $permission) {
+                        return $permission->getId();
+                    }, $permission->getDependencies()->toArray()),
+                    $permission->isSystem(),
+                    $permission->getCreatedAt(),
+                    $permission->getUpdatedAt()
+                );
+            });
+
+        Papper::createMap(Organisation::class, \Schweppesale\Module\Access\Application\Response\Organisation::class)
+            ->constructUsing(function(Organisation $organisation) use ($mapper) {
+                return new \Schweppesale\Module\Access\Application\Response\Organisation(
+                    $organisation->getId(),
+                    $organisation->getName(),
+                    $organisation->getDescription(),
+                    $organisation->getCreatedAt(),
+                    $organisation->getUpdatedAt()
+                );
+            });
+
+        Papper::createMap(Role::class, \Schweppesale\Module\Access\Application\Response\Role::class)
+            ->constructUsing(function(Role $role) use ($mapper){
+                return new \Schweppesale\Module\Access\Application\Response\Role(
+                    $role->getId(),
+                    $role->getName(),
+                    array_map(function(Permission $permission) use($mapper) {
+                        return $mapper->map($permission, \Schweppesale\Module\Access\Application\Response\Permission::class);
+                    }, $role->getPermissions()->toArray()),
+                    $role->getAll(),
+                    $role->getCreatedAt(),
+                    $role->getUpdatedAt()
+                );
+            });
+
+        Papper::createMap(User::class, \Schweppesale\Module\Access\Application\Response\User::class)
+            ->constructUsing(function(User $user) use($mapper){
+                return new \Schweppesale\Module\Access\Application\Response\User(
+                    $user->getId(),
+                    $user->getName(),
+                    $user->isConfirmed(),
+                    $user->getEmail(),
+                    $user->getStatus(),
+                    array_map(function(Permission $permission) use ($mapper) {
+                        return $mapper->map($permission, \Schweppesale\Module\Access\Application\Response\Permission::class);
+                    }, $user->getPermissions()->toArray()),
+                    array_map(function(Role $role) use ($mapper) {
+                        return $mapper->map($role, \Schweppesale\Module\Access\Application\Response\Role::class);
+                    }, $user->getRoles()->toArray()),
+                    $user->getCreatedAt(),
+                    $user->getDeletedAt(),
+                    $user->getUpdatedAt()
+                );
+            });
     }
 
     /**

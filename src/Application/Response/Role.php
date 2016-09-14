@@ -7,7 +7,7 @@ use DateTime;
  * Class Role
  * @package Schweppesale\Module\Access\Application\Response
  */
-class Role{
+class Role implements \JsonSerializable {
 
     /**
      * @var int
@@ -104,5 +104,20 @@ class Role{
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'all' => $this->all,
+            'permissions' => $this->permissions,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt
+        ];
     }
 }

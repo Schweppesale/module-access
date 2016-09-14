@@ -1,6 +1,7 @@
-<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\User;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Application\Services\Users\ConfirmationService;
 use Schweppesale\Module\Access\Application\Services\Users\UserService;
@@ -36,13 +37,19 @@ class UserController extends Controller
     private $userService;
 
     /**
+     * @var Response
+     */
+    private $response;
+
+    /**
      * UserController constructor.
-     *
+     * @param Response $response
      * @param UserService $userService
      * @param AuthenticationService $authenticationService
      */
-    public function __construct(UserService $userService, AuthenticationService $authenticationService)
+    public function __construct(Response $response, UserService $userService, AuthenticationService $authenticationService)
     {
+        $this->response = $response;
         $this->userService = $userService;
         $this->authenticationService = $authenticationService;
     }
@@ -127,7 +134,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('access::backend.index', ['users' => $this->userService->fetchAll()]);
+        return $this->response->setContent($this->userService->fetchAll());
     }
 
     /**

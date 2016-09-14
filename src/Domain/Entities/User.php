@@ -31,7 +31,7 @@ use Schweppesale\Module\Access\Domain\Entities\Traits\HasPermissions;
  *
  * @HasLifecycleCallbacks
  */
-class User implements JsonSerializable, HasPermissionsInterface, Authenticatable, CanResetPassword
+class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
 {
 
     const ACTIVE = 0x01;
@@ -66,7 +66,7 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
     private $createdAt;
 
     /**
-     * @var DateTime
+     * @var mixed
      *
      * @ORM\Column(type="datetime")
      */
@@ -166,6 +166,8 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
             $this->confirmationCode = md5(uniqid(mt_rand(), true));
         }
 
+        $this->setUpdatedAt(new DateTime());
+        $this->setCreatedAt(new DateTime());
         $this->setConfirmed($confirmed);
         $this->changePassword($password);
         $this->setStatus($status);
@@ -176,11 +178,6 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
     public function getAuthIdentifierName()
     {
         return $this->getEmail();
-    }
-
-    public function sendPasswordResetNotification($token)
-    {
-        // TODO: Implement sendPasswordResetNotification() method.
     }
 
     /**

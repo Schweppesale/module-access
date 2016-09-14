@@ -1,6 +1,6 @@
 <?php
 
-namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Profile;
+namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
@@ -11,7 +11,7 @@ use Schweppesale\Module\Access\Presentation\Http\Requests\Frontend\User\UpdatePr
 /**
  * Class ProfileController
  *
- * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Backend\Profile
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Profile
  */
 class ProfileController extends Controller
 {
@@ -30,7 +30,7 @@ class ProfileController extends Controller
      * ProfileController constructor.
      *
      * @param UserService $userService
-     * @param Guard $auth
+     * @param Guard|AuthenticationService $auth
      */
     public function __construct(UserService $userService, AuthenticationService $auth)
     {

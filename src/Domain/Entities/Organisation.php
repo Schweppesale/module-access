@@ -136,7 +136,7 @@ class Organisation implements \JsonSerializable, OrganisationContract
     }
 
     /**
-     * @param int $updatedAt
+     * @param DateTime|int $updatedAt
      */
     public function setUpdatedAt(DateTime $updatedAt)
     {
