@@ -19,10 +19,10 @@ class EventServiceProvider extends ServiceProvider
         /**
          * Frontend Events
          */
-        'Schweppesale\Module\Access\Application\Events\User\UserLoggedIn' => [
+        'Schweppesale\Module\Access\Domain\Events\User\UserLoggedIn' => [
             'Schweppesale\Module\Access\Application\Listeners\User\UserLoggedInHandler',
         ],
-        'Schweppesale\Module\Access\Application\Events\User\UserLoggedOut' => [
+        'Schweppesale\Module\Access\Domain\Events\User\UserLoggedOut' => [
             'Schweppesale\Module\Access\Application\Listeners\User\UserLoggedOutHandler',
         ],
     ];

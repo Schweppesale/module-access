@@ -7,8 +7,8 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
-use Schweppesale\Module\Access\Application\Events\User\UserLoggedIn;
-use Schweppesale\Module\Access\Application\Events\User\UserLoggedOut;
+use Schweppesale\Module\Access\Domain\Events\User\UserLoggedIn;
+use Schweppesale\Module\Access\Domain\Events\User\UserLoggedOut;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 
