@@ -15,10 +15,11 @@
         }
     },
     "require": {
+        "laravel/framework": "~5.3.0",
         "laravel-doctrine/orm": "~1.0",
         "laravel-doctrine/acl": "~1.0",
         "predis/predis": "1.0.3",
-        "bcc/auto-mapper-bundle": "~1.1.0",
+        "bcc/auto-mapper-bundle": "~1.0.0",
         "schweppesale/module-core": "dev-master"
     },
     "require-dev": {
