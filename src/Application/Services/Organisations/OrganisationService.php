@@ -53,7 +53,7 @@ class OrganisationService
      */
     public function update($organisationid, $organisationName, $description = null)
     {
-        $organisation = $this->organisations->getCompany($organisationid);
+        $organisation = $this->organisations->getById($organisationid);
         $organisation->setName($organisationName);
         $organisation->setDescription($description);
         return $this->organisations->save($organisation);

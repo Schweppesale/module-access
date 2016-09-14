@@ -9,12 +9,12 @@ use LaravelDoctrine\ACL\Contracts\Organisation as OrganisationContract;
 
 
 /**
- * Class Company
+ * Class Organisation
  *
  * @package Schweppesale\Domain\Entities
  *
  * @ORM\Entity
- * @ORM\Table(name="companies")
+ * @ORM\Table(name="organisations")
  * @HasLifecycleCallbacks
  */
 class Organisation implements \JsonSerializable, OrganisationContract

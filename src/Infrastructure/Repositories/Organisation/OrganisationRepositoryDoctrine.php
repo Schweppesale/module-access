@@ -27,7 +27,7 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
     }
 
     /**
-     * @return Company[]
+     * @return Organisation[]
      */
     public function fetchAll()
     {
@@ -36,7 +36,7 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
 
     /**
      * @param $id
-     * @return Company
+     * @return Organisation
      */
     public function getById($id)
     {
@@ -44,8 +44,8 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
     }
 
     /**
-     * @param Organisation|Company $organisation
-     * @return Company
+     * @param Organisation $organisation
+     * @return Organisation
      */
     public function save(Organisation $organisation)
     {

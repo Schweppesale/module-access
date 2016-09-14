@@ -12,19 +12,19 @@ interface OrganisationRepository
 {
 
     /**
-     * @return Company[]
+     * @return Organisation[]
      */
     public function fetchAll();
 
     /**
      * @param $id
-     * @return Company
+     * @return Organisation
      */
     public function getById($id);
 
     /**
-     * @param Organisation|Company $organisation
-     * @return Company
+     * @param Organisation $organisation
+     * @return Organisation
      */
     public function save(Organisation $organisation);
 }

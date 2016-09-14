@@ -14,7 +14,7 @@ class SetupAccessTables extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('organisations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->unique('name');
@@ -27,7 +27,7 @@ class SetupAccessTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('company_id')->nullable();
+            $table->string('Organisation_id')->nullable();
             $table->string('email')->unique();
             $table->string('password', 60)->nullable();
             $table->tinyInteger('status')->default(1);
@@ -169,7 +169,7 @@ class SetupAccessTables extends Migration
         });
 
         Schema::drop('users');
-        Schema::drop('companies');
+        Schema::drop('organisations');
         Schema::drop('assigned_roles');
         Schema::drop('permission_role');
         Schema::drop('user_permissions');

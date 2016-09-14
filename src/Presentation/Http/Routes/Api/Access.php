@@ -36,12 +36,6 @@ Route::group([
 
         Route::resource('organisations', 'OrganisationController', ['only' => ['index', 'show', 'create', 'edit', 'store',
             'update']]);
-
-//        Route::group(['namespace' => 'Logo'], function () {
-//
-//            Route::resource('companies.logo', 'CompanyLogoController', ['only' => 'store']);
-//
-//        });
     });
 
     /**

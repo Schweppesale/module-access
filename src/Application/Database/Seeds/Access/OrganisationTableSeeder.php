@@ -31,10 +31,10 @@ class OrganisationTableSeeder extends Seeder
     public function run()
     {
         $organisation = new \Schweppesale\Module\Access\Domain\Entities\Organisation('Alexander Interactive');
-        $organisation->setDescription('Company Description');
+        $organisation->setDescription('Organisation Description');
         $this->organisations->save($organisation);
 
-        $organisation = new \Schweppesale\Module\Access\Domain\Entities\Organisation('Client Company');
+        $organisation = new \Schweppesale\Module\Access\Domain\Entities\Organisation('Client Organisation');
         $organisation->setDescription('This is a placeholder');
         $this->organisations->save($organisation);
     }

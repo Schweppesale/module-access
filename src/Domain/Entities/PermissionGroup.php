@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 
 
 /**
- * Class Company
+ * Class PermissionGroup
  *
  * @package Schweppesale\Domain\Entities
  *
