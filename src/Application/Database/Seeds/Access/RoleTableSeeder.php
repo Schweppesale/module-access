@@ -2,21 +2,22 @@
 namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use Illuminate\Database\Seeder;
+use Schweppesale\Module\Access\Application\Services\Roles\RoleService;
 
 class RoleTableSeeder extends Seeder
 {
 
     /**
-     * @var \Schweppesale\Module\Access\Application\Services\Roles\RoleService
+     * @var RoleService
      */
     private $roleService;
 
     /**
      * RoleTableSeeder constructor.
      *
-     * @param \Schweppesale\Module\Access\Application\Services\Roles\RoleService $roleService
+     * @param RoleService $roleService
      */
-    public function __construct(\Schweppesale\Module\Access\Application\Services\Roles\RoleService $roleService)
+    public function __construct(RoleService $roleService)
     {
         $this->roleService = $roleService;
     }

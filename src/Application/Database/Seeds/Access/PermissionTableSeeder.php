@@ -3,21 +3,22 @@ namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use App\Http\Controllers\Backend\Project\Access\ProjectAccessController;
 use Illuminate\Database\Seeder;
+use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
 
 class PermissionTableSeeder extends Seeder
 {
 
     /**
-     * @var \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService
+     * @var PermissionService
      */
     private $permissionService;
 
     /**
      * PermissionTableSeeder constructor.
      *
-     * @param \Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService
+     * @param PermissionService $permissionService
      */
-    public function __construct(\Schweppesale\Module\Access\Application\Services\Permissions\PermissionService $permissionService)
+    public function __construct(PermissionService $permissionService)
     {
         $this->permissionService = $permissionService;
     }

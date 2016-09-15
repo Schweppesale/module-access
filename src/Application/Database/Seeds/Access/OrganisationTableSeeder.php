@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use Illuminate\Database\Seeder;
+use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 
 /**
@@ -30,12 +31,12 @@ class OrganisationTableSeeder extends Seeder
      */
     public function run()
     {
-        $organisation = new \Schweppesale\Module\Access\Domain\Entities\Organisation('Alexander Interactive');
-        $organisation->setDescription('Organisation Description');
+        $organisation = new Organisation('Company Name');
+        $organisation->setDescription('Description');
         $this->organisations->save($organisation);
 
-        $organisation = new \Schweppesale\Module\Access\Domain\Entities\Organisation('Client Organisation');
-        $organisation->setDescription('This is a placeholder');
+        $organisation = new Organisation('Client Organisation');
+        $organisation->setDescription('Description');
         $this->organisations->save($organisation);
     }
 }
