@@ -1,9 +1,11 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Permissions;
 
+use Schweppesale\Module\Access\Application\Response\PermissionDTO;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class PermissionService
@@ -12,6 +14,10 @@ use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
  */
 class PermissionService
 {
+    /**
+     * @var MapperInterface
+     */
+    private $mapper;
 
     /**
      * @var PermissionGroupRepository
@@ -25,12 +31,17 @@ class PermissionService
 
     /**
      * PermissionService constructor.
-     *
+     * @param MapperInterface $mapper
      * @param PermissionRepository $permissions
      * @param PermissionGroupRepository $permissionGroupService
      */
-    public function __construct(PermissionRepository $permissions, PermissionGroupRepository $permissionGroupService)
+    public function __construct(
+        MapperInterface $mapper,
+        PermissionRepository $permissions,
+        PermissionGroupRepository $permissionGroupService
+    )
     {
+        $this->mapper = $mapper;
         $this->permissions = $permissions;
         $this->permissionGroups = $permissionGroupService;
     }
@@ -65,25 +76,27 @@ class PermissionService
         }
 
         $permission->setSystem($system);
+        $permission = $this->permissions->save($permission);
 
-        return $this->permissions->save($permission);
+        return $this->mapper->map($permission, PermissionDTO::class);
     }
 
     /**
      * @param $permissionId
-     * @return bool
+     * @return void
      */
     public function delete($permissionId)
     {
-        return $this->permissions->delete($permissionId);
+        $this->permissions->delete($permissionId);
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\Permission[]
+     * @return Permission[]
      */
     public function fetchAll()
     {
-        return $this->permissions->fetchAll();
+        $result = $this->permissions->fetchAll();
+        return $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
     }
 
     /**
@@ -92,6 +105,7 @@ class PermissionService
      */
     public function getById($permissionId)
     {
-        return $this->permissions->get($permissionId);
+        $permission = $this->permissions->getById($permissionId);
+        return $this->mapper->map($permission, PermissionDTO::class);
     }
 }

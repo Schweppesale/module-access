@@ -54,18 +54,6 @@ class AuthenticationService
     }
 
     /**
-     * @return User
-     */
-    public function getUser()
-    {
-        $user = $this->auth->user();
-        if (!$user instanceof User) {
-            throw new \UnexpectedValueException('Invalid User Entity');
-        }
-        return $user;
-    }
-
-    /**
      * @param $userId
      * @return mixed
      */
@@ -121,6 +109,18 @@ class AuthenticationService
         }
 
         throw new GeneralException('These credentials do not match our records.');
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        $user = $this->auth->user();
+        if (!$user instanceof User) {
+            throw new \UnexpectedValueException('Invalid User Entity');
+        }
+        return $user;
     }
 
     /**

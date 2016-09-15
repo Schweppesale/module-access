@@ -40,6 +40,17 @@ class RoleRepositoryDoctrine implements RoleRepository
 
     /**
      * @param $id
+     * @return bool
+     */
+    public function delete($id)
+    {
+        $this->manager->remove($this->getById($id));
+        $this->manager->flush();
+        return true;
+    }
+
+    /**
+     * @param $id
      * @return Role
      * @internal param $userId
      */
@@ -50,17 +61,6 @@ class RoleRepositoryDoctrine implements RoleRepository
         } else {
             throw new \Illuminate\Contracts\Queue\EntityNotFoundException('Role not found', $id);
         }
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function delete($id)
-    {
-        $this->manager->remove($this->getById($id));
-        $this->manager->flush();
-        return true;
     }
 
     /**

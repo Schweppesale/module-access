@@ -5,7 +5,8 @@ namespace Schweppesale\Module\Access\Domain\Services;
  * Class HashedPassword
  * @package Schweppesale\Module\Access\Domain\Services
  */
-class HashedPassword {
+class HashedPassword
+{
 
     /**
      * @var string
@@ -24,15 +25,16 @@ class HashedPassword {
     /**
      * @return string
      */
-    public function value() {
-        return $this->value;
+    public function __toString()
+    {
+        return $this->value();
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function value()
     {
-        return $this->value();
+        return $this->value;
     }
 }

@@ -1,10 +1,12 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Users;
 
+use Schweppesale\Module\Access\Application\Response\UserDTO;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class ProfileService
@@ -24,13 +26,23 @@ class ProfileService
     private $users;
 
     /**
+     * @var MapperInterface
+     */
+    private $mapper;
+
+    /**
      * ProfileService constructor.
-     *
+     * @param MapperInterface $mapper
      * @param AuthenticationService $auth
      * @param UserRepository $users
      */
-    public function __construct(AuthenticationService $auth, UserRepository $users)
+    public function __construct(
+        MapperInterface $mapper,
+        AuthenticationService $auth,
+        UserRepository $users
+    )
     {
+        $this->mapper = $mapper;
         $this->auth = $auth;
         $this->users = $users;
     }
@@ -46,7 +58,8 @@ class ProfileService
         $user->setName($username);
         $user->setEmail($email);
 
-        return $this->users->save($user);
+        $user = $this->users->save($user);
+        return $this->mapper->map($user, UserDTO::class);
     }
 
     /**
@@ -58,6 +71,7 @@ class ProfileService
         $user = $this->auth->getUser();
         $user->changePassword($password);
 
-        return $this->users->save($user);
+        $user = $this->users->save($user);
+        return $this->mapper->map($user, UserDTO::class);
     }
 }

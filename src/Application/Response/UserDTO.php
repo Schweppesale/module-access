@@ -5,10 +5,10 @@ use DateTime;
 use JsonSerializable;
 
 /**
- * Class User
+ * Class UserDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class User implements JsonSerializable
+class UserDTO implements JsonSerializable
 {
 
     /**

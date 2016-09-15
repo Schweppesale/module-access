@@ -6,7 +6,8 @@ use Schweppesale\Module\Access\Domain\Services\HashedPassword;
 use Schweppesale\Module\Access\Domain\Services\Password;
 use Schweppesale\Module\Access\Domain\Services\PasswordHasher;
 
-class PasswordHasherBcrypt implements PasswordHasher  {
+class PasswordHasherBcrypt implements PasswordHasher
+{
 
     /**
      * @var BcryptHasher

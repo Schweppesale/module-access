@@ -4,10 +4,11 @@ namespace Schweppesale\Module\Access\Application\Response;
 use DateTime;
 
 /**
- * Class Permission
+ * Class PermissionDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class Permission implements \JsonSerializable {
+class PermissionDTO implements \JsonSerializable
+{
 
     /**
      * @var DateTime

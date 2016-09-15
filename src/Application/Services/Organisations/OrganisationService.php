@@ -2,8 +2,10 @@
 namespace Schweppesale\Module\Access\Application\Services\Organisations;
 
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
+use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class OrganisationService
@@ -19,18 +21,19 @@ class OrganisationService
     private $organisations;
 
     /**
-     * @var FileSystem
+     * @var MapperInterface
      */
-    private $fileSystem;
+    private $mapper;
 
     /**
+     * OrganisationService constructor.
+     * @param MapperInterface $mapper
      * @param OrganisationRepository $organisations
-     * @param FileSystem $fileSystem
      */
-    public function __construct(OrganisationRepository $organisations, FileSystem $fileSystem)
+    public function __construct(MapperInterface $mapper, OrganisationRepository $organisations)
     {
+        $this->mapper = $mapper;
         $this->organisations = $organisations;
-        $this->fileSystem = $fileSystem;
     }
 
     /**
@@ -42,7 +45,9 @@ class OrganisationService
     {
         $organisation = new Organisation($organisationName);
         $organisation->setDescription($description);
-        return $this->organisations->save($organisation);
+        $organisation = $this->organisations->save($organisation);
+
+        return $this->mapper->map($organisation, OrganisationDTO::class);
     }
 
     /**
@@ -56,6 +61,8 @@ class OrganisationService
         $organisation = $this->organisations->getById($organisationid);
         $organisation->setName($organisationName);
         $organisation->setDescription($description);
-        return $this->organisations->save($organisation);
+        $organisation = $this->organisations->save($organisation);
+
+        return $this->mapper->map($organisation, OrganisationDTO::class);
     }
 }

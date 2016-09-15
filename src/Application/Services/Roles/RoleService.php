@@ -1,10 +1,16 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Roles;
 
+use Schweppesale\Module\Access\Application\Response\PermissionDTO;
+use Schweppesale\Module\Access\Application\Response\PermissionGroupDTO;
+use Schweppesale\Module\Access\Application\Response\RoleDTO;
+use Schweppesale\Module\Access\Domain\Entities\Permission;
+use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class RoleService
@@ -13,6 +19,10 @@ use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
  */
 class RoleService
 {
+    /**
+     * @var MapperInterface
+     */
+    private $mapper;
 
     /**
      * @var RoleRepository
@@ -31,24 +41,30 @@ class RoleService
 
     /**
      * RoleService constructor.
-     *
+     * @param MapperInterface $mapper
      * @param PermissionRepository $permissions
      * @param PermissionGroupRepository $permissionGroups
      * @param RoleRepository $roles
      */
-    public function __construct(PermissionRepository $permissions, PermissionGroupRepository $permissionGroups, RoleRepository $roles)
+    public function __construct(
+        MapperInterface $mapper,
+        PermissionRepository $permissions,
+        PermissionGroupRepository $permissionGroups,
+        RoleRepository $roles)
     {
+        $this->mapper = $mapper;
         $this->roles = $roles;
         $this->permissions = $permissions;
         $this->permissionGroups = $permissionGroups;
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\Role[]
+     * @return Role[]
      */
     public function fetchAll()
     {
-        return $this->roles->fetchAll();
+        $result = $this->roles->fetchAll();
+        return $this->mapper->mapArray($result->toArray(), Role::class, RoleDTO::class);
     }
 
     /**
@@ -58,10 +74,17 @@ class RoleService
     public function editMeta($roleId)
     {
         return [
-            'role' => $this->roles->getById($roleId),
-            'groups' => $this->permissionGroups->fetchAllParents(),
-            'permissions' => $this->permissions->fetchAll(),
+            'role' => $this->getById($roleId),
+            'permissions' => $this->mapper->mapArray($this->permissions->fetchAll()->toArray(), Permission::class, PermissionDTO::class),
+            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->fetchAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
         ];
+    }
+
+
+    public function getById($roleId)
+    {
+        $role = $this->roles->getById($roleId);
+        return $this->mapper->map($role, RoleDTO::class);
     }
 
     /**
@@ -83,7 +106,8 @@ class RoleService
             }
         }
 
-        return $this->roles->save(new Role($name, $sort, $allPermission, $permissions));
+        $role = $this->roles->save(new Role($name, $sort, $allPermission, $permissions));
+        return $this->mapper->map($role, RoleDTO::class);
     }
 
     /**
@@ -92,15 +116,15 @@ class RoleService
     public function createMeta()
     {
         return [
-            'groups' => $this->permissionGroups->fetchAllParents(),
-            'permissions' => $this->permissions->fetchAll()
+            'permissions' => $this->mapper->mapArray($this->permissions->fetchAll()->toArray(), Permission::class, PermissionDTO::class),
+            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->fetchAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class)
         ];
     }
 
     /**
      * @param $roleId
      * @param array $criteria
-     * @return \Schweppesale\Module\Access\Domain\Entities\Role
+     * @return Role
      */
     public function update($roleId, array $criteria)
     {
@@ -123,11 +147,16 @@ class RoleService
             ->setPermissions($permissions)
             ->setAll($allPermission);
 
-        return $this->roles->save($role);
+        $role = $this->roles->save($role);
+        return $this->mapper->map($role, RoleDTO::class);
     }
 
+    /**
+     * @param $roleId
+     * @return void
+     */
     public function delete($roleId)
     {
-        return $this->roles->delete($roleId);
+        $this->roles->delete($roleId);
     }
 }

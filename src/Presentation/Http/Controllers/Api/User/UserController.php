@@ -202,6 +202,15 @@ class UserController extends Controller
     }
 
     /**
+     * @param $id
+     * @return $this
+     */
+    public function show($id)
+    {
+        return $this->response->setContent($this->userService->getById($id));
+    }
+
+    /**
      * @param StoreUserRequest $request
      * @return mixed
      */
@@ -218,6 +227,23 @@ class UserController extends Controller
             $request->get('status')
         );
         return redirect()->route('admin.access.users.index')->withFlashSuccess(trans("alerts.users.created"));
+    }
+
+    /**
+     * @param $deliminator
+     * @param $string
+     * @return array
+     */
+    private function extractInt($deliminator, $string)
+    {
+        $results = [];
+        $values = explode($deliminator, $string);
+        foreach ($values as $value) {
+            if (is_numeric($value)) {
+                $results[] = $value;
+            }
+        }
+        return $results;
     }
 
     /**
@@ -251,22 +277,5 @@ class UserController extends Controller
 
         $this->userService->changePassword($id, $password, $confirmation);
         return redirect()->route('admin.access.users.index')->withFlashSuccess(trans("alerts.users.updated_password"));
-    }
-
-    /**
-     * @param $deliminator
-     * @param $string
-     * @return array
-     */
-    private function extractInt($deliminator, $string)
-    {
-        $results = [];
-        $values = explode($deliminator, $string);
-        foreach ($values as $value) {
-            if (is_numeric($value)) {
-                $results[] = $value;
-            }
-        }
-        return $results;
     }
 }

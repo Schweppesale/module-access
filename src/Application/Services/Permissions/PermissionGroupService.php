@@ -1,8 +1,10 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Permissions;
 
+use Schweppesale\Module\Access\Application\Response\PermissionGroupDTO;
 use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class PermissionService
@@ -18,23 +20,29 @@ class PermissionGroupService
     private $permissionGroups;
 
     /**
+     * @var MapperInterface
+     */
+    private $mapper;
+
+    /**
      * PermissionGroupService constructor.
-     *
+     * @param MapperInterface $mapper
      * @param PermissionGroupRepository $permissionGroups
      */
-    public function __construct(PermissionGroupRepository $permissionGroups)
+    public function __construct(MapperInterface $mapper, PermissionGroupRepository $permissionGroups)
     {
+        $this->mapper = $mapper;
         $this->permissionGroups = $permissionGroups;
     }
 
     /**
      * @param $name
-     * @param bool|false $system
+     * @param bool $system
      * @param null $parentId
      * @param int $sort
-     * @return PermissionGroup
+     * @return PermissionGroupDTO
      */
-    public function create($name, $system = false, $parentId = null, $sort = 0)
+    public function create($name, $system = false, $parentId = null, $sort = 0): PermissionGroupDTO
     {
         if ($parentId !== null) {
             $parent = $this->permissionGroups->getById($parentId);
@@ -42,69 +50,67 @@ class PermissionGroupService
         } else {
             $permissionGroup = new PermissionGroup($name, $system);
         }
+        $permissionGroup = $this->permissionGroups->save($permissionGroup->setSort($sort));
 
-        return $this->permissionGroups->save($permissionGroup->setSort($sort));
+        return $this->mapper->map($permissionGroup, PermissionGroupDTO::class);
     }
 
     /**
      * @param $groupId
-     * @return bool
+     * @return void
      */
     public function delete($groupId)
     {
-        return $this->permissionGroups->delete($groupId);
+        $this->permissionGroups->delete($groupId);
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\Permission[]
+     * @return PermissionGroupDTO[]
      */
     public function fetchAll()
     {
-        return $this->permissionGroups->fetchAll();
+        $result = $this->permissionGroups->fetchAll();
+        return $this->mapper->mapArray($result, PermissionGroup::class, PermissionGroupDTO::class);
     }
 
     /**
-     * @return \Schweppesale\Module\Access\Domain\Entities\PermissionGroup[]
+     * @return PermissionGroupDTO[]
      */
     public function fetchAllParents()
     {
-        return $this->permissionGroups->fetchAllParents();
+        $result = $this->permissionGroups->fetchAllParents();
+        return $this->mapper->mapArray($result, PermissionGroup::class, PermissionGroupDTO::class);
     }
 
     /**
      * @param $groupId
-     * @return PermissionGroup
+     * @return PermissionGroupDTO
      */
-    public function getById($groupId)
+    public function getById($groupId): PermissionGroupDTO
     {
-        return $this->permissionGroups->getById($groupId);
+        $result = $this->permissionGroups->getById($groupId);
+        return $this->mapper->map($result, PermissionGroupDTO::class);
     }
 
     /**
      * @param $name
-     * @return PermissionGroup
+     * @return PermissionGroupDTO
      */
-    public function getByName($name)
+    public function getByName($name) : PermissionGroupDTO
     {
-        return $this->permissionGroups->getByName($name);
+        $result = $this->permissionGroups->getByName($name);
+        return $this->mapper->map($result, PermissionGroupDTO::class);
     }
 
     /**
      * @param $groupId
      * @param $name
-     * @return PermissionGroup
+     * @return PermissionGroupDTO
      */
-    public function update($groupId, $name)
+    public function update($groupId, $name): PermissionGroupDTO
     {
         $group = $this->permissionGroups->getById($groupId);
-        return $this->permissionGroups->save($group->changeName($name));
-    }
-
-    /**
-     * @param array $order
-     */
-    public function updateSort(array $order)
-    {
-
+        $group = $this->permissionGroups->save($group->changeName($name));
+        return $this->mapper->map($group, PermissionGroupDTO::class);
     }
 }

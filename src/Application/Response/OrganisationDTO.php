@@ -4,20 +4,22 @@ namespace Schweppesale\Module\Access\Application\Response;
 use DateTime;
 
 /**
- * Class Role
+ * Class OrganisationDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class Role implements \JsonSerializable {
+class OrganisationDTO implements \JsonSerializable
+{
 
-    /**
-     * @var int
-     */
-    private $all;
 
     /**
      * @var DateTime
      */
     private $createdAt;
+
+    /**
+     * @var string
+     */
+    private $description;
 
     /**
      * @var int
@@ -30,40 +32,25 @@ class Role implements \JsonSerializable {
     private $name;
 
     /**
-     * @var Permission[]
-     */
-    private $permissions;
-
-    /**
      * @var DateTime
      */
     private $updatedAt;
 
     /**
-     * Role constructor.
+     * Organisation constructor.
      * @param $id
      * @param $name
-     * @param array $permissions
-     * @param $all
+     * @param $description
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, array $permissions, $all, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $description, DateTime $createdAt, DateTime $updatedAt)
     {
-        $this->all = $all;
         $this->createdAt = $createdAt;
+        $this->description = $description;
         $this->id = $id;
         $this->name = $name;
-        $this->permissions = $permissions;
         $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAll(): int
-    {
-        return $this->all;
     }
 
     /**
@@ -72,6 +59,14 @@ class Role implements \JsonSerializable {
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     /**
@@ -91,14 +86,6 @@ class Role implements \JsonSerializable {
     }
 
     /**
-     * @return Permission[]
-     */
-    public function getPermissions(): array
-    {
-        return $this->permissions;
-    }
-
-    /**
      * @return DateTime
      */
     public function getUpdatedAt(): DateTime
@@ -114,10 +101,9 @@ class Role implements \JsonSerializable {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'all' => $this->all,
-            'permissions' => $this->permissions,
+            'description' => $this->description,
             'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt
+            'updatedAt' => $this->updatedAt,
         ];
     }
 }

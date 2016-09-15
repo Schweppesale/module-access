@@ -48,6 +48,30 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
+     * @param int $id
+     * @return User
+     */
+    public function getById($id)
+    {
+        if ($users = $this->manager->getRepository(User::class)->findBy(['id' => $id])) {
+            return $users[0];
+        } else {
+            throw new \Illuminate\Contracts\Queue\EntityNotFoundException('User not found', $id);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @return User
+     */
+    public function save(User $user)
+    {
+        $this->manager->persist($user);
+        $this->manager->flush();
+        return $user;
+    }
+
+    /**
      * @return User[]
      */
     public function fetchAll()
@@ -100,19 +124,6 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
-     * @param int $id
-     * @return User
-     */
-    public function getById($id)
-    {
-        if ($users = $this->manager->getRepository(User::class)->findBy(['id' => $id])) {
-            return $users[0];
-        } else {
-            throw new \Illuminate\Contracts\Queue\EntityNotFoundException('User not found', $id);
-        }
-    }
-
-    /**
      * @param $email
      * @return User
      */
@@ -148,16 +159,5 @@ class UserRepositoryDoctrine implements UserRepository
         } else {
             throw new \Illuminate\Contracts\Queue\EntityNotFoundException('User not found', $token);
         }
-    }
-
-    /**
-     * @param User $user
-     * @return User
-     */
-    public function save(User $user)
-    {
-        $this->manager->persist($user);
-        $this->manager->flush();
-        return $user;
     }
 }

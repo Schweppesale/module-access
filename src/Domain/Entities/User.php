@@ -175,11 +175,6 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
         $this->setRoles($roles);
     }
 
-    public function getAuthIdentifierName()
-    {
-        return $this->getEmail();
-    }
-
     /**
      * @param $password
      * @return $this
@@ -187,6 +182,30 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
     public function changePassword($password)
     {
         $this->password = bcrypt($password);
+
+        return $this;
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param $email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -228,25 +247,6 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
     public function getEmailForPasswordReset()
     {
         return $this->getEmail();
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param $email
-     * @return $this
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     /**

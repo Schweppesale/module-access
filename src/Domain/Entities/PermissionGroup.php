@@ -155,7 +155,7 @@ class PermissionGroup implements \JsonSerializable
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getParent()
     {
