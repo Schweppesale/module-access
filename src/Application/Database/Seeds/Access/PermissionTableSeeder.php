@@ -24,21 +24,6 @@ class PermissionTableSeeder extends Seeder
 
     public function run()
     {
-//        if (env('DB_DRIVER') == 'mysql') {
-//            DB::table('permissions')->truncate();
-//            DB::table('permission_role')->truncate();
-//            DB::table('user_permissions')->truncate();
-//        } elseif (env('DB_DRIVER') == 'sqlite') {
-//            DB::statement("DELETE FROM " . 'permissions');
-//            DB::statement("DELETE FROM " . 'permission_role');
-//            DB::statement("DELETE FROM " . 'user_permissions');
-//        } else { //For PostgreSQL or anything else
-//            DB::statement("TRUNCATE TABLE " . 'permissions' . " CASCADE");
-//            DB::statement("TRUNCATE TABLE " . 'permission_role' . " CASCADE");
-//            DB::statement("TRUNCATE TABLE " . 'user_permissions' . " CASCADE");
-//        }
-
-        //Don't need to assign any permissions to administrator because the all flag is set to true
 
         /**
          * Misc Access Permissions
@@ -46,7 +31,7 @@ class PermissionTableSeeder extends Seeder
         $this->permissionService->create('view-access-management', 'View Access Management', 1, 2, null, true);
 
         /**
-         * User
+         * Users
          */
         $this->permissionService->create('create-users', 'Create Users', 2, 5, null, true);
         $this->permissionService->create('edit-users', 'Edit Users', 2, 6, null, true);
@@ -62,7 +47,7 @@ class PermissionTableSeeder extends Seeder
 
 
         /**
-         * Role
+         * Roles
          */
         $this->permissionService->create('create-roles', 'Create Roles', 3, 2, null, true);
         $this->permissionService->create('edit-roles', 'Edit Roles', 3, 3, null, true);
@@ -70,7 +55,7 @@ class PermissionTableSeeder extends Seeder
 
 
         /**
-         * Permission Group
+         * Permission Groups
          */
         $this->permissionService->create('edit-permission-groups', 'Edit Permission Groups', 4, 2, null, true);
         $this->permissionService->create('delete-permission-groups', 'Delete Permission Groups', 4, 3, null, true);

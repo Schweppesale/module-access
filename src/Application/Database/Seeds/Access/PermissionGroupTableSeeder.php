@@ -2,27 +2,27 @@
 namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use Illuminate\Database\Seeder;
+use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;
 
 class PermissionGroupTableSeeder extends Seeder
 {
 
+    /**
+     * @var PermissionGroupService
+     */
     private $permissionGroupService;
 
-    public function __construct(\Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService $permissionGroupService)
+    /**
+     * PermissionGroupTableSeeder constructor.
+     * @param PermissionGroupService $permissionGroupService
+     */
+    public function __construct(PermissionGroupService $permissionGroupService)
     {
         $this->permissionGroupService = $permissionGroupService;
     }
 
     public function run()
     {
-//        if (env('DB_DRIVER') == 'mysql') {
-//            DB::table('permission_groups')->truncate();
-//        } elseif (env('DB_DRIVER') == 'sqlite') {
-//            DB::statement("DELETE FROM " . 'permission_groups');
-//        } else { //For PostgreSQL or anything else
-//            DB::statement("TRUNCATE TABLE " . 'permission_groups' . " CASCADE");
-//        }
-
         /**
          * Create the Access groups
          */

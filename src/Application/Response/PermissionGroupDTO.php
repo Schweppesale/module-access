@@ -32,7 +32,7 @@ class PermissionGroupDTO implements \JsonSerializable
     private $name;
 
     /**
-     * @var int
+     * @var mixed
      */
     private $parentId;
 
@@ -68,7 +68,7 @@ class PermissionGroupDTO implements \JsonSerializable
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $order, $system, int $parentId, array $children, array $permissions, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $order, $system, $parentId = null, array $children, array $permissions, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->children = $children;
         $this->createdAt = $createdAt;
@@ -116,7 +116,7 @@ class PermissionGroupDTO implements \JsonSerializable
     /**
      * @return int
      */
-    public function getParentId(): int
+    public function getParentId()
     {
         return $this->parentId;
     }

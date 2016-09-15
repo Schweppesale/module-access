@@ -96,13 +96,14 @@ class ApplicationServiceProvider extends ServiceProvider
 
         Papper::createMap(Permission::class, PermissionDTO::class)
             ->constructUsing(function (Permission $permission) use ($mapper) {
+                $dependencies = $permission->getDependencies();
+                $dependencies = ($dependencies) ? $mapper->mapArray($dependencies->toArray(), Permission::class, PermissionDTO::class) : [];
+
                 return new PermissionDTO(
                     $permission->getId(),
                     $permission->getName(),
                     $permission->getDisplayName(),
-                    array_map(function (Permission $permission) {
-                        return $permission->getId();
-                    }, $permission->getDependencies()->toArray()),
+                    $dependencies,
                     $permission->isSystem(),
                     $permission->getCreatedAt(),
                     $permission->getUpdatedAt()
@@ -112,16 +113,20 @@ class ApplicationServiceProvider extends ServiceProvider
         Papper::createMap(PermissionGroup::class, PermissionGroupDTO::class)
             ->constructUsing(function (PermissionGroup $permissionGroup) use ($mapper) {
                 $parent = $permissionGroup->getParent();
+                $parentId = $parent ? $parent->getId() : null;
+                $permissions = $permissionGroup->getPermissions();
+                $permissions = ($permissions) ? $mapper->mapArray($permissions->toArray(), Permission::class, PermissionDTO::class) : [];
+                $children = $permissionGroup->getChildren();
+                $children = ($children) ? $mapper->mapArray($children->toArray(), Permission::class, PermissionDTO::class) : [];
+
                 return new PermissionGroupDTO(
                     $permissionGroup->getId(),
                     $permissionGroup->getName(),
                     $permissionGroup->getSort(),
                     $permissionGroup->getSystem(),
-                    ($parent instanceof PermissionGroup) ? $parent->getId() : null,
-                    array_map(function (PermissionGroup $permissionGroup) {
-                        return $permissionGroup->getId();
-                    }, $permissionGroup->getChildren()),
-                    $mapper->mapArray($permissionGroup->getPermissions()->toArray(), Permission::class, PermissionDTO::class),
+                    $parentId,
+                    $children,
+                    $permissions,
                     $permissionGroup->getCreatedAt(),
                     $permissionGroup->getUpdatedAt()
                 );

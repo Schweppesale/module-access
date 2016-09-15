@@ -23,13 +23,6 @@ class RoleTableSeeder extends Seeder
 
     public function run()
     {
-//        if (env('DB_DRIVER') == 'mysql')
-//            DB::table('roles')->truncate();
-//        elseif (env('DB_DRIVER') == 'sqlite')
-//            DB::statement("DELETE FROM " . 'roles');
-//        else //For PostgreSQL or anything else
-//            DB::statement("TRUNCATE TABLE " . 'roles' . " CASCADE");
-
         $this->roleService->create(['name' => 'Administrator', 'sort' => 1, 'associated-permissions' => 'all']);
         $this->roleService->create(['name' => 'User', 'sort' => 2]);
         $this->roleService->create(['name' => 'Client', 'sort' => 3]);
