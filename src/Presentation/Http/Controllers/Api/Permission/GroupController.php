@@ -64,13 +64,4 @@ class GroupController extends Controller
     {
         return $this->response->setContent($this->permissionGroupService->update($id, $request->get('name')));
     }
-
-    /**
-     * @param SortPermissionGroupRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-//    public function updateSort(SortPermissionGroupRequest $request)
-//    {
-//        $this->permissionGroupService->updateSort($request->get('data'));
-//    }
 }

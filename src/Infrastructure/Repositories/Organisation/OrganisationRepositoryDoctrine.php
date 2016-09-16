@@ -55,7 +55,7 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
                 ->select('o')
                 ->from(Organisation::class, 'o')
                 ->where('o.id = :id')
-                ->setParameter('o', $id)
+                ->setParameter('id', $id)
                 ->getQuery()
                 ->getSingleResult();
 

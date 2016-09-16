@@ -67,6 +67,15 @@ class RoleController extends Controller
     }
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function show($id)
+    {
+        return $this->response->setContent($this->roleService->getById($id));
+    }
+
+    /**
      * @param StoreRoleRequest $request
      * @return mixed
      */

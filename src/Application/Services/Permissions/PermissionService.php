@@ -95,7 +95,7 @@ class PermissionService
      */
     public function findAll()
     {
-        $result = $this->permissions->findAll();
+        $result = $this->permissions->findAll()->toArray();
         return $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
     }
 

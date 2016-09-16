@@ -3,6 +3,7 @@
 use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class PermissionController
@@ -39,5 +40,27 @@ class PermissionController extends Controller
     public function index()
     {
         return $this->response->setContent($this->permissionService->findAll());
+    }
+
+    public function show($id)
+    {
+        return $this->response->setContent($this->permissionService->getById($id));
+    }
+
+    public function store(Request $request)
+    {
+        return $this->response->setContent($this->permissionService->create(
+            $request->get('name'),
+            $request->get('label'),
+            $request->get('groupId'),
+            $request->get('sort'),
+            explode(',', $request->get('dependencyIds')),
+            (bool)$request->get('system')
+        ));
+    }
+
+    public function update($id)
+    {
+
     }
 }

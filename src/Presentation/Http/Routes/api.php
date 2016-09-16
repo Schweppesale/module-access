@@ -15,8 +15,8 @@ Route::group([
      * Users
      */
     $router->group(['prefix' => 'users', 'namespace' => 'User'], function (Router $router) {
-        $router->resource('banned', 'BannedController', ['only' => 'index']);
-        $router->resource('deactivated', 'DeactivatedController', ['only' => 'index']);
+        $router->resource('banned', 'BannedController', ['only' => 'index', 'store']);
+        $router->resource('deactivated', 'DeactivatedController', ['only' => 'index', 'store']);
         $router->resource('confirmation', 'ConfirmationController');
     });
     $router->resource('users', 'UserController');
@@ -25,7 +25,7 @@ Route::group([
      * Permissions
      */
     $router->group(['prefix' => 'permissions', 'namespace' => 'Permission'], function (Router $router) {
-        $router->resource('group', 'GroupController');
+        $router->resource('group', 'GroupController', ['only' => ['update', 'store', 'destroy']]);
     });
     $router->resource('permissions', 'PermissionController');
 
