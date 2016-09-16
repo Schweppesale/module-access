@@ -89,7 +89,7 @@ class UserRepositoryDoctrine implements UserRepository
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.status = ' . User::ACTIVE)
-            ->where('u.deletedAt IS NULL')
+            ->andWhere('u.deletedAt IS NULL')
             ->getQuery()
             ->getResult();
 
@@ -105,7 +105,7 @@ class UserRepositoryDoctrine implements UserRepository
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.status = ' . User::BANNED)
-            ->where('u.deletedAt IS NULL')
+            ->andWhere('u.deletedAt IS NULL')
             ->getQuery()
             ->getResult();
 
@@ -121,7 +121,7 @@ class UserRepositoryDoctrine implements UserRepository
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.status = ' . User::DISABLED)
-            ->where('u.deletedAt IS NULL')
+            ->andWhere('u.deletedAt IS NULL')
             ->getQuery()
             ->getResult();
 
