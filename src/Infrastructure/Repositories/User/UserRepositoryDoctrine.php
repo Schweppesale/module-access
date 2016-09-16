@@ -51,6 +51,7 @@ class UserRepositoryDoctrine implements UserRepository
     /**
      * @param int $id
      * @return User
+     * @throws EntityNotFoundException
      */
     public function getById($id): User
     {
@@ -81,7 +82,7 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
     public function findAll(): Collection
     {
@@ -113,7 +114,7 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
     public function findAllDeactivated(): Collection
     {
@@ -129,7 +130,7 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
     public function findAllDeleted(): Collection
     {
@@ -146,6 +147,7 @@ class UserRepositoryDoctrine implements UserRepository
     /**
      * @param $email
      * @return User
+     * @throws EntityNotFoundException
      */
     public function getByEmail($email): User
     {
@@ -165,8 +167,9 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
-     * @param string $token
+     * @param string $code
      * @return User
+     * @throws EntityNotFoundException
      */
     public function getByConfirmationCode($code): User
     {

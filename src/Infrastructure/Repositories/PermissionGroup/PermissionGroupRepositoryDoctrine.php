@@ -44,6 +44,7 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
     /**
      * @param $id
      * @return PermissionGroup
+     * @throws EntityNotFoundException
      */
     public function getById($id): PermissionGroup
     {

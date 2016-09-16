@@ -3,6 +3,7 @@ namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Interface RoleRepository
@@ -26,6 +27,7 @@ interface RoleRepository
     /**
      * @param $id
      * @return Role
+     * @throws EntityNotFoundException
      */
     public function getById($id): Role;
 

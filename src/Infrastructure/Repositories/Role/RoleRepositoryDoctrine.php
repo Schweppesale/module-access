@@ -59,6 +59,7 @@ class RoleRepositoryDoctrine implements RoleRepository
     /**
      * @param $id
      * @return Role
+     * @throws EntityNotFoundException
      */
     public function getById($id): Role
     {

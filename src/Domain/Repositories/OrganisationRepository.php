@@ -3,6 +3,7 @@ namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Interface OrganisationRepository
@@ -20,6 +21,7 @@ interface OrganisationRepository
     /**
      * @param $id
      * @return Organisation
+     * @throws EntityNotFoundException
      */
     public function getById($id): Organisation;
 

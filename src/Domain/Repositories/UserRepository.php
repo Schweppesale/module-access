@@ -3,6 +3,7 @@ namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Interface UserRepository
@@ -42,18 +43,21 @@ interface UserRepository
     /**
      * @param $email
      * @return User
+     * @throws EntityNotFoundException
      */
     public function getByEmail($email): User;
 
     /**
      * @param int $id
      * @return User
+     * @throws EntityNotFoundException
      */
     public function getById($id): User;
 
     /**
      * @param string $code
      * @return User
+     * @throws EntityNotFoundException
      */
     public function getByConfirmationCode($code): User;
 

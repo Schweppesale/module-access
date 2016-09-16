@@ -48,6 +48,7 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
     /**
      * @param $id
      * @return Organisation
+     * @throws EntityNotFoundException
      */
     public function getById($id): Organisation
     {

@@ -3,6 +3,7 @@ namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\Permission;
 use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Interface PermissionGroupInterface
@@ -26,6 +27,7 @@ interface PermissionRepository
     /**
      * @param $id
      * @return Permission
+     * @throws EntityNotFoundException
      */
     public function getById($id): Permission;
 
