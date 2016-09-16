@@ -11,7 +11,7 @@ use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Events\User\UserLoggedIn;
 use Schweppesale\Module\Access\Domain\Events\User\UserLoggedOut;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
-use Schweppesale\Module\Core\Exceptions\GeneralException;
+use Schweppesale\Module\Core\Exceptions\Exception;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
@@ -88,7 +88,7 @@ class AuthenticationService
      * @param $email
      * @param $password
      * @return bool
-     * @throws GeneralException
+     * @throws Exception
      */
     public function login($email, $password)
     {
@@ -98,18 +98,18 @@ class AuthenticationService
 
             if ($user->getStatus() === User::DISABLED) {
                 $this->auth->logout();
-                throw new GeneralException("Your account is currently deactivated.");
+                throw new Exception("Your account is currently deactivated.");
             }
 
             if ($user->getStatus() === User::BANNED) {
                 $this->auth->logout();
-                throw new GeneralException("Your account is currently banned.");
+                throw new Exception("Your account is currently banned.");
             }
 
             if ($user->isConfirmed() === false) {
                 $user_id = $user->getId();
                 $this->auth->logout();
-                throw new GeneralException("Your account is not confirmed. Please click the confirmation link in your e-mail, or " . '<a href="' . route('account.confirm.resend', $user_id) . '">click here</a>' . " to resend the confirmation e-mail.");
+                throw new Exception("Your account is not confirmed. Please click the confirmation link in your e-mail, or " . '<a href="' . route('account.confirm.resend', $user_id) . '">click here</a>' . " to resend the confirmation e-mail.");
             }
 
             event(new UserLoggedIn($user));
@@ -117,7 +117,7 @@ class AuthenticationService
 
         }
 
-        throw new GeneralException('These credentials do not match our records.');
+        throw new Exception('These credentials do not match our records.');
     }
 
     /**
@@ -144,7 +144,7 @@ class AuthenticationService
     /**
      * @param $email
      * @return void
-     * @throws GeneralException
+     * @throws Exception
      */
     public function sendPasswordResetEmail($email)
     {
@@ -153,10 +153,10 @@ class AuthenticationService
 
         if ($user) {
             if ($user->isConfirmed() === false) {
-                throw new GeneralException("Your account is not confirmed. Please click the confirmation link in your e-mail, or " . '<a href="' . route('account.confirm.resend', $user->getId()) . '">click here</a>' . " to resend the confirmation e-mail.");
+                throw new Exception("Your account is not confirmed. Please click the confirmation link in your e-mail, or " . '<a href="' . route('account.confirm.resend', $user->getId()) . '">click here</a>' . " to resend the confirmation e-mail.");
             }
         } else {
-            throw new GeneralException("There is no user with that e-mail address.");
+            throw new Exception("There is no user with that e-mail address.");
         }
 
         $this->passwordBroker->sendResetLink(['email' => $email], function (Message $message) {

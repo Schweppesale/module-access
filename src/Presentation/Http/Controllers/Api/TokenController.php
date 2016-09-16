@@ -1,11 +1,11 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Token\LoginRequest;
-use Schweppesale\Module\Core\Exceptions\GeneralException;
+use Schweppesale\Module\Core\Exceptions\Exception;
 
 /**
  * Class TokenController
@@ -62,7 +62,7 @@ class TokenController extends Controller
             $this->clearLoginAttempts($request);
             return $this->response->setContent(['success' => true]);
 
-        } catch (GeneralException $e) {
+        } catch (Exception $e) {
 
             $this->incrementLoginAttempts($request);
 
