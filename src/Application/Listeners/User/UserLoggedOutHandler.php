@@ -2,7 +2,7 @@
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Schweppesale\Module\Access\Domain\Events\User\UserLoggedOut;
+use Schweppesale\Module\Access\Application\Events\User\UserLoggedOut;
 
 /**
  * Class UserLoggedOutHandler

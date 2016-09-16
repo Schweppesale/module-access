@@ -1,4 +1,4 @@
-<?php namespace Schweppesale\Module\Access\Domain\Events\User;
+<?php namespace Schweppesale\Module\Access\Application\Events\User;
 
 use Illuminate\Queue\SerializesModels;
 use Schweppesale\Module\Access\Domain\Entities\User;
@@ -7,7 +7,7 @@ use Schweppesale\Module\Core\Events\Event;
 /**
  * Class UserLoggedOut
  *
- * @package Schweppesale\Module\Access\Domain\Events\User
+ * @package Schweppesale\Module\Access\Application\Events\User
  */
 class UserLoggedOut extends Event
 {
