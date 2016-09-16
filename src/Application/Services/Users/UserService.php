@@ -25,12 +25,6 @@ use Schweppesale\Module\Core\Mapper\MapperInterface;
  */
 class UserService
 {
-
-    /**
-     * @var AuthenticationService
-     */
-    private $access;
-
     /**
      * @var OrganisationRepository
      */
@@ -69,7 +63,6 @@ class UserService
     /**
      * UserService constructor.
      * @param MapperInterface $mapper
-     * @param AuthenticationService $access
      * @param UserRepository $users
      * @param OrganisationRepository $organisations
      * @param RoleRepository $roles
@@ -79,7 +72,6 @@ class UserService
      */
     public function __construct(
         MapperInterface $mapper,
-        AuthenticationService $access,
         UserRepository $users,
         OrganisationRepository $organisations,
         RoleRepository $roles,
@@ -90,7 +82,6 @@ class UserService
     {
         $this->authenticationService = $authenticationService;
         $this->mapper = $mapper;
-        $this->access = $access;
         $this->users = $users;
         $this->organisations = $organisations;
         $this->roles = $roles;
