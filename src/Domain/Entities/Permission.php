@@ -3,59 +3,38 @@ namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use LaravelDoctrine\ACL\Contracts\Permission as PermissionContract;
 
 /**
  * Class Permission
  *
  * @package Schweppesale\Domain\Entities
- *
- * @ORM\Entity
- * @ORM\Table(name="permissions")
- * @HasLifecycleCallbacks
  */
 class Permission implements \JsonSerializable, PermissionContract
 {
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var Permission[]
-     *
-     * @ManyToMany(targetEntity="Permission")
-     * @JoinTable(name="permission_dependencies",
-     *      joinColumns={@JoinColumn(name="permission_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="dependency_id", referencedColumnName="id", unique=true)}
-     *      )
      */
     private $dependencies;
 
     /**
      * @var int
-     * @ORM\Column(type="string")
      */
     private $displayName;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     private $name;
 
@@ -69,19 +48,16 @@ class Permission implements \JsonSerializable, PermissionContract
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
     private $sort;
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
      */
     private $system;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 

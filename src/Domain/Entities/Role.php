@@ -3,10 +3,6 @@ namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use LaravelDoctrine\ACL\Contracts\Role as RoleContract;
 use LaravelDoctrine\ACL\Permissions\HasPermissions;
 
@@ -14,10 +10,6 @@ use LaravelDoctrine\ACL\Permissions\HasPermissions;
  * Class Role
  *
  * @package Schweppesale\Domain\Entities
- *
- * @ORM\Entity
- * @ORM\Table(name="roles")
- * @HasLifecycleCallbacks
  */
 class Role implements \JsonSerializable, RoleContract
 {
@@ -26,62 +18,41 @@ class Role implements \JsonSerializable, RoleContract
 
     /**
      * @var int
-     * @ORM\Column(name="`all`", type="boolean")
      */
     private $all;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var Permission[]
-     *
-     * @ManyToMany(targetEntity="Permission")
-     * @JoinTable(name="permission_role",
-     *      joinColumns={@JoinColumn(name="role_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="permission_id", referencedColumnName="id", unique=true)}
-     *      )
      */
     private $permissions;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
     private $sort;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
     /**
      * @var User[]
-     *
-     * @ManyToMany(targetEntity="User", mappedBy="roles")
-     * @JoinTable(name="assigned_roles",
-     *      joinColumns={@JoinColumn(name="role_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="user_id", referencedColumnName="id", unique=true)}
-     *      )
      */
     private $users;
 

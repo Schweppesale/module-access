@@ -1,6 +1,7 @@
 <?php
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\Organisation;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
@@ -22,11 +23,12 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
     private $manager;
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * UserRepositoryDoctrine constructor.
+     * @param ManagerRegistry $registry
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->manager = $entityManager;
+        $this->manager = $registry->getManagerForClass(Organisation::class);
     }
 
     /**

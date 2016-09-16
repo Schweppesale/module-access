@@ -3,9 +3,9 @@ namespace Schweppesale\Module\Access\Presentation\Providers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\ServiceProvider;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 use Schweppesale\Module\Core\Exceptions\ModuleExceptionHandler;
+use Schweppesale\Module\Core\Providers\Laravel\ServiceProvider;
 
 class PresentationServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,7 @@
 <?php
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\Role;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\Role;
@@ -23,12 +24,11 @@ class RoleRepositoryDoctrine implements RoleRepository
 
     /**
      * UserRepositoryDoctrine constructor.
-     *
-     * @param EntityManagerInterface $manager
+     * @param ManagerRegistry $registry
      */
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->manager = $manager;
+        $this->manager = $registry->getManagerForClass(Role::class);
     }
 
     /**

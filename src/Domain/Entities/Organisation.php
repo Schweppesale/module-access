@@ -3,7 +3,6 @@ namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PreUpdate;
 use LaravelDoctrine\ACL\Contracts\Organisation as OrganisationContract;
 
@@ -12,44 +11,32 @@ use LaravelDoctrine\ACL\Contracts\Organisation as OrganisationContract;
  * Class Organisation
  *
  * @package Schweppesale\Domain\Entities
- *
- * @ORM\Entity
- * @ORM\Table(name="organisations")
- * @HasLifecycleCallbacks
  */
 class Organisation implements \JsonSerializable, OrganisationContract
 {
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     private $description;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 

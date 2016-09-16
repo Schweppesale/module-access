@@ -3,93 +3,58 @@ namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\OneToMany;
 
 
 /**
  * Class PermissionGroup
  *
  * @package Schweppesale\Domain\Entities
- *
- * @ORM\Entity
- * @ORM\Table(name="permission_groups")
- * @HasLifecycleCallbacks
  */
 class PermissionGroup implements \JsonSerializable
 {
 
     /**
      * @var PermissionGroup[]
-     *
-     * @OneToMany(
-     *     targetEntity="PermissionGroup",
-     *     cascade={"all"},
-     *     orphanRemoval=true,
-     *     fetch="EAGER",
-     *     mappedBy="parent"
-     * )
      */
     private $children;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var PermissionGroup
-     *
-     * @ManyToOne(
-     *     targetEntity="PermissionGroup",
-     *     cascade={"all"},
-     *     fetch="EAGER",
-     *     inversedBy="children"
-     * )
-     * @JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
 
     /**
      * @var Role[]
-     *
-     * @OneToMany(targetEntity="Permission", mappedBy="permissionGroup")
      */
     private $permissions;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
     private $sort;
 
     /**
      * @var int
-     * @ORM\Column(type="boolean")
      */
     private $system;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 

@@ -3,12 +3,7 @@ namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\PreUpdate;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 use Illuminate\Contracts\Auth\Authenticatable;
 use JsonSerializable;
 use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
@@ -20,15 +15,6 @@ use Schweppesale\Module\Access\Domain\Entities\Traits\HasPermissions;
  * Class User
  *
  * @package Schweppesale\Domain\Entities
- *
- * @ORM\Entity
- * @ORM\Table(
- *     name="users", uniqueConstraints={
- *              @UniqueConstraint(name="permissions_name_unique", columns={"name"})
- *          }
- *     )
- *
- * @HasLifecycleCallbacks
  */
 class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
 {
@@ -45,102 +31,66 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
 
     /**
      * @var string $confirmation_code
-     *
-     * @ORM\Column(type="string")
      */
     private $confirmationCode;
 
     /**
      * @var boolean $confirmed
-     *
-     * @ORM\Column(type="boolean")
      */
     private $confirmed;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var mixed
-     *
-     * @ORM\Column(type="datetime")
      */
     private $deletedAt;
 
     /**
      * @var string $email
-     *
-     * @ORM\Column(type="string")
      */
     private $email;
 
     /**
      * @var int $id
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $id
-     *
-     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var string $password
-     *
-     * @ORM\Column(type="string", unique=true)
      */
     private $password;
 
     /**
      * @var Permission[]
-     * @ManyToMany(targetEntity="Permission", inversedBy="users")
-     * @JoinTable(name="user_permissions",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="permission_id", referencedColumnName="id", unique=true)}
-     *      )
-     *
      */
     private $permissions;
 
     /**
      * @var string $remember_token
-     *
-     * @ORM\Column(type="string")
      */
     private $rememberToken;
 
     /**
      * @var Role[]
-     *
-     * @ManyToMany(targetEntity="Role", inversedBy="users")
-     * @JoinTable(name="assigned_roles",
-     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id", unique=true)}
-     *      )
      */
     private $roles;
 
     /**
      * @var int $status
-     *
-     * @ORM\Column(type="integer")
      */
     private $status;
 
     /**
      * @var DateTime $updated_at
-     *
-     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 

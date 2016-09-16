@@ -1,6 +1,7 @@
 <?php
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
@@ -22,13 +23,12 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
     private $manager;
 
     /**
-     * UserRepository constructor.
-     *
-     * @param EntityManagerInterface $manager
+     * UserRepositoryDoctrine constructor.
+     * @param ManagerRegistry $registry
      */
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->manager = $manager;
+        $this->manager = $registry->getManagerForClass(PermissionGroup::class);
     }
 
     /**

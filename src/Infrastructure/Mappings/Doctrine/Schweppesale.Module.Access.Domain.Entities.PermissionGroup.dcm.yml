@@ -1,0 +1,83 @@
+Schweppesale\Module\Access\Domain\Entities\PermissionGroup:
+    type: entity
+    table: permission_groups
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        sort:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        system:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    oneToMany:
+        children:
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\PermissionGroup
+            cascade:
+                - all
+            fetch: EAGER
+            mappedBy: parent
+            inversedBy: null
+            orphanRemoval: true
+            orderBy: null
+        permissions:
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\Permission
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: permissionGroup
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    manyToOne:
+        parent:
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\PermissionGroup
+            cascade:
+                - all
+            fetch: EAGER
+            mappedBy: null
+            inversedBy: children
+            joinColumns:
+                parent_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,150 @@
+Schweppesale\Module\Access\Domain\Entities\User:
+    type: entity
+    table: users
+    uniqueConstraints:
+        permissions_name_unique:
+            columns:
+                - name
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        confirmationCode:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: confirmation_code
+        confirmed:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        deletedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: deleted_at
+        email:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        password:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+        rememberToken:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: remember_token
+        status:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    manyToMany:
+        permissions:
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\Permission
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: users
+            joinTable:
+                name: user_permissions
+                schema: null
+                joinColumns:
+                    -
+                        name: user_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: permission_id
+                        unique: true
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+        roles:
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\Role
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: users
+            joinTable:
+                name: assigned_roles
+                schema: null
+                joinColumns:
+                    -
+                        name: user_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: role_id
+                        unique: true
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks:
+        preUpdate:
+            - preUpdate

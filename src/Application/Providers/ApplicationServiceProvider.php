@@ -1,6 +1,5 @@
 <?php namespace Schweppesale\Module\Access\Application\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Papper\Papper;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
@@ -24,6 +23,7 @@ use Schweppesale\Module\Access\Infrastructure\Repositories\Role\RoleRepositoryDo
 use Schweppesale\Module\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 use Schweppesale\Module\Core\Mapper\Papper\Mapper;
+use Schweppesale\Module\Core\Providers\Laravel\ServiceProvider;
 
 class ApplicationServiceProvider extends ServiceProvider
 {
@@ -58,8 +58,13 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../Config/config.php' => config_path('access.php'),
         ]);
+
         $this->mergeConfigFrom(
             __DIR__ . '/../Config/config.php', 'access'
+        );
+
+        $this->mergeConfigRecursiveFrom(
+            __DIR__ . '/../Config/doctrine.php', 'doctrine'
         );
     }
 
