@@ -9,7 +9,7 @@ Route::group([
     /**
      * Authentication
      */
-    $router->resource('token', 'TokenController', ['only' => ['create', 'destroy']]);
+    $router->resource('token', 'TokenController', ['only' => ['store', 'destroy']]);
 
     /**
      * Users

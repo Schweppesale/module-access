@@ -49,7 +49,7 @@ class TokenController extends Controller
      * @param LoginRequest $request
      * @return mixed
      */
-    public function create(LoginRequest $request)
+    public function store(LoginRequest $request)
     {
 
         if ($this->hasTooManyLoginAttempts($request)) {
