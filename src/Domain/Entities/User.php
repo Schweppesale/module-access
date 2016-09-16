@@ -5,7 +5,6 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Illuminate\Contracts\Auth\Authenticatable;
-use JsonSerializable;
 use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
 use LaravelDoctrine\ACL\Mappings as ACL;
 use Schweppesale\Module\Access\Domain\Entities\Traits\CanBeAuthenticated;
@@ -16,7 +15,7 @@ use Schweppesale\Module\Access\Domain\Entities\Traits\HasPermissions;
  *
  * @package Schweppesale\Domain\Entities
  */
-class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
+class User implements HasPermissionsInterface, Authenticatable
 {
 
     const ACTIVE = 0x01;
@@ -330,22 +329,6 @@ class User implements JsonSerializable, HasPermissionsInterface, Authenticatable
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'confirmation_code' => $this->getConfirmationCode(),
-            'confirmed' => $this->isConfirmed(),
-            'created_at' => $this->getCreatedAt(),
-            'deleted_at' => $this->getDeletedAt(),
-            'email' => $this->getEmail(),
-            'name' => $this->getName()
-        ];
     }
 
     /**

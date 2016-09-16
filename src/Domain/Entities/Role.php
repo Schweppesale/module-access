@@ -11,7 +11,7 @@ use LaravelDoctrine\ACL\Permissions\HasPermissions;
  *
  * @package Schweppesale\Domain\Entities
  */
-class Role implements \JsonSerializable, RoleContract
+class Role implements RoleContract
 {
 
     use HasPermissions;
@@ -186,10 +186,5 @@ class Role implements \JsonSerializable, RoleContract
     public function getUsers()
     {
         return $this->users;
-    }
-
-    public function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
     }
 }

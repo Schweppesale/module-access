@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package Schweppesale\Domain\Entities
  */
-class PermissionGroup implements \JsonSerializable
+class PermissionGroup
 {
 
     /**
@@ -168,10 +168,5 @@ class PermissionGroup implements \JsonSerializable
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    public function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
     }
 }

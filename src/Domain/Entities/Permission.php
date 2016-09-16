@@ -10,7 +10,7 @@ use LaravelDoctrine\ACL\Contracts\Permission as PermissionContract;
  *
  * @package Schweppesale\Domain\Entities
  */
-class Permission implements \JsonSerializable, PermissionContract
+class Permission implements PermissionContract
 {
 
     /**
@@ -184,10 +184,5 @@ class Permission implements \JsonSerializable, PermissionContract
     {
         $this->system = $system;
         return $this;
-    }
-
-    public function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
     }
 }

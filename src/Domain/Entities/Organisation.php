@@ -12,7 +12,7 @@ use LaravelDoctrine\ACL\Contracts\Organisation as OrganisationContract;
  *
  * @package Schweppesale\Domain\Entities
  */
-class Organisation implements \JsonSerializable, OrganisationContract
+class Organisation implements OrganisationContract
 {
 
     /**
@@ -128,14 +128,6 @@ class Organisation implements \JsonSerializable, OrganisationContract
     public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
     }
 
     /**
