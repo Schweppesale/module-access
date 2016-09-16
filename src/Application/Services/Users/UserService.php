@@ -209,10 +209,10 @@ class UserService
     {
         return [
             'user' => $this->getById($userId),
-            'roles' => $this->roles->findAll(),
-            'organisations' => $this->organisations->findAll(),
-            'permissions' => $this->permissions->findAll(),
-            'permissionGroups' => $this->permissionGroups->findAllParents(),
+            'roles' => $this->mapper->mapArray($this->roles->findAll()->toArray(), Role::class, RoleDTO::class),
+            'organisations' => $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class),
+            'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
+            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
         ];
     }
 
