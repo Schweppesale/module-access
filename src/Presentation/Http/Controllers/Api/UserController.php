@@ -1,6 +1,5 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Application\Services\Users\UserService;
@@ -9,6 +8,7 @@ use Schweppesale\Module\Access\Presentation\Http\Requests\Api\User\DeleteUserReq
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\User\PermanentlyDeleteUserRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\User\StoreUserRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\User\UpdateUserRequest;
+use Schweppesale\Module\Core\Http\Controller;
 
 /**
  * Class UserController

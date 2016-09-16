@@ -1,12 +1,11 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Permission;
 
-use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\DeletePermissionGroupRequest;
-use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\SortPermissionGroupRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\StorePermissionGroupRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\UpdatePermissionGroupRequest;
+use Schweppesale\Module\Core\Http\Controller;
 
 /**
  * Class GroupController

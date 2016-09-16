@@ -1,8 +1,8 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
+use Schweppesale\Module\Core\Http\Controller;
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**

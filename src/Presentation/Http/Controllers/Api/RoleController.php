@@ -1,12 +1,12 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Roles\RoleService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\DeleteRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\EditRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\StoreRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\UpdateRoleRequest;
+use Schweppesale\Module\Core\Http\Controller;
 
 /**
  * Class RoleController

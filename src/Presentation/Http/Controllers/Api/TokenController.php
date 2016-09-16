@@ -1,11 +1,11 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Schweppesale\Module\Core\Http\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Token\LoginRequest;
 use Schweppesale\Module\Core\Exceptions\Exception;
+use Schweppesale\Module\Core\Http\Controller;
 
 /**
  * Class TokenController

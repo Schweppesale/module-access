@@ -1,12 +1,14 @@
 <?php
 namespace Schweppesale\Module\Access\Presentation\Providers;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\ServiceProvider;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 use Schweppesale\Module\Core\Exceptions\ModuleExceptionHandler;
 
-class PresentationServiceProvider extends ServiceProvider {
+class PresentationServiceProvider extends ServiceProvider
+{
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -26,23 +28,23 @@ class PresentationServiceProvider extends ServiceProvider {
     }
 
     /**
-     * @return ModuleExceptionHandler
-     */
-    public function getExceptionHandler(): ModuleExceptionHandler
-    {
-        return $this->app->make(\Illuminate\Contracts\Debug\ExceptionHandler::class);
-    }
-
-    /**
      * @return void
      */
     public function registerExceptionHandlers()
     {
         $this->getExceptionHandler()->addModuleExceptionHandler(
             EntityNotFoundException::class,
-            function(Request $request, EntityNotFoundException $exception, Response $response) {
-               return $response->setStatusCode(404)->setContent(['error' => $exception->getMessage()]);
+            function (Request $request, EntityNotFoundException $exception, Response $response) {
+                return $response->setStatusCode(404)->setContent(['error' => $exception->getMessage()]);
             }
         );
+    }
+
+    /**
+     * @return ModuleExceptionHandler
+     */
+    public function getExceptionHandler(): ModuleExceptionHandler
+    {
+        return $this->app->make(\Illuminate\Contracts\Debug\ExceptionHandler::class);
     }
 }
