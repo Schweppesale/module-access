@@ -35,6 +35,11 @@ class GroupController extends Controller
         $this->permissionGroupService = $permissionGroupService;
     }
 
+    public function index()
+    {
+        return $this->response->setContent($this->permissionGroupService->findAll());
+    }
+
     /**
      * @param $id
      * @param DeletePermissionGroupRequest $request

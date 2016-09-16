@@ -69,7 +69,7 @@ class PermissionGroupService
      */
     public function findAll()
     {
-        $result = $this->permissionGroups->findAll();
+        $result = $this->permissionGroups->findAll()->toArray();
         return $this->mapper->mapArray($result, PermissionGroup::class, PermissionGroupDTO::class);
     }
 
@@ -78,7 +78,7 @@ class PermissionGroupService
      */
     public function findAllParents()
     {
-        $result = $this->permissionGroups->findAllParents();
+        $result = $this->permissionGroups->findAllParents()->toArray();
         return $this->mapper->mapArray($result, PermissionGroup::class, PermissionGroupDTO::class);
     }
 

@@ -25,7 +25,7 @@ Route::group([
      * Permissions
      */
     $router->group(['prefix' => 'permissions', 'namespace' => 'Permission'], function (Router $router) {
-        $router->resource('group', 'GroupController', ['only' => ['update', 'store', 'destroy']]);
+        $router->resource('groups', 'GroupController', ['only' => ['index', 'update', 'store', 'destroy']]);
     });
     $router->resource('permissions', 'PermissionController');
 

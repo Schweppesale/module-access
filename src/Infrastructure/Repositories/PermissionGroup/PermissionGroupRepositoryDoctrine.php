@@ -93,7 +93,6 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
             ->from(PermissionGroup::class, 'pg')
             ->getQuery()
             ->getResult();
-
         return new Collection($result);
     }
 

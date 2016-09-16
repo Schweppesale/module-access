@@ -118,10 +118,13 @@ class ApplicationServiceProvider extends ServiceProvider
             ->constructUsing(function (PermissionGroup $permissionGroup) use ($mapper) {
                 $parent = $permissionGroup->getParent();
                 $parentId = $parent ? $parent->getId() : null;
-                $permissions = $permissionGroup->getPermissions();
-                $permissions = ($permissions) ? $mapper->mapArray($permissions->toArray(), Permission::class, PermissionDTO::class) : [];
-                $children = $permissionGroup->getChildren();
-                $children = ($children) ? $mapper->mapArray($children->toArray(), Permission::class, PermissionDTO::class) : [];
+//                $permissions = $permissionGroup->getPermissions();
+//                $permissions = ($permissions) ? $mapper->mapArray($permissions->toArray(), Permission::class, PermissionDTO::class) : [];
+//                $children = $permissionGroup->getChildren();
+//                $children = ($children) ? $mapper->mapArray($children->toArray(), Permission::class, PermissionDTO::class) : [];
+
+                $permissions = [];
+                $children = [];
 
                 return new PermissionGroupDTO(
                     $permissionGroup->getId(),
