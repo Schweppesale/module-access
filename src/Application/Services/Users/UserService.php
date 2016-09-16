@@ -27,7 +27,7 @@ class UserService
 {
 
     /**
-     * @var Access
+     * @var AuthenticationService
      */
     private $access;
 
@@ -69,7 +69,7 @@ class UserService
     /**
      * UserService constructor.
      * @param MapperInterface $mapper
-     * @param Access $access
+     * @param AuthenticationService $access
      * @param UserRepository $users
      * @param OrganisationRepository $organisations
      * @param RoleRepository $roles
@@ -79,7 +79,7 @@ class UserService
      */
     public function __construct(
         MapperInterface $mapper,
-        Access $access,
+        AuthenticationService $access,
         UserRepository $users,
         OrganisationRepository $organisations,
         RoleRepository $roles,
@@ -173,10 +173,10 @@ class UserService
     public function createMeta()
     {
         return [
-            'roles' => $this->mapper->mapArray($this->roles->fetchAll()->toArray(), Role::class, RoleDTO::class),
-            'organisations' => $this->mapper->mapArray($this->organisations->fetchAll()->toArray(), Organisation::class, OrganisationDTO::class),
-            'permissions' => $this->mapper->mapArray($this->permissions->fetchAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->fetchAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
+            'roles' => $this->mapper->mapArray($this->roles->findAll()->toArray(), Role::class, RoleDTO::class),
+            'organisations' => $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class),
+            'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
+            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
         ];
     }
 
@@ -209,10 +209,10 @@ class UserService
     {
         return [
             'user' => $this->getById($userId),
-            'roles' => $this->roles->fetchAll(),
-            'organisations' => $this->organisations->fetchAll(),
-            'permissions' => $this->permissions->fetchAll(),
-            'permissionGroups' => $this->permissionGroups->fetchAllParents(),
+            'roles' => $this->roles->findAll(),
+            'organisations' => $this->organisations->findAll(),
+            'permissions' => $this->permissions->findAll(),
+            'permissionGroups' => $this->permissionGroups->findAllParents(),
         ];
     }
 
@@ -240,9 +240,9 @@ class UserService
     /**
      * @return UserDTO[]
      */
-    public function fetchAll()
+    public function findAll()
     {
-        $result = $this->users->fetchAll();
+        $result = $this->users->findAll();
         return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
     }
 
@@ -251,7 +251,7 @@ class UserService
      */
     public function findBanned()
     {
-        $result = $this->users->fetchAllBanned();
+        $result = $this->users->findAllBanned();
         return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
     }
 
@@ -260,7 +260,7 @@ class UserService
      */
     public function findDeactivated()
     {
-        $result = $this->users->fetchAllDeactivated();
+        $result = $this->users->findAllDeactivated();
         return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
     }
 
@@ -269,7 +269,7 @@ class UserService
      */
     public function findDeleted()
     {
-        $result = $this->users->fetchAllDeleted();
+        $result = $this->users->findAllDeleted();
         return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
     }
 

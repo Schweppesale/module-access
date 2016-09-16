@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\CanResetPassword;
 use JsonSerializable;
 use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
 use LaravelDoctrine\ACL\Mappings as ACL;

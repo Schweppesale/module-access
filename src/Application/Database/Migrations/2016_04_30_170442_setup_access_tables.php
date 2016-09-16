@@ -27,12 +27,13 @@ class SetupAccessTables extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('Organisation_id')->nullable();
+            $table->string('organisation_id')->nullable();
             $table->string('email')->unique();
             $table->string('password', 60)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->string('confirmation_code');
             $table->boolean('confirmed')->default(false);
+            $table->string('access_token');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

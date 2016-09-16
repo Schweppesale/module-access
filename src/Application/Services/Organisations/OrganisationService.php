@@ -1,7 +1,6 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Organisations;
 
-use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
@@ -39,9 +38,9 @@ class OrganisationService
     /**
      * @param $organisationName
      * @param null $description
-     * @return Organisation
+     * @return OrganisationDTO
      */
-    public function create($organisationName, $description = null)
+    public function create($organisationName, $description = null): OrganisationDTO
     {
         $organisation = new Organisation($organisationName);
         $organisation->setDescription($description);
@@ -51,12 +50,29 @@ class OrganisationService
     }
 
     /**
+     * @param $id
+     * @return OrganisationDTO
+     */
+    public function getById($organisationid): OrganisationDTO
+    {
+        return $this->mapper->map($this->organisations->getById($organisationid), OrganisationDTO::class);
+    }
+
+    /**
+     * @return OrganisationDTO[]
+     */
+    public function findAll()
+    {
+        return $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class);
+    }
+
+    /**
      * @param $organisationid
      * @param $organisationName
      * @param null $description
-     * @return Organisation
+     * @return OrganisationDTO
      */
-    public function update($organisationid, $organisationName, $description = null)
+    public function update($organisationid, $organisationName, $description = null): OrganisationDTO
     {
         $organisation = $this->organisations->getById($organisationid);
         $organisation->setName($organisationName);

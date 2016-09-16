@@ -61,9 +61,9 @@ class RoleService
     /**
      * @return Role[]
      */
-    public function fetchAll()
+    public function findAll()
     {
-        $result = $this->roles->fetchAll();
+        $result = $this->roles->findAll();
         return $this->mapper->mapArray($result->toArray(), Role::class, RoleDTO::class);
     }
 
@@ -75,8 +75,8 @@ class RoleService
     {
         return [
             'role' => $this->getById($roleId),
-            'permissions' => $this->mapper->mapArray($this->permissions->fetchAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->fetchAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
+            'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
+            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
         ];
     }
 
@@ -116,8 +116,8 @@ class RoleService
     public function createMeta()
     {
         return [
-            'permissions' => $this->mapper->mapArray($this->permissions->fetchAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->fetchAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class)
+            'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
+            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class)
         ];
     }
 

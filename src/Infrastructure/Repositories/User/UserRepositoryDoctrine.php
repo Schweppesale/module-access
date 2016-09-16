@@ -2,9 +2,11 @@
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\User;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Class UserRepository
@@ -34,7 +36,7 @@ class UserRepositoryDoctrine implements UserRepository
      * @param bool|true $softDelete
      * @return bool
      */
-    public function delete($userId, $softDelete = true)
+    public function delete($userId, $softDelete = true): bool
     {
         $user = $this->getById($userId);
         if ($softDelete === true) {
@@ -43,7 +45,6 @@ class UserRepositoryDoctrine implements UserRepository
             $this->manager->remove($user);
             $this->manager->flush();
         }
-
         return true;
     }
 
@@ -51,12 +52,20 @@ class UserRepositoryDoctrine implements UserRepository
      * @param int $id
      * @return User
      */
-    public function getById($id)
+    public function getById($id): User
     {
-        if ($users = $this->manager->getRepository(User::class)->findBy(['id' => $id])) {
-            return $users[0];
-        } else {
-            throw new \Illuminate\Contracts\Queue\EntityNotFoundException('User not found', $id);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
         }
     }
 
@@ -64,7 +73,7 @@ class UserRepositoryDoctrine implements UserRepository
      * @param User $user
      * @return User
      */
-    public function save(User $user)
+    public function save(User $user): User
     {
         $this->manager->persist($user);
         $this->manager->flush();
@@ -74,90 +83,105 @@ class UserRepositoryDoctrine implements UserRepository
     /**
      * @return User[]
      */
-    public function fetchAll()
+    public function findAll(): Collection
     {
-        $query = $this->manager->createQueryBuilder();
-        $query->select('u');
-        $query->from(User::class, 'u');
-        $query->where('u.status = ' . User::ACTIVE . ' AND u.deletedAt IS NULL');
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.status = ' . User::ACTIVE)
+            ->where('u.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
 
-        return new Collection($query->getQuery()->getResult());
+        return new Collection($result);
     }
 
     /**
      * @return User[]
      */
-    public function fetchAllBanned()
+    public function findAllBanned(): Collection
     {
-        $query = $this->manager->createQueryBuilder();
-        $query->select('u');
-        $query->from(User::class, 'u');
-        $query->where('u.status = ' . User::BANNED . ' AND u.deletedAt IS NULL');
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.status = ' . User::BANNED)
+            ->where('u.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
 
-        return new Collection($query->getQuery()->getResult());
+        return new Collection($result);
     }
 
     /**
      * @return User[]
      */
-    public function fetchAllDeactivated()
+    public function findAllDeactivated(): Collection
     {
-        $query = $this->manager->createQueryBuilder();
-        $query->select('u');
-        $query->from(User::class, 'u');
-        $query->where('u.status = ' . User::DISABLED . ' AND u.deletedAt IS NULL');
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.status = ' . User::DISABLED)
+            ->where('u.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
 
-        return new Collection($query->getQuery()->getResult());
+        return new Collection($result);
     }
 
     /**
      * @return User[]
      */
-    public function fetchAllDeleted()
+    public function findAllDeleted(): Collection
     {
-        $query = $this->manager->createQueryBuilder();
-        $query->select('u');
-        $query->from(User::class, 'u');
-        $query->where('u.deletedAt IS NOT NULL');
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.deletedAt IS NOT NULL')
+            ->getQuery()
+            ->getResult();
 
-        return new Collection($query->getQuery()->getResult());
+        return new Collection($result);
     }
 
     /**
      * @param $email
      * @return User
      */
-    public function getByEmail($email)
+    public function getByEmail($email): User
     {
-        if ($users = $this->manager->getRepository(User::class)->findBy(['email' => $email])) {
-            return $users[0];
-        } else {
-            throw new \Illuminate\Contracts\Queue\EntityNotFoundException('User not found', $email);
-        }
-    }
+        try {
 
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function findUserById($id)
-    {
-        if ($users = $this->manager->getRepository(User::class)->findBy(['id' => $id])) {
-            return $users[0];
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.email = :email')
+                ->setParameter('email', $email)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
         }
-        return false;
     }
 
     /**
      * @param string $token
      * @return User
      */
-    public function getByToken($token)
+    public function getByConfirmationCode($code): User
     {
-        if ($users = $this->manager->getRepository(User::class)->findBy(['confirmationCode' => $token])) {
-            return $users[0];
-        } else {
-            throw new \Illuminate\Contracts\Queue\EntityNotFoundException('User not found', $token);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.confirmationCode = :confirmationCode')
+                ->setParameter('confirmationCode', $code)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
         }
     }
 }

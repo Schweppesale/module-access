@@ -14,13 +14,11 @@
     "providers": [
         "Schweppesale\\Module\\Access\\Application\\Providers\\ApplicationServiceProvider",
         "Schweppesale\\Module\\Access\\Application\\Providers\\EventServiceProvider",
-        "Schweppesale\\Module\\Access\\Presentation\\Providers\\PresentationServiceProvider",
         "LaravelDoctrine\\ORM\\DoctrineServiceProvider",
         "LaravelDoctrine\\ACL\\AclServiceProvider"
     ],
     "aliases": [],
     "files": [
-        "src\/Application\/Support\/helpers.php",
         "src\/Presentation\/Http\/routes.php"
     ]
 }

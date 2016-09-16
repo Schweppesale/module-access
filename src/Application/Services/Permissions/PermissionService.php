@@ -93,9 +93,9 @@ class PermissionService
     /**
      * @return Permission[]
      */
-    public function fetchAll()
+    public function findAll()
     {
-        $result = $this->permissions->fetchAll();
+        $result = $this->permissions->findAll();
         return $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
     }
 

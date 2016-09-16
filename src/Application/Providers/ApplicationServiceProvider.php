@@ -1,6 +1,5 @@
 <?php namespace Schweppesale\Module\Access\Application\Providers;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Papper\Papper;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;

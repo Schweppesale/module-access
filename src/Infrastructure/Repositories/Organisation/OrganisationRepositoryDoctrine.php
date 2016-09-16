@@ -2,8 +2,11 @@
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\Organisation;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
+use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Class OrganisationRepository
@@ -16,41 +19,59 @@ class OrganisationRepositoryDoctrine implements OrganisationRepositoryInterface
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private $manager;
 
     /**
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->manager = $entityManager;
     }
 
     /**
-     * @return Organisation[]
+     * @return Organisation[]|Collection
      */
-    public function fetchAll()
+    public function findAll(): Collection
     {
-        return $this->entityManager->getRepository(Organisation::class)->findAll();
+        $result = $this->manager->createQueryBuilder()
+            ->select('o')
+            ->from(Organisation::class, 'o')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
     }
 
     /**
      * @param $id
      * @return Organisation
      */
-    public function getById($id)
+    public function getById($id): Organisation
     {
-        return $this->entityManager->find(Organisation::class, $id);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('o')
+                ->from(Organisation::class, 'o')
+                ->where('o.id = :id')
+                ->setParameter('o', $id)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Organisation not found!', 0, $ex);
+        }
     }
 
     /**
      * @param Organisation $organisation
      * @return Organisation
      */
-    public function save(Organisation $organisation)
+    public function save(Organisation $organisation): Organisation
     {
-        $this->entityManager->persist($organisation);
-        $this->entityManager->flush();
+        $this->manager->persist($organisation);
+        $this->manager->flush();
         return $organisation;
     }
 }

@@ -67,18 +67,18 @@ class PermissionGroupService
     /**
      * @return PermissionGroupDTO[]
      */
-    public function fetchAll()
+    public function findAll()
     {
-        $result = $this->permissionGroups->fetchAll();
+        $result = $this->permissionGroups->findAll();
         return $this->mapper->mapArray($result, PermissionGroup::class, PermissionGroupDTO::class);
     }
 
     /**
      * @return PermissionGroupDTO[]
      */
-    public function fetchAllParents()
+    public function findAllParents()
     {
-        $result = $this->permissionGroups->fetchAllParents();
+        $result = $this->permissionGroups->findAllParents();
         return $this->mapper->mapArray($result, PermissionGroup::class, PermissionGroupDTO::class);
     }
 

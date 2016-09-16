@@ -2,15 +2,17 @@
 
 namespace Schweppesale\Module\Access\Application\Services\Users;
 
-use Schweppesale\Module\Core\Exceptions\GeneralException;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
+use Schweppesale\Module\Access\Application\Response\UserDTO;
+use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Events\User\UserLoggedIn;
 use Schweppesale\Module\Access\Domain\Events\User\UserLoggedOut;
-use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Core\Exceptions\GeneralException;
+use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
  * Class AuthenticationService
@@ -36,20 +38,27 @@ class AuthenticationService
     private $passwordBroker;
 
     /**
+     * @var MapperInterface
+     */
+    private $mapper;
+
+    /**
      * AuthenticationService constructor.
-     *
      * @param Guard $auth
      * @param UserRepository $users
      * @param PasswordBroker $passwordBroker
+     * @param MapperInterface $mapper
      */
     public function __construct(
         Guard $auth,
         UserRepository $users,
-        PasswordBroker $passwordBroker
+        PasswordBroker $passwordBroker,
+        MapperInterface $mapper
     )
     {
         $this->auth = $auth;
         $this->users = $users;
+        $this->mapper = $mapper;
         $this->passwordBroker = $passwordBroker;
     }
 
@@ -112,15 +121,15 @@ class AuthenticationService
     }
 
     /**
-     * @return User
+     * @return UserDTO
      */
-    public function getUser()
+    public function getUser(): UserDTO
     {
         $user = $this->auth->user();
         if (!$user instanceof User) {
-            throw new \UnexpectedValueException('Invalid User Entity');
+            throw new \UnexpectedValueException('User not logged in!');
         }
-        return $user;
+        return $this->mapper->map($user, UserDTO::class);
     }
 
     /**
@@ -134,7 +143,7 @@ class AuthenticationService
 
     /**
      * @param $email
-     * @return $this|\Illuminate\Http\RedirectResponse|string
+     * @return void
      * @throws GeneralException
      */
     public function sendPasswordResetEmail($email)
@@ -150,7 +159,7 @@ class AuthenticationService
             throw new GeneralException("There is no user with that e-mail address.");
         }
 
-        return $this->passwordBroker->sendResetLink(['email' => $email], function (Message $message) {
+        $this->passwordBroker->sendResetLink(['email' => $email], function (Message $message) {
             $message->subject('Your Password Reset Link');
         });
     }

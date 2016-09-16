@@ -1,8 +1,8 @@
 <?php namespace Schweppesale\Module\Access\Domain\Events\User;
 
-use Schweppesale\Module\Core\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Schweppesale\Module\Access\Domain\Entities\User;
+use Schweppesale\Module\Core\Events\Event;
 
 /**
  * Class UserLoggedOut

@@ -2,10 +2,11 @@
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\Permission;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Illuminate\Contracts\Queue\EntityNotFoundException;
+use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionGroup;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Class PermissionRepositoryDoctrine
@@ -34,7 +35,7 @@ class PermissionRepositoryDoctrine implements PermissionRepository
      * @param $id
      * @return bool
      */
-    public function delete($id)
+    public function delete($id): bool
     {
         $this->manager->remove($this->getById($id));
         return true;
@@ -44,28 +45,42 @@ class PermissionRepositoryDoctrine implements PermissionRepository
      * @param $id
      * @return Permission
      */
-    public function getById($id)
+    public function getById($id): Permission
     {
-        if ($permissions = $this->manager->getRepository(Permission::class)->findBy(['id' => $id])) {
-            return $permissions[0];
-        } else {
-            throw new EntityNotFoundException('Permission not found', $id);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('p')
+                ->from(Permission::class, 'p')
+                ->where('p.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Permission not found!', 0, $ex);
         }
     }
 
     /**
-     * @return Permission[]
+     * @return Permission[]|Collection
      */
-    public function fetchAll()
+    public function findAll(): Collection
     {
-        return $this->manager->getRepository(Permission::class)->findAll();
+        $result = $this->manager->createQueryBuilder()
+            ->select('p')
+            ->from(Permission::class, 'p')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
     }
 
     /**
      * @param Permission $permission
      * @return Permission
      */
-    public function save(Permission $permission)
+    public function save(Permission $permission): Permission
     {
         if ($this->manager->contains($permission) === false) {
             $this->manager->persist($permission);

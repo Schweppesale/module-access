@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\Role;
+use Schweppesale\Module\Core\Collections\Collection;
 
 /**
  * Interface RoleRepository
@@ -15,22 +16,22 @@ interface RoleRepository
      * @param $id
      * @return boolean
      */
-    public function delete($id);
+    public function delete($id): bool;
 
     /**
-     * @return Role[]
+     * @return Role[]|Collection
      */
-    public function fetchAll();
+    public function findAll(): Collection;
 
     /**
      * @param $id
      * @return Role
      */
-    public function getById($id);
+    public function getById($id): Role;
 
     /**
      * @param Role $role
      * @return Role
      */
-    public function save(Role $role);
+    public function save(Role $role): Role;
 }

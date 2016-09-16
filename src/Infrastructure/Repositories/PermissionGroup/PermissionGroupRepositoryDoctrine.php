@@ -2,9 +2,11 @@
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Illuminate\Contracts\Queue\EntityNotFoundException;
+use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Class PermissionGroupRepositoryDoctrine
@@ -33,7 +35,7 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
      * @param $id
      * @return bool
      */
-    public function delete($id)
+    public function delete($id): bool
     {
         $this->manager->remove($this->getById($id));
         return true;
@@ -43,12 +45,20 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
      * @param $id
      * @return PermissionGroup
      */
-    public function getById($id)
+    public function getById($id): PermissionGroup
     {
-        if ($users = $this->manager->getRepository(PermissionGroup::class)->findBy(['id' => $id])) {
-            return $users[0];
-        } else {
-            throw new EntityNotFoundException('Permission Group not found', $id);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('pg')
+                ->from(PermissionGroup::class, 'pg')
+                ->where('pg.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Permission Group not found!', 0, $ex);
         }
     }
 
@@ -56,36 +66,57 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
      * @param $name
      * @return PermissionGroup
      */
-    public function getByName($name)
+    public function getByName($name): PermissionGroup
     {
-        if ($users = $this->manager->getRepository(PermissionGroup::class)->findBy(['name' => $name])) {
-            return $users[0];
-        } else {
-            throw new EntityNotFoundException('Permission Group not found', $name);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('pg')
+                ->from(PermissionGroup::class, 'pg')
+                ->where('pg.name = :name')
+                ->setParameter('name', $name)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Permission Group not found!', 0, $ex);
         }
     }
 
     /**
-     * @return PermissionGroup[]
+     * @return PermissionGroup[]|Collection
      */
-    public function fetchAll()
+    public function findAll(): Collection
     {
-        return $this->manager->getRepository(PermissionGroup::class)->findAll();
+        $result = $this->manager->createQueryBuilder()
+            ->select('pg')
+            ->from(PermissionGroup::class, 'pg')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
     }
 
     /**
-     * @return PermissionGroup[]
+     * @return PermissionGroup[]|Collection
      */
-    public function fetchAllParents()
+    public function findAllParents(): Collection
     {
-        return $this->manager->getRepository(PermissionGroup::class)->findBy(['parent' => null]);
+        $result = $this->manager->createQueryBuilder()
+            ->select('pg')
+            ->from(PermissionGroup::class, 'pg')
+            ->where('pg.parent IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
     }
 
     /**
      * @param PermissionGroup $permissionGroup
      * @return PermissionGroup
      */
-    public function save(PermissionGroup $permissionGroup)
+    public function save(PermissionGroup $permissionGroup): PermissionGroup
     {
         $this->manager->persist($permissionGroup);
         $this->manager->flush();

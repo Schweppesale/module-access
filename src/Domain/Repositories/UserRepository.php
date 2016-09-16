@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\User;
+use Schweppesale\Module\Core\Collections\Collection;
 
 /**
  * Interface UserRepository
@@ -16,55 +17,49 @@ interface UserRepository
      * @param bool|true $softDelete
      * @return bool
      */
-    public function delete($userId, $softDelete = true);
+    public function delete($userId, $softDelete = true): bool;
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
-    public function fetchAll();
+    public function findAll(): Collection;
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
-    public function fetchAllBanned();
+    public function findAllBanned(): Collection;
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
-    public function fetchAllDeactivated();
+    public function findAllDeactivated(): Collection;
 
     /**
-     * @return User[]
+     * @return User[]|Collection
      */
-    public function fetchAllDeleted();
-
-    /**
-     * @param $id
-     * @return User|bool
-     */
-    public function findUserById($id);
+    public function findAllDeleted(): Collection;
 
     /**
      * @param $email
      * @return User
      */
-    public function getByEmail($email);
+    public function getByEmail($email): User;
 
     /**
      * @param int $id
      * @return User
      */
-    public function getById($id);
+    public function getById($id): User;
 
     /**
-     * @param string $token
+     * @param string $code
      * @return User
      */
-    public function getByToken($token);
+    public function getByConfirmationCode($code): User;
 
     /**
      * @param User $user
      * @return User
      */
-    public function save(User $user);
+    public function save(User $user): User;
 }

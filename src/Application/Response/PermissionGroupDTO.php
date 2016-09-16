@@ -2,7 +2,6 @@
 namespace Schweppesale\Module\Access\Application\Response;
 
 use DateTime;
-use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
 
 /**
  * Class PermissionGroupDTO

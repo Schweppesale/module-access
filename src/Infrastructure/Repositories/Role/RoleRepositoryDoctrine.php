@@ -2,10 +2,11 @@
 namespace Schweppesale\Module\Access\Infrastructure\Repositories\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\Role;
-use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 use Schweppesale\Module\Core\Collections\Collection;
+use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
  * Class RoleRepositoryDoctrine
@@ -31,18 +32,24 @@ class RoleRepositoryDoctrine implements RoleRepository
     }
 
     /**
-     * @return Role[]
+     * @return Role[]|Collection
      */
-    public function fetchAll()
+    public function findAll(): Collection
     {
-        return new Collection($this->manager->getRepository(Role::class)->findAll());
+        $result = $this->manager->createQueryBuilder()
+            ->select('r')
+            ->from(Role::class, 'r')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
     }
 
     /**
      * @param $id
      * @return bool
      */
-    public function delete($id)
+    public function delete($id): bool
     {
         $this->manager->remove($this->getById($id));
         $this->manager->flush();
@@ -52,23 +59,29 @@ class RoleRepositoryDoctrine implements RoleRepository
     /**
      * @param $id
      * @return Role
-     * @internal param $userId
      */
-    public function getById($id)
+    public function getById($id): Role
     {
-        if ($roles = $this->manager->getRepository(Role::class)->findBy(['id' => $id])) {
-            return $roles[0];
-        } else {
-            throw new \Illuminate\Contracts\Queue\EntityNotFoundException('Role not found', $id);
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('r')
+                ->from(Role::class, 'r')
+                ->where('r.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Role not found!', 0, $ex);
         }
     }
 
     /**
      * @param Role $role
      * @return Role
-     * @internal param User $user
      */
-    public function save(Role $role)
+    public function save(Role $role): Role
     {
         $this->manager->persist($role);
         $this->manager->flush();

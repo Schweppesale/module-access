@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\Permission;
+use Schweppesale\Module\Core\Collections\Collection;
 
 /**
  * Interface PermissionGroupInterface
@@ -15,22 +16,22 @@ interface PermissionRepository
      * @param $id
      * @return boolean
      */
-    public function delete($id);
+    public function delete($id): bool;
 
     /**
-     * @return Permission[]
+     * @return Permission[]|Collection
      */
-    public function fetchAll();
+    public function findAll(): Collection;
 
     /**
      * @param $id
      * @return Permission
      */
-    public function getById($id);
+    public function getById($id): Permission;
 
     /**
      * @param Permission $permissionGroup
      * @return Permission
      */
-    public function save(Permission $permissionGroup);
+    public function save(Permission $permissionGroup): Permission;
 }

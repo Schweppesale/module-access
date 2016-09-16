@@ -3,7 +3,6 @@ namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
 
 use Illuminate\Database\Seeder;
 use Schweppesale\Module\Access\Application\Services\Users\UserService;
-use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 
 class UserTableSeeder extends Seeder
 {

@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
+use Schweppesale\Module\Core\Collections\Collection;
 
 /**
  * Interface OrganisationRepository
@@ -12,19 +13,19 @@ interface OrganisationRepository
 {
 
     /**
-     * @return Organisation[]
+     * @return Organisation[]|Collection
      */
-    public function fetchAll();
+    public function findAll(): Collection;
 
     /**
      * @param $id
      * @return Organisation
      */
-    public function getById($id);
+    public function getById($id): Organisation;
 
     /**
      * @param Organisation $organisation
      * @return Organisation
      */
-    public function save(Organisation $organisation);
+    public function save(Organisation $organisation): Organisation;
 }
