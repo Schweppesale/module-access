@@ -19,6 +19,7 @@
         "laravel-doctrine/orm": "~1.0",
         "laravel-doctrine/acl": "~1.0",
         "idr0id/papper": "~1.1.2",
+        "willdurand/hateoas": "~2.10",
         "predis/predis": "1.0.3",
         "schweppesale/module-core": "dev-master"
     },
