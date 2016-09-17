@@ -61,7 +61,6 @@ class PermissionService
         if ($groupId !== null) {
             $group = $this->permissionGroups->getById($groupId);
             $permission = new Permission($name, $label, $group);
-//            dd($permission);
         } else {
             $permission = new Permission($name, $label, null);
         }
