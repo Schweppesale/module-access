@@ -89,49 +89,48 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function registerFacade()
     {
-//        $this->app->booting(function () {
-//            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-//            $loader->alias('Access', \Schweppesale\Module\Access\Application\Services\Facades\Access::class);
-//        });
     }
 
     public function registerMappings()
     {
-        $this->app->bind(MapperInterface::class, Mapper::class);
-        $mapper = $this->app->make(MapperInterface::class);
+        $this->app->singleton(MapperInterface::class, Mapper::class);
+
+        Papper::createMap(PermissionGroup::class, PermissionGroupDTO::class)
+            ->constructUsing(function(PermissionGroup $permissionGroup) {
+                $parent = $permissionGroup->getParent();
+                $permissions = $permissionGroup->getPermissions();
+
+                return new PermissionGroupDTO(
+                    $permissionGroup->getId(),
+                    $permissionGroup->getName(),
+                    $permissionGroup->getSort(),
+                    $permissionGroup->getSystem(),
+                    null,
+//                    $parent != false ? Papper::map($parent)->toType(PermissionGroupDTO::class) : null,
+                    $permissionGroup->getCreatedAt(),
+                    $permissionGroup->getUpdatedAt()
+                );
+            });
 
         Papper::createMap(Permission::class, PermissionDTO::class)
-            ->constructUsing(function (Permission $permission) use ($mapper) {
+            ->constructUsing(function (Permission $permission) {
+                $group = $permission->getPermissionGroup();
                 $dependencies = $permission->getDependencies();
+
                 return new PermissionDTO(
                     $permission->getId(),
                     $permission->getName(),
                     $permission->getDisplayName(),
-                    ($dependencies) ? $mapper->mapArray($dependencies->toArray(), Permission::class, PermissionDTO::class) : [],
+                    ($group) ? Papper::map($group, PermissionGroup::class)->toType(PermissionGroupDTO::class) : null,
+                    ($dependencies) ? Papper::map($dependencies->toArray(), Permission::class)->toType(PermissionDTO::class) : [],
                     $permission->isSystem(),
                     $permission->getCreatedAt(),
                     $permission->getUpdatedAt()
                 );
             });
 
-        Papper::createMap(PermissionGroup::class, PermissionGroupDTO::class)
-            ->constructUsing(function(PermissionGroup $permissionGroup) use($mapper) {
-                $parent = $permissionGroup->getParent();
-                $permissions = $permissionGroup->getPermissions();
-                return new PermissionGroupDTO(
-                    $permissionGroup->getId(),
-                    $permissionGroup->getName(),
-                    $permissionGroup->getSort(),
-                    $permissionGroup->getSystem(),
-                    $parent !== null ? $mapper->map($parent, PermissionGroupDTO::class) : null,
-                    ($permissions && $permissions->count() > 0) ? $mapper->mapArray($permissions->toArray(), Permission::class, PermissionDTO::class) : [],
-                    $permissionGroup->getCreatedAt(),
-                    $permissionGroup->getUpdatedAt()
-                );
-            });
-
         Papper::createMap(Organisation::class, OrganisationDTO::class)
-            ->constructUsing(function (Organisation $organisation) use ($mapper) {
+            ->constructUsing(function (Organisation $organisation) {
                 return new OrganisationDTO(
                     $organisation->getId(),
                     $organisation->getName(),
@@ -142,26 +141,26 @@ class ApplicationServiceProvider extends ServiceProvider
             });
 
         Papper::createMap(Role::class, RoleDTO::class)
-            ->constructUsing(function (Role $role) use ($mapper) {
+            ->constructUsing(function (Role $role) {
                 return new RoleDTO(
                     $role->getId(),
                     $role->getName(),
-                    $mapper->mapArray($role->getPermissions()->toArray(), Permission::class, PermissionDTO::class),
+                    Papper::map($role->getPermissions()->toArray(), Permission::class)->toType(PermissionDTO::class),
                     $role->getCreatedAt(),
                     $role->getUpdatedAt()
                 );
             });
 
         Papper::createMap(User::class, UserDTO::class)
-            ->constructUsing(function (User $user) use ($mapper) {
+            ->constructUsing(function (User $user) {
                 return new UserDTO(
                     $user->getId(),
                     $user->getName(),
                     $user->isConfirmed(),
                     $user->getEmail(),
                     $user->getStatus(),
-                    $mapper->mapArray($user->getPermissions()->toArray(), Permission::class, PermissionDTO::class),
-                    $mapper->mapArray($user->getRoles()->toArray(), Role::class, RoleDTO::class),
+                    Papper::map($user->getPermissions()->toArray(), Permission::class)->toType(PermissionDTO::class),
+                    Papper::map($user->getRoles()->toArray(), Role::class)->toType(RoleDTO::class),
                     $user->getCreatedAt(),
                     $user->getDeletedAt(),
                     $user->getUpdatedAt()

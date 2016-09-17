@@ -14,22 +14,20 @@ Route::group([
     /**
      * Users
      */
-    $router->group(['prefix' => 'users', 'namespace' => 'User'], function (Router $router) {
-        $router->resource('banned', 'BannedController', ['only' => 'index', 'store']);
-        $router->resource('deactivated', 'DeactivatedController', ['only' => 'index', 'store']);
-        $router->resource('confirmation', 'ConfirmationController');
-    });
     $router->resource('users', 'UserController');
+    $router->get('users/{user}/roles', ['as' => 'users.roles', 'uses' => 'UserController@roles']);
+    $router->get('users/{user}/permissions', ['as' => 'users.permissions', 'uses' => 'UserController@permissions']);
 
     /**
      * Permission Groups
      */
-    $router->resource('permission-groups', 'PermissionGroupController', ['only' => ['index', 'update', 'store', 'destroy']]);
+    $router->resource('permission-groups', 'PermissionGroupController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
 
     /**
      * Permissions
      */
     $router->resource('permissions', 'PermissionController');
+    $router->get('paermissions/{user}/dependencies', ['as' => 'permissions.dependencies', 'uses' => 'PermissionController@dependencies']);
 
     /**
      * Organisations

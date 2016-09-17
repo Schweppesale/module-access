@@ -1,0 +1,22 @@
+Schweppesale\Module\Access\Application\Response\PermissionGroupDTO:
+    properties:
+        permissions:
+            exclude: true
+        parent:
+            exclude: true
+    relations:
+        -
+            rel: self
+            href:
+                route: permission-groups.show
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+        -
+            rel: parent
+            embedded:
+                content: expr(object.getParent())
+                xmlElementName: role
+            exclusion:
+                exclude_if: expr(object.getParent() == false)
+        -

@@ -1,0 +1,33 @@
+Schweppesale\Module\Access\Application\Response\UserDTO:
+    properties:
+        permissions:
+            exclude: true
+        roles:
+            exclude: true
+    relations:
+        -
+            rel: self
+            href:
+                route: users.show
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+        -
+            rel: permissions
+            href:
+                route: users.permissions
+                parameters:
+                    permission: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getPermissions() == false)
+        -
+            rel: roles
+            href:
+                route: users.roles
+                parameters:
+                    roles: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getRoles() == false)
+        -

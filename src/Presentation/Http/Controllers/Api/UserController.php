@@ -1,6 +1,10 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
+use Hateoas\HateoasBuilder;
+use Hateoas\Serializer\JsonSerializerInterface;
 use Illuminate\Http\Response;
+use JMS\Serializer\SerializerInterface;
+use LaravelDoctrine\ORM\Serializers\JsonSerializer;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Application\Services\Users\UserService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\User\CreateUserRequest;
@@ -33,14 +37,21 @@ class UserController extends Controller
     private $response;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * UserController constructor.
      * @param Response $response
+     * @param SerializerInterface $serializer
      * @param UserService $userService
      * @param AuthenticationService $authenticationService
      */
-    public function __construct(Response $response, UserService $userService, AuthenticationService $authenticationService)
+    public function __construct(Response $response, SerializerInterface $serializer, UserService $userService, AuthenticationService $authenticationService)
     {
         $this->response = $response;
+        $this->serializer = $serializer;
         $this->userService = $userService;
         $this->authenticationService = $authenticationService;
     }
@@ -51,7 +62,9 @@ class UserController extends Controller
      */
     public function create(CreateUserRequest $request)
     {
-        return $this->response->setContent($this->userService->createMeta());
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->createMeta(), 'json')
+        );
     }
 
     /**
@@ -61,7 +74,9 @@ class UserController extends Controller
      */
     public function delete($id, PermanentlyDeleteUserRequest $request)
     {
-        $this->userService->delete($id, false);
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->delete($id, false), 'json')
+        );
     }
 
     /**
@@ -71,7 +86,9 @@ class UserController extends Controller
      */
     public function destroy($id, DeleteUserRequest $request)
     {
-        return $this->response->setContent($this->userService->delete($id));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->delete($id), 'json')
+        );
     }
 
     /**
@@ -79,7 +96,23 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->response->setContent($this->userService->findAll());
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->findAll(), 'json')
+        );
+    }
+
+    public function permissions($id)
+    {
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->getById($id)->getPermissions(), 'json')
+        );
+    }
+
+    public function roles($id)
+    {
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->getById($id)->getRoles(), 'json')
+        );
     }
 
     /**
@@ -88,7 +121,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return $this->response->setContent($this->userService->getById($id));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->userService->getById($id), 'json')
+        );
     }
 
     /**
@@ -97,16 +132,18 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        return $this->response->setContent(
-            $this->userService->create(
-                $request->get('name'),
-                $request->get('email'),
-                $request->get('password'),
-                $request->get('assignees_roles'),
-                $this->extractInt(',', $request->get('permissions')),
-                $request->get('confirmed'),
-                $request->get('confirmation_email'),
-                $request->get('status')
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize(
+                $this->userService->create(
+                    $request->get('name'),
+                    $request->get('email'),
+                    $request->get('password'),
+                    $request->get('assignees_roles'),
+                    $this->extractInt(',', $request->get('permissions')),
+                    $request->get('confirmed'),
+                    $request->get('confirmation_email'),
+                    $request->get('status')
+                ), 'json'
             )
         );
     }
@@ -135,15 +172,17 @@ class UserController extends Controller
      */
     public function update($id, UpdateUserRequest $request)
     {
-        return $this->response->setContent(
-            $this->userService->update(
-                $id,
-                $request->get('name'),
-                $request->get('email'),
-                $request->get('assignees_roles'),
-                $this->extractInt(',', $request->get('permissions')),
-                $request->get('confirmed'),
-                $request->get('status')
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize(
+                $this->userService->update(
+                    $id,
+                    $request->get('name'),
+                    $request->get('email'),
+                    $request->get('assignees_roles'),
+                    $this->extractInt(',', $request->get('permissions')),
+                    $request->get('confirmed'),
+                    $request->get('status')
+                ), 'json'
             )
         );
     }

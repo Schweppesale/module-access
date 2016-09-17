@@ -42,12 +42,12 @@ class UserDTO implements JsonSerializable
     private $name;
 
     /**
-     * @var Permission[]
+     * @var PermissionDTO[]
      */
     private $permissions;
 
     /**
-     * @var Role[]
+     * @var RoleDTO[]
      */
     private $roles;
 

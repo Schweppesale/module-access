@@ -2,13 +2,13 @@
 namespace Schweppesale\Module\Access\Application\Response;
 
 use DateTime;
-use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
+use JsonSerializable;
 
 /**
  * Class PermissionGroupDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class PermissionGroupDTO implements \JsonSerializable
+class PermissionGroupDTO implements JsonSerializable
 {
 
     /**
@@ -62,13 +62,12 @@ class PermissionGroupDTO implements \JsonSerializable
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $order, $system, PermissionGroupDTO $parent = null, array $permissions, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $order, $system, PermissionGroupDTO $parent = null, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->createdAt = $createdAt;
         $this->id = $id;
         $this->name = $name;
         $this->parent = $parent;
-        $this->permissions = $permissions;
         $this->order = $order;
         $this->system = $system;
         $this->updatedAt = $updatedAt;

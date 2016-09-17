@@ -1,0 +1,22 @@
+Schweppesale\Module\Access\Application\Response\PermissionDTO:
+    properties:
+        dependencies:
+            exclude: true
+    relations:
+        -
+            rel: self
+            href:
+                route: permissions.show
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+        -
+            rel: dependencies
+            href:
+                route: permissions.dependencies
+                parameters:
+                    permission: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getDependencies() == false)
+

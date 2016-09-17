@@ -1,0 +1,10 @@
+Schweppesale\Module\Access\Application\Response\RoleDTO:
+    relations:
+        -
+            rel: self
+            href:
+                route: roles.show
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+        -

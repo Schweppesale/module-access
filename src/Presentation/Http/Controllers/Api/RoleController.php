@@ -1,6 +1,8 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
+use Hateoas\HateoasBuilder;
 use Illuminate\Http\Response;
+use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Access\Application\Services\Roles\RoleService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\DeleteRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\EditRoleRequest;
@@ -27,13 +29,20 @@ class RoleController extends Controller
     private $response;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * RoleController constructor.
      * @param Response $response
+     * @param SerializerInterface $serializer
      * @param RoleService $roleService
      */
-    public function __construct(Response $response, RoleService $roleService)
+    public function __construct(Response $response, SerializerInterface $serializer, RoleService $roleService)
     {
         $this->response = $response;
+        $this->serializer = $serializer;
         $this->roleService = $roleService;
     }
 
@@ -44,7 +53,9 @@ class RoleController extends Controller
      */
     public function destroy($id, DeleteRoleRequest $request)
     {
-        return $this->response->setContent($this->roleService->delete($id));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->roleService->delete($id), 'json')
+        );
     }
 
     /**
@@ -55,7 +66,9 @@ class RoleController extends Controller
      */
     public function edit($id, EditRoleRequest $request)
     {
-        return $this->response->setContent($this->roleService->editMeta($id));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer>serialize($this->roleService->editMeta($id), 'json')
+        );
     }
 
     /**
@@ -63,7 +76,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return $this->response->setContent($this->roleService->findAll());
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->roleService->findAll(), 'json')
+        );
     }
 
     /**
@@ -72,7 +87,9 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return $this->response->setContent($this->roleService->getById($id));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->roleService->getById($id), 'json')
+        );
     }
 
     /**
@@ -81,7 +98,9 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        return $this->response->setContent($this->roleService->create($request->all()));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->roleService->create($request->all()), 'json')
+        );
     }
 
     /**
@@ -91,6 +110,8 @@ class RoleController extends Controller
      */
     public function update($id, UpdateRoleRequest $request)
     {
-        return $this->response->setContent($this->roleService->update($id, $request->all()));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serializer->serialize($this->roleService->update($id, $request->all()), 'json')
+        );
     }
 }

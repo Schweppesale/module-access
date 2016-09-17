@@ -1,0 +1,10 @@
+Schweppesale\Module\Access\Application\Response\OrganisationDTO:
+    relations:
+        -
+            rel: self
+            href:
+                route: organisations.show
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+        -

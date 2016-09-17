@@ -2,12 +2,13 @@
 namespace Schweppesale\Module\Access\Application\Response;
 
 use DateTime;
+use JsonSerializable;
 
 /**
  * Class PermissionDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class PermissionDTO implements \JsonSerializable
+class PermissionDTO implements JsonSerializable
 {
 
     /**
@@ -46,22 +47,29 @@ class PermissionDTO implements \JsonSerializable
     private $updatedAt;
 
     /**
+     * @var PermissionGroupDTO
+     */
+    private $group;
+
+    /**
      * Permission constructor.
      * @param $id
      * @param $name
      * @param $displayName
+     * @param null|PermissionGroupDTO $group
      * @param PermissionDTO[] $dependencies
      * @param $system
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $displayName, array $dependencies, $system, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $displayName, $group = null, array $dependencies, $system, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->createdAt = $createdAt;
         $this->dependencies = $dependencies;
         $this->displayName = $displayName;
         $this->id = $id;
         $this->name = $name;
+        $this->group = $group;
         $this->system = $system;
         $this->updatedAt = $updatedAt;
     }
@@ -123,6 +131,14 @@ class PermissionDTO implements \JsonSerializable
     }
 
     /**
+     * @return PermissionGroupDTO
+     */
+    public function getGroup(): PermissionGroupDTO
+    {
+        return $this->group;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize()
@@ -132,6 +148,7 @@ class PermissionDTO implements \JsonSerializable
             'name' => $this->name,
             'displayName' => $this->displayName,
             'dependencies' => $this->dependencies,
+            'group' => $this->getGroup(),
             'system' => $this->system,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,

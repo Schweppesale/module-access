@@ -1,6 +1,8 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
+use Hateoas\HateoasBuilder;
 use Illuminate\Http\Response;
+use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\DeletePermissionGroupRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\StorePermissionGroupRequest;
@@ -25,19 +27,35 @@ class PermissionGroupController extends Controller
     private $response;
 
     /**
-     * GroupController constructor.
+     * @var SerializerInterface
+     */
+    private $serlalizer;
+
+    /**
+     * PermissionGroupController constructor.
      * @param Response $response
+     * @param SerializerInterface $serializer
      * @param PermissionGroupService $permissionGroupService
      */
-    public function __construct(Response $response, PermissionGroupService $permissionGroupService)
+    public function __construct(Response $response, SerializerInterface $serializer, PermissionGroupService $permissionGroupService)
     {
         $this->response = $response;
+        $this->serlalizer = $serializer;
         $this->permissionGroupService = $permissionGroupService;
     }
 
     public function index()
     {
-        return $this->response->setContent($this->permissionGroupService->findAll());
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serlalizer->serialize($this->permissionGroupService->findAll(), 'json')
+        );
+    }
+
+    public function show($id)
+    {
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serlalizer->serialize($this->permissionGroupService->getById($id), 'json')
+        );
     }
 
     /**
@@ -47,7 +65,9 @@ class PermissionGroupController extends Controller
      */
     public function destroy($id, DeletePermissionGroupRequest $request)
     {
-        return $this->response->setContent($this->permissionGroupService->delete($id));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serlalizer->serialize($this->permissionGroupService->delete($id), 'json')
+        );
     }
 
     /**
@@ -56,7 +76,12 @@ class PermissionGroupController extends Controller
      */
     public function store(StorePermissionGroupRequest $request)
     {
-        return $this->response->setContent($this->permissionGroupService->create($request->get('name')));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serlalizer->serialize(
+                $this->permissionGroupService->create($request->get('name'))
+                , 'json'
+            )
+        );
     }
 
     /**
@@ -66,6 +91,8 @@ class PermissionGroupController extends Controller
      */
     public function update($id, UpdatePermissionGroupRequest $request)
     {
-        return $this->response->setContent($this->permissionGroupService->update($id, $request->get('name')));
+        return $this->response->header('Content-Type', 'application/json')->setContent(
+            $this->serlalizer->serialize($this->permissionGroupService->update($id, $request->get('name')), 'json')
+        );
     }
 }

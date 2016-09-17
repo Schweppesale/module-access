@@ -2,12 +2,13 @@
 namespace Schweppesale\Module\Access\Application\Response;
 
 use DateTime;
+use JsonSerializable;
 
 /**
  * Class OrganisationDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class OrganisationDTO implements \JsonSerializable
+class OrganisationDTO implements JsonSerializable
 {
 
 
