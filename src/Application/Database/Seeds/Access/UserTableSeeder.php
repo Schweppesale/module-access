@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
 
     public function run()
     {
-        $this->userService->create('Admin Istrator', 'admin@admin.com', '1234', ['1'], [], true, false, 1);
+        $this->userService->create('Admin Istrator', 'admin@admin.com', '1234', ['1'], range(1, 17), true, false, 1);
         $this->userService->create('Test User', 'user@yahoo.com', '1234', ['2'], [], true, false, 1);
     }
 }

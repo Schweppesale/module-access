@@ -14,11 +14,6 @@ class PermissionGroup
 {
 
     /**
-     * @var PermissionGroup[]
-     */
-    private $children;
-
-    /**
      * @var DateTime
      */
     private $createdAt;
@@ -39,7 +34,7 @@ class PermissionGroup
     private $parent;
 
     /**
-     * @var Role[]
+     * @var null|Permission[]
      */
     private $permissions;
 
@@ -88,14 +83,6 @@ class PermissionGroup
     }
 
     /**
-     * @return PermissionGroup[]
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
      * @return DateTime
      */
     public function getCreatedAt()
@@ -128,7 +115,7 @@ class PermissionGroup
     }
 
     /**
-     * @return mixed
+     * @return null|Permission[]
      */
     public function getPermissions()
     {

@@ -98,7 +98,7 @@ Schweppesale\Module\Access\Domain\Entities\User:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: users
+            inversedBy: null
             joinTable:
                 name: user_permissions
                 schema: null

@@ -1,5 +1,7 @@
 <?php namespace Schweppesale\Module\Access\Application\Providers;
 
+use Papper\MemberOption\Ignore;
+use Papper\MemberOptionInterface;
 use Papper\Papper;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
@@ -87,10 +89,10 @@ class ApplicationServiceProvider extends ServiceProvider
      */
     public function registerFacade()
     {
-        $this->app->booting(function () {
-            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Access', \Schweppesale\Module\Access\Application\Services\Facades\Access::class);
-        });
+//        $this->app->booting(function () {
+//            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+//            $loader->alias('Access', \Schweppesale\Module\Access\Application\Services\Facades\Access::class);
+//        });
     }
 
     public function registerMappings()
@@ -101,13 +103,11 @@ class ApplicationServiceProvider extends ServiceProvider
         Papper::createMap(Permission::class, PermissionDTO::class)
             ->constructUsing(function (Permission $permission) use ($mapper) {
                 $dependencies = $permission->getDependencies();
-                $dependencies = ($dependencies) ? $mapper->mapArray($dependencies->toArray(), Permission::class, PermissionDTO::class) : [];
-
                 return new PermissionDTO(
                     $permission->getId(),
                     $permission->getName(),
                     $permission->getDisplayName(),
-                    $dependencies,
+                    ($dependencies) ? $mapper->mapArray($dependencies->toArray(), Permission::class, PermissionDTO::class) : [],
                     $permission->isSystem(),
                     $permission->getCreatedAt(),
                     $permission->getUpdatedAt()
@@ -115,25 +115,16 @@ class ApplicationServiceProvider extends ServiceProvider
             });
 
         Papper::createMap(PermissionGroup::class, PermissionGroupDTO::class)
-            ->constructUsing(function (PermissionGroup $permissionGroup) use ($mapper) {
+            ->constructUsing(function(PermissionGroup $permissionGroup) use($mapper) {
                 $parent = $permissionGroup->getParent();
-                $parentId = $parent ? $parent->getId() : null;
-//                $permissions = $permissionGroup->getPermissions();
-//                $permissions = ($permissions) ? $mapper->mapArray($permissions->toArray(), Permission::class, PermissionDTO::class) : [];
-//                $children = $permissionGroup->getChildren();
-//                $children = ($children) ? $mapper->mapArray($children->toArray(), Permission::class, PermissionDTO::class) : [];
-
-                $permissions = [];
-                $children = [];
-
+                $permissions = $permissionGroup->getPermissions();
                 return new PermissionGroupDTO(
                     $permissionGroup->getId(),
                     $permissionGroup->getName(),
                     $permissionGroup->getSort(),
                     $permissionGroup->getSystem(),
-                    $parentId,
-                    $children,
-                    $permissions,
+                    $parent !== null ? $mapper->map($parent, PermissionGroupDTO::class) : null,
+                    ($permissions && $permissions->count() > 0) ? $mapper->mapArray($permissions->toArray(), Permission::class, PermissionDTO::class) : [],
                     $permissionGroup->getCreatedAt(),
                     $permissionGroup->getUpdatedAt()
                 );
@@ -156,7 +147,6 @@ class ApplicationServiceProvider extends ServiceProvider
                     $role->getId(),
                     $role->getName(),
                     $mapper->mapArray($role->getPermissions()->toArray(), Permission::class, PermissionDTO::class),
-                    $role->getAll(),
                     $role->getCreatedAt(),
                     $role->getUpdatedAt()
                 );

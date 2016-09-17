@@ -51,15 +51,6 @@ Schweppesale\Module\Access\Domain\Entities\PermissionGroup:
             precision: 0
             column: updated_at
     oneToMany:
-        children:
-            targetEntity: Schweppesale\Module\Access\Domain\Entities\PermissionGroup
-            cascade:
-                - all
-            fetch: EAGER
-            mappedBy: parent
-            inversedBy: null
-            orphanRemoval: true
-            orderBy: null
         permissions:
             targetEntity: Schweppesale\Module\Access\Domain\Entities\Permission
             cascade: {  }
@@ -75,9 +66,9 @@ Schweppesale\Module\Access\Domain\Entities\PermissionGroup:
                 - all
             fetch: EAGER
             mappedBy: null
-            inversedBy: children
-            joinColumns:
-                parent_id:
-                    referencedColumnName: id
+            inversedBy: null
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

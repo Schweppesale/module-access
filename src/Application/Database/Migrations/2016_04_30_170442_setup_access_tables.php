@@ -33,7 +33,7 @@ class SetupAccessTables extends Migration
             $table->tinyInteger('status')->default(1);
             $table->string('confirmation_code');
             $table->boolean('confirmed')->default(false);
-            $table->string('access_token');
+            $table->string('access_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -42,7 +42,6 @@ class SetupAccessTables extends Migration
         Schema::create('roles', function ($table) {
             $table->increments('id')->unsigned();
             $table->string('name')->unique();
-            $table->boolean('all')->default(false);
             $table->smallInteger('sort')->default(0);
             $table->timestamps();
         });

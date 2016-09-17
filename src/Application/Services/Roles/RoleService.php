@@ -95,7 +95,6 @@ class RoleService
     {
         $name = $criteria['name'];
         $sort = $criteria['sort'];
-        $allPermission = (!empty($criteria['associated-permissions']) && strtolower($criteria['associated-permissions']) === 'all') ? true : false;
 
         $permissions = [];
         if (!empty($criteria['permissions'])) {
@@ -106,7 +105,7 @@ class RoleService
             }
         }
 
-        $role = $this->roles->save(new Role($name, $sort, $allPermission, $permissions));
+        $role = $this->roles->save(new Role($name, $sort, $permissions));
         return $this->mapper->map($role, RoleDTO::class);
     }
 

@@ -17,11 +17,6 @@ class Role implements RoleContract
     use HasPermissions;
 
     /**
-     * @var int
-     */
-    private $all;
-
-    /**
      * @var DateTime
      */
     private $createdAt;
@@ -61,39 +56,18 @@ class Role implements RoleContract
      *
      * @param $name
      * @param $sort
-     * @param $all
      * @param array $permissions
      */
-    public function __construct($name, $sort, $all, array $permissions)
+    public function __construct($name, $sort, array $permissions)
     {
         $this->name = $name;
         $this->sort = $sort;
-        $this->all = $all;
 
         $this->setPermissions($permissions);
 
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
 
-    }
-
-    /**
-     * @return int
-     */
-    public function getAll()
-    {
-        return $this->all;
-    }
-
-    /**
-     * @param int $all
-     * @return $this
-     */
-    public function setAll($all)
-    {
-        $this->all = $all;
-
-        return $this;
     }
 
     /**

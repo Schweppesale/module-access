@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Application\Response;
 
 use DateTime;
+use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
 
 /**
  * Class PermissionGroupDTO
@@ -9,11 +10,6 @@ use DateTime;
  */
 class PermissionGroupDTO implements \JsonSerializable
 {
-
-    /**
-     * @var PermissionGroupDTO[]
-     */
-    private $children;
 
     /**
      * @var DateTime
@@ -33,7 +29,7 @@ class PermissionGroupDTO implements \JsonSerializable
     /**
      * @var mixed
      */
-    private $parentId;
+    private $parent;
 
     /**
      * @var RoleDTO[]
@@ -61,31 +57,21 @@ class PermissionGroupDTO implements \JsonSerializable
      * @param $name
      * @param $order
      * @param $system
-     * @param int $parentId
-     * @param array $children
+     * @param null|PermissionGroupDTO $parent
      * @param array $permissions
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $order, $system, $parentId = null, array $children, array $permissions, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $order, $system, PermissionGroupDTO $parent = null, array $permissions, DateTime $createdAt, DateTime $updatedAt)
     {
-        $this->children = $children;
         $this->createdAt = $createdAt;
         $this->id = $id;
         $this->name = $name;
-        $this->parentId = $parentId;
+        $this->parent = $parent;
         $this->permissions = $permissions;
         $this->order = $order;
         $this->system = $system;
         $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return PermissionGroupDTO[]
-     */
-    public function getChildren(): array
-    {
-        return $this->children;
     }
 
     /**
@@ -113,11 +99,11 @@ class PermissionGroupDTO implements \JsonSerializable
     }
 
     /**
-     * @return int
+     * @return null|PermissionGroupDTO
      */
-    public function getParentId()
+    public function getParent()
     {
-        return $this->parentId;
+        return $this->parent;
     }
 
     /**
@@ -162,8 +148,7 @@ class PermissionGroupDTO implements \JsonSerializable
             'name' => $this->name,
             'order' => $this->order,
             'system' => $this->system,
-            'parentId' => $this->parentId,
-            'children' => $this->children,
+            'parent' => $this->parent,
             'permissions' => $this->permissions,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,

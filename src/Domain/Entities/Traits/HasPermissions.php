@@ -20,11 +20,11 @@ trait HasPermissions
     public function can($permission)
     {
 
-        foreach ($this->getRoles() as $role) {
-            if ($role->getAll() === true) {
-                return true;
-            }
-        }
+//        foreach ($this->getRoles() as $role) {
+//            if ($role->getAll() === true) {
+//                return true;
+//            }
+//        }
 
         return $this->hasPermissionTo($permission);
     }
@@ -41,11 +41,11 @@ trait HasPermissions
      */
     public function canMultiple(array $permissions, $strict = false)
     {
-        foreach ($this->getRoles() as $role) {
-            if ($role->getAll() === true) {
-                return true;
-            }
-        }
+//        foreach ($this->getRoles() as $role) {
+//            if ($role->getAll() === true) {
+//                return true;
+//            }
+//        }
 
         return $this->hasPermissionTo($permissions, $strict);
     }

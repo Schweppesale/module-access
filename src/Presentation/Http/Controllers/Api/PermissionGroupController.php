@@ -1,4 +1,4 @@
-<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Permission;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
 use Illuminate\Http\Response;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionGroupService;
@@ -8,10 +8,10 @@ use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Gro
 use Schweppesale\Module\Core\Http\Controller;
 
 /**
- * Class GroupController
- * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Api\Permission
+ * Class PermissionGroupController
+ * @package Schweppesale\Module\Access\Presentation\Http\Controllers\Api
  */
-class GroupController extends Controller
+class PermissionGroupController extends Controller
 {
 
     /**

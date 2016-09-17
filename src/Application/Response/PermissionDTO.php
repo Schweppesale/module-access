@@ -16,7 +16,7 @@ class PermissionDTO implements \JsonSerializable
     private $createdAt;
 
     /**
-     * @var Permission[]
+     * @var PermissionDTO[]
      */
     private $dependencies;
 
@@ -50,7 +50,7 @@ class PermissionDTO implements \JsonSerializable
      * @param $id
      * @param $name
      * @param $displayName
-     * @param array $dependencies
+     * @param PermissionDTO[] $dependencies
      * @param $system
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
@@ -75,7 +75,7 @@ class PermissionDTO implements \JsonSerializable
     }
 
     /**
-     * @return Permission[]
+     * @return PermissionDTO[]
      */
     public function getDependencies(): array
     {
@@ -131,7 +131,7 @@ class PermissionDTO implements \JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'displayName' => $this->displayName,
-            'dependencyIds' => $this->dependencies,
+            'dependencies' => $this->dependencies,
             'system' => $this->system,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,

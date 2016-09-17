@@ -38,13 +38,10 @@ class Permission implements PermissionContract
      */
     private $name;
 
-//    /**
-//     * @var PermissionGroup
-//     *
-//     * @ManyToOne(targetEntity="\Schweppesale\Module\Access\Domain\Entities\PermissionGroup", inversedBy="permissions", cascade={"all"}, fetch="EAGER")
-//     * @JoinColumn(name="group_id", referencedColumnName="id")
-//     */
-//    private $permissionGroup;
+    /**
+     * @var PermissionGroup
+     */
+    private $permissionGroup;
 
     /**
      * @var int
@@ -134,12 +131,12 @@ class Permission implements PermissionContract
     }
 
     /**
-     * @return int
+     * @return PermissionGroup
      */
-//    public function getPermissionGroup()
-//    {
-//        return $this->permissionGroup;
-//    }
+    public function getPermissionGroup()
+    {
+        return $this->permissionGroup;
+    }
 
     /**
      * @return int

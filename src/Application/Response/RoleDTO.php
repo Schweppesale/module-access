@@ -11,11 +11,6 @@ class RoleDTO implements \JsonSerializable
 {
 
     /**
-     * @var int
-     */
-    private $all;
-
-    /**
      * @var DateTime
      */
     private $createdAt;
@@ -45,26 +40,16 @@ class RoleDTO implements \JsonSerializable
      * @param $id
      * @param $name
      * @param array $permissions
-     * @param $all
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, array $permissions, $all, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, array $permissions, DateTime $createdAt, DateTime $updatedAt)
     {
-        $this->all = $all;
         $this->createdAt = $createdAt;
         $this->id = $id;
         $this->name = $name;
         $this->permissions = $permissions;
         $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAll(): int
-    {
-        return $this->all;
     }
 
     /**
@@ -115,7 +100,6 @@ class RoleDTO implements \JsonSerializable
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'all' => $this->all,
             'permissions' => $this->permissions,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt

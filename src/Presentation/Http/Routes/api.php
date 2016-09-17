@@ -22,11 +22,13 @@ Route::group([
     $router->resource('users', 'UserController');
 
     /**
+     * Permission Groups
+     */
+    $router->resource('permission-groups', 'PermissionGroupController', ['only' => ['index', 'update', 'store', 'destroy']]);
+
+    /**
      * Permissions
      */
-    $router->group(['prefix' => 'permissions', 'namespace' => 'Permission'], function (Router $router) {
-        $router->resource('groups', 'GroupController', ['only' => ['index', 'update', 'store', 'destroy']]);
-    });
     $router->resource('permissions', 'PermissionController');
 
     /**
