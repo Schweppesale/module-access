@@ -2,12 +2,12 @@
 namespace Schweppesale\Module\Access\Application\Services\Roles;
 
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
-use Schweppesale\Module\Access\Application\Response\PermissionGroupDTO;
+use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\RoleDTO;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
-use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
+use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Entities\Role;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
@@ -35,27 +35,27 @@ class RoleService
     private $permissions;
 
     /**
-     * @var PermissionGroupRepository
+     * @var GroupRepository
      */
-    private $permissionGroups;
+    private $groups;
 
     /**
      * RoleService constructor.
      * @param MapperInterface $mapper
      * @param PermissionRepository $permissions
-     * @param PermissionGroupRepository $permissionGroups
+     * @param GroupRepository $groups
      * @param RoleRepository $roles
      */
     public function __construct(
         MapperInterface $mapper,
         PermissionRepository $permissions,
-        PermissionGroupRepository $permissionGroups,
+        GroupRepository $groups,
         RoleRepository $roles)
     {
         $this->mapper = $mapper;
         $this->roles = $roles;
         $this->permissions = $permissions;
-        $this->permissionGroups = $permissionGroups;
+        $this->groups = $groups;
     }
 
     /**
@@ -76,7 +76,7 @@ class RoleService
         return [
             'role' => $this->getById($roleId),
             'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
+            'groups' => $this->mapper->mapArray($this->groups->findAllParents()->toArray(), Group::class, GroupDTO::class),
         ];
     }
 
@@ -116,7 +116,7 @@ class RoleService
     {
         return [
             'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class)
+            'groups' => $this->mapper->mapArray($this->groups->findAllParents()->toArray(), Group::class, GroupDTO::class)
         ];
     }
 

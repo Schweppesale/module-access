@@ -3,7 +3,7 @@ namespace Schweppesale\Module\Access\Application\Services\Permissions;
 
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 
@@ -20,9 +20,9 @@ class PermissionService
     private $mapper;
 
     /**
-     * @var PermissionGroupRepository
+     * @var GroupRepository
      */
-    private $permissionGroups;
+    private $groups;
 
     /**
      * @var PermissionRepository
@@ -33,17 +33,17 @@ class PermissionService
      * PermissionService constructor.
      * @param MapperInterface $mapper
      * @param PermissionRepository $permissions
-     * @param PermissionGroupRepository $permissionGroupService
+     * @param GroupRepository $groupService
      */
     public function __construct(
         MapperInterface $mapper,
         PermissionRepository $permissions,
-        PermissionGroupRepository $permissionGroupService
+        GroupRepository $groupService
     )
     {
         $this->mapper = $mapper;
         $this->permissions = $permissions;
-        $this->permissionGroups = $permissionGroupService;
+        $this->groups = $groupService;
     }
 
     /**
@@ -59,7 +59,7 @@ class PermissionService
     public function create($name, $label, $groupId = null, $sort, array $dependencyIds = null, $system = false)
     {
         if ($groupId !== null) {
-            $group = $this->permissionGroups->getById($groupId);
+            $group = $this->groups->getById($groupId);
             $permission = new Permission($name, $label, $group);
         } else {
             $permission = new Permission($name, $label, null);

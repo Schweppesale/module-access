@@ -5,10 +5,10 @@ use DateTime;
 use JsonSerializable;
 
 /**
- * Class PermissionGroupDTO
+ * Class GroupDTO
  * @package Schweppesale\Module\Access\Application\Response
  */
-class PermissionGroupDTO implements JsonSerializable
+class GroupDTO implements JsonSerializable
 {
 
     /**
@@ -52,17 +52,17 @@ class PermissionGroupDTO implements JsonSerializable
     private $updatedAt;
 
     /**
-     * PermissionGroupDTO constructor.
+     * GroupDTO constructor.
      * @param $id
      * @param $name
      * @param $order
      * @param $system
-     * @param null|PermissionGroupDTO $parent
+     * @param null|GroupDTO $parent
      * @param array $permissions
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $order, $system, PermissionGroupDTO $parent = null, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $order, $system, GroupDTO $parent = null, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->createdAt = $createdAt;
         $this->id = $id;
@@ -98,7 +98,7 @@ class PermissionGroupDTO implements JsonSerializable
     }
 
     /**
-     * @return null|PermissionGroupDTO
+     * @return null|GroupDTO
      */
     public function getParent()
     {

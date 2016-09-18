@@ -3,10 +3,10 @@
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
- * Class SortPermissionGroupRequest
+ * Class SortGroupRequest
  * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
  */
-class SortPermissionGroupRequest extends Request
+class SortGroupRequest extends Request
 {
 
     /**
@@ -16,7 +16,7 @@ class SortPermissionGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('sort-permission-groups');
+        return access()->can('sort-groups');
     }
 
     /**

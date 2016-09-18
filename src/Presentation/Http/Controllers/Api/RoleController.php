@@ -62,7 +62,7 @@ class RoleController extends Controller
      * @param $id
      * @param EditRoleRequest $request
      * @return mixed
-     * @internal param PermissionGroupRepositoryContract $group
+     * @internal param GroupRepositoryContract $group
      */
     public function edit($id, EditRoleRequest $request)
     {

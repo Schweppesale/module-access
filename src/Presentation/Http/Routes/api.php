@@ -21,13 +21,13 @@ Route::group([
     /**
      * Permission Groups
      */
-    $router->resource('permission-groups', 'PermissionGroupController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
+    $router->resource('groups', 'GroupController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
 
     /**
      * Permissions
      */
     $router->resource('permissions', 'PermissionController');
-    $router->get('paermissions/{user}/dependencies', ['as' => 'permissions.dependencies', 'uses' => 'PermissionController@dependencies']);
+    $router->get('permissions/{user}/dependencies', ['as' => 'permissions.dependencies', 'uses' => 'PermissionController@dependencies']);
 
     /**
      * Organisations

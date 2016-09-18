@@ -3,17 +3,17 @@ namespace Schweppesale\Module\Access\Application\Services\Users;
 
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
-use Schweppesale\Module\Access\Application\Response\PermissionGroupDTO;
+use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\RoleDTO;
 use Schweppesale\Module\Access\Application\Response\UserDTO;
 use Schweppesale\Module\Access\Application\Services\Access;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
-use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
+use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
@@ -31,9 +31,9 @@ class UserService
     private $organisations;
 
     /**
-     * @var PermissionGroupRepository
+     * @var GroupRepository
      */
-    private $permissionGroups;
+    private $groups;
 
     /**
      * @var PermissionRepository
@@ -67,7 +67,7 @@ class UserService
      * @param OrganisationRepository $organisations
      * @param RoleRepository $roles
      * @param PermissionRepository $permissions
-     * @param PermissionGroupRepository $permissionGroups
+     * @param GroupRepository $groups
      * @param AuthenticationService $authenticationService
      */
     public function __construct(
@@ -76,7 +76,7 @@ class UserService
         OrganisationRepository $organisations,
         RoleRepository $roles,
         PermissionRepository $permissions,
-        PermissionGroupRepository $permissionGroups,
+        GroupRepository $groups,
         AuthenticationService $authenticationService
     )
     {
@@ -86,7 +86,7 @@ class UserService
         $this->organisations = $organisations;
         $this->roles = $roles;
         $this->permissions = $permissions;
-        $this->permissionGroups = $permissionGroups;
+        $this->groups = $groups;
     }
 
     /**
@@ -167,7 +167,7 @@ class UserService
             'roles' => $this->mapper->mapArray($this->roles->findAll()->toArray(), Role::class, RoleDTO::class),
             'organisations' => $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class),
             'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
+            'groups' => $this->mapper->mapArray($this->groups->findAllParents()->toArray(), Group::class, GroupDTO::class),
         ];
     }
 
@@ -203,7 +203,7 @@ class UserService
             'roles' => $this->mapper->mapArray($this->roles->findAll()->toArray(), Role::class, RoleDTO::class),
             'organisations' => $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class),
             'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
-            'permissionGroups' => $this->mapper->mapArray($this->permissionGroups->findAllParents()->toArray(), PermissionGroup::class, PermissionGroupDTO::class),
+            'groups' => $this->mapper->mapArray($this->groups->findAllParents()->toArray(), Group::class, GroupDTO::class),
         ];
     }
 

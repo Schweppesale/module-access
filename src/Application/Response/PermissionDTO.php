@@ -47,7 +47,7 @@ class PermissionDTO implements JsonSerializable
     private $updatedAt;
 
     /**
-     * @var PermissionGroupDTO
+     * @var GroupDTO
      */
     private $group;
 
@@ -56,7 +56,7 @@ class PermissionDTO implements JsonSerializable
      * @param $id
      * @param $name
      * @param $displayName
-     * @param null|PermissionGroupDTO $group
+     * @param null|GroupDTO $group
      * @param PermissionDTO[] $dependencies
      * @param $system
      * @param DateTime $createdAt
@@ -131,9 +131,9 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @return PermissionGroupDTO
+     * @return GroupDTO
      */
-    public function getGroup(): PermissionGroupDTO
+    public function getGroup(): GroupDTO
     {
         return $this->group;
     }

@@ -6,9 +6,9 @@ use Schweppesale\Module\Core\Collections\Collection;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
- * Interface PermissionGroupInterface
+ * Interface GroupInterface
  *
- * @package Schweppesale\Module\Access\Domain\Repositories\PermissionGroup
+ * @package Schweppesale\Module\Access\Domain\Repositories\Group
  */
 interface PermissionRepository
 {
@@ -32,8 +32,8 @@ interface PermissionRepository
     public function getById($id): Permission;
 
     /**
-     * @param Permission $permissionGroup
+     * @param Permission $group
      * @return Permission
      */
-    public function save(Permission $permissionGroup): Permission;
+    public function save(Permission $group): Permission;
 }

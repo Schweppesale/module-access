@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Class PermissionGroup
+ * Class Group
  *
  * @package Schweppesale\Domain\Entities
  */
-class PermissionGroup
+class Group
 {
 
     /**
@@ -29,14 +29,9 @@ class PermissionGroup
     private $name;
 
     /**
-     * @var PermissionGroup
+     * @var Group
      */
     private $parent;
-
-    /**
-     * @var null|Permission[]
-     */
-    private $permissions;
 
     /**
      * @var int
@@ -54,13 +49,13 @@ class PermissionGroup
     private $updatedAt;
 
     /**
-     * PermissionGroup constructor.
+     * Group constructor.
      *
      * @param $name
      * @param bool|false $system
-     * @param PermissionGroup|null $parent
+     * @param Group|null $parent
      */
-    public function __construct($name, $system = false, PermissionGroup $parent = null)
+    public function __construct($name, $system = false, Group $parent = null)
     {
         $this->name = $name;
         $this->system = $system;
@@ -112,14 +107,6 @@ class PermissionGroup
     public function getParent()
     {
         return $this->parent;
-    }
-
-    /**
-     * @return null|Permission[]
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
     }
 
     /**

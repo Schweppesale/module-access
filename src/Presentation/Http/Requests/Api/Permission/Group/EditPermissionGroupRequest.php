@@ -3,10 +3,10 @@
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
- * Class EditPermissionGroupRequest
+ * Class EditGroupRequest
  * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
  */
-class EditPermissionGroupRequest extends Request
+class EditGroupRequest extends Request
 {
 
     /**
@@ -16,7 +16,7 @@ class EditPermissionGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('edit-permission-groups');
+        return access()->can('edit-groups');
     }
 
     /**

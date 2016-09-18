@@ -1,4 +1,4 @@
-Schweppesale\Module\Access\Domain\Entities\PermissionGroup:
+Schweppesale\Module\Access\Domain\Entities\Group:
     type: entity
     table: permission_groups
     id:
@@ -50,18 +50,9 @@ Schweppesale\Module\Access\Domain\Entities\PermissionGroup:
             nullable: false
             precision: 0
             column: updated_at
-    oneToMany:
-        permissions:
-            targetEntity: Schweppesale\Module\Access\Domain\Entities\Permission
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: permissionGroup
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
     manyToOne:
         parent:
-            targetEntity: Schweppesale\Module\Access\Domain\Entities\PermissionGroup
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\Group
             cascade:
                 - all
             fetch: EAGER

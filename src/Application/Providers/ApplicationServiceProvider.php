@@ -5,22 +5,22 @@ use Papper\MemberOptionInterface;
 use Papper\Papper;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
-use Schweppesale\Module\Access\Application\Response\PermissionGroupDTO;
+use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\RoleDTO;
 use Schweppesale\Module\Access\Application\Response\UserDTO;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
-use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
+use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository as OrganisationRepositoryInterface;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository as PermissionGroupRepositoryInterface;
+use Schweppesale\Module\Access\Domain\Repositories\GroupRepository as GroupRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository as RoleRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository as UserRepositoryInterface;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Organisation\OrganisationRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Permission\PermissionRepositoryDoctrine;
-use Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup\PermissionGroupRepositoryDoctrine;
+use Schweppesale\Module\Access\Infrastructure\Repositories\Group\GroupRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
@@ -77,7 +77,7 @@ class ApplicationServiceProvider extends ServiceProvider
     {
         $this->app->bind(RoleRepositoryInterface::class, RoleRepositoryDoctrine::class);
         $this->app->bind(OrganisationRepositoryInterface::class, OrganisationRepositoryDoctrine::class);
-        $this->app->bind(PermissionGroupRepositoryInterface::class, PermissionGroupRepositoryDoctrine::class);
+        $this->app->bind(GroupRepositoryInterface::class, GroupRepositoryDoctrine::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepositoryDoctrine::class);
         $this->app->bind(PermissionRepositoryInterface::class, PermissionRepositoryDoctrine::class);
     }
@@ -95,33 +95,29 @@ class ApplicationServiceProvider extends ServiceProvider
     {
         $this->app->singleton(MapperInterface::class, Mapper::class);
 
-        Papper::createMap(PermissionGroup::class, PermissionGroupDTO::class)
-            ->constructUsing(function(PermissionGroup $permissionGroup) {
-                $parent = $permissionGroup->getParent();
-                $permissions = $permissionGroup->getPermissions();
-
-                return new PermissionGroupDTO(
-                    $permissionGroup->getId(),
-                    $permissionGroup->getName(),
-                    $permissionGroup->getSort(),
-                    $permissionGroup->getSystem(),
+        Papper::createMap(Group::class, GroupDTO::class)
+            ->constructUsing(function(Group $group) {
+                $parent = $group->getParent();
+                return new GroupDTO(
+                    $group->getId(),
+                    $group->getName(),
+                    $group->getSort(),
+                    $group->getSystem(),
                     null,
-//                    $parent != false ? Papper::map($parent)->toType(PermissionGroupDTO::class) : null,
-                    $permissionGroup->getCreatedAt(),
-                    $permissionGroup->getUpdatedAt()
+//                    $parent != false ? Papper::map($parent)->toType(GroupDTO::class) : null,
+                    $group->getCreatedAt(),
+                    $group->getUpdatedAt()
                 );
             });
 
         Papper::createMap(Permission::class, PermissionDTO::class)
             ->constructUsing(function (Permission $permission) {
-                $group = $permission->getPermissionGroup();
                 $dependencies = $permission->getDependencies();
-
                 return new PermissionDTO(
                     $permission->getId(),
                     $permission->getName(),
                     $permission->getDisplayName(),
-                    ($group) ? Papper::map($group, PermissionGroup::class)->toType(PermissionGroupDTO::class) : null,
+                    Papper::map($permission->getGroup(), Group::class)->toType(GroupDTO::class),
                     ($dependencies) ? Papper::map($dependencies->toArray(), Permission::class)->toType(PermissionDTO::class) : [],
                     $permission->isSystem(),
                     $permission->getCreatedAt(),

@@ -1,20 +1,20 @@
 <?php
-namespace Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup;
+namespace Schweppesale\Module\Access\Infrastructure\Repositories\Group;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
-use Schweppesale\Module\Access\Domain\Entities\PermissionGroup;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroupRepository;
+use Schweppesale\Module\Access\Domain\Entities\Group;
+use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Core\Collections\Collection;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
 /**
- * Class PermissionGroupRepositoryDoctrine
+ * Class GroupRepositoryDoctrine
  *
- * @package Schweppesale\Module\Access\Infrastructure\Repositories\PermissionGroup
+ * @package Schweppesale\Module\Access\Infrastructure\Repositories\Group
  */
-class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
+class GroupRepositoryDoctrine implements GroupRepository
 {
 
     /**
@@ -28,7 +28,7 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
      */
     public function __construct(ManagerRegistry $registry)
     {
-        $this->manager = $registry->getManagerForClass(PermissionGroup::class);
+        $this->manager = $registry->getManagerForClass(Group::class);
     }
 
     /**
@@ -43,16 +43,16 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
 
     /**
      * @param $id
-     * @return PermissionGroup
+     * @return Group
      * @throws EntityNotFoundException
      */
-    public function getById($id): PermissionGroup
+    public function getById($id): Group
     {
         try {
 
             return $this->manager->createQueryBuilder()
                 ->select('pg')
-                ->from(PermissionGroup::class, 'pg')
+                ->from(Group::class, 'pg')
                 ->where('pg.id = :id')
                 ->setParameter('id', $id)
                 ->getQuery()
@@ -65,15 +65,15 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
 
     /**
      * @param $name
-     * @return PermissionGroup
+     * @return Group
      */
-    public function getByName($name): PermissionGroup
+    public function getByName($name): Group
     {
         try {
 
             return $this->manager->createQueryBuilder()
                 ->select('pg')
-                ->from(PermissionGroup::class, 'pg')
+                ->from(Group::class, 'pg')
                 ->where('pg.name = :name')
                 ->setParameter('name', $name)
                 ->getQuery()
@@ -85,26 +85,26 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
     }
 
     /**
-     * @return PermissionGroup[]|Collection
+     * @return Group[]|Collection
      */
     public function findAll(): Collection
     {
         $result = $this->manager->createQueryBuilder()
             ->select('pg')
-            ->from(PermissionGroup::class, 'pg')
+            ->from(Group::class, 'pg')
             ->getQuery()
             ->getResult();
         return new Collection($result);
     }
 
     /**
-     * @return PermissionGroup[]|Collection
+     * @return Group[]|Collection
      */
     public function findAllParents(): Collection
     {
         $result = $this->manager->createQueryBuilder()
             ->select('pg')
-            ->from(PermissionGroup::class, 'pg')
+            ->from(Group::class, 'pg')
             ->where('pg.parent IS NULL')
             ->getQuery()
             ->getResult();
@@ -113,14 +113,14 @@ class PermissionGroupRepositoryDoctrine implements PermissionGroupRepository
     }
 
     /**
-     * @param PermissionGroup $permissionGroup
-     * @return PermissionGroup
+     * @param Group $group
+     * @return Group
      */
-    public function save(PermissionGroup $permissionGroup): PermissionGroup
+    public function save(Group $group): Group
     {
-        $this->manager->persist($permissionGroup);
+        $this->manager->persist($group);
         $this->manager->flush();
 
-        return $permissionGroup;
+        return $group;
     }
 }

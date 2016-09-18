@@ -13,15 +13,6 @@ Schweppesale\Module\Access\Application\Response\UserDTO:
                     user: expr(object.getId())
                 absolute: true
         -
-            rel: permissions
-            href:
-                route: users.permissions
-                parameters:
-                    permission: expr(object.getId())
-                absolute: true
-            exclusion:
-                exclude_if: expr(object.getPermissions() == false)
-        -
             rel: roles
             href:
                 route: users.roles
@@ -30,4 +21,13 @@ Schweppesale\Module\Access\Application\Response\UserDTO:
                 absolute: true
             exclusion:
                 exclude_if: expr(object.getRoles() == false)
+        -
+            rel: permissions
+            href:
+                route: users.permissions
+                parameters:
+                    permission: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getPermissions() == false)
         -

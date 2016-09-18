@@ -3,8 +3,8 @@ namespace Schweppesale\Module\Access\Application\Services\Users;
 
 use Schweppesale\Module\Access\Application\Response\UserDTO;
 use Schweppesale\Module\Access\Domain\Entities\User;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionGroupInterface;
-use Schweppesale\Module\Access\Domain\Repositories\PermissionGroup\PermissionInterface;
+use Schweppesale\Module\Access\Domain\Repositories\Group\GroupInterface;
+use Schweppesale\Module\Access\Domain\Repositories\Group\PermissionInterface;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 

@@ -3,10 +3,10 @@
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
- * Class DeletePermissionGroupRequest
+ * Class DeleteGroupRequest
  * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
  */
-class DeletePermissionGroupRequest extends Request
+class DeleteGroupRequest extends Request
 {
 
     /**
@@ -16,7 +16,7 @@ class DeletePermissionGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('delete-permission-groups');
+        return access()->can('delete-groups');
     }
 
     /**

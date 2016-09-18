@@ -3,10 +3,10 @@
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
- * Class CreatePermissionGroupRequest
+ * Class CreateGroupRequest
  * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
  */
-class CreatePermissionGroupRequest extends Request
+class CreateGroupRequest extends Request
 {
 
     /**
@@ -16,7 +16,7 @@ class CreatePermissionGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('create-permission-groups');
+        return access()->can('create-groups');
     }
 
     /**

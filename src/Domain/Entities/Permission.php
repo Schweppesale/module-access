@@ -39,9 +39,9 @@ class Permission implements PermissionContract
     private $name;
 
     /**
-     * @var PermissionGroup
+     * @var Group
      */
-    private $permissionGroup;
+    private $group;
 
     /**
      * @var int
@@ -63,13 +63,13 @@ class Permission implements PermissionContract
      *
      * @param $name
      * @param $displayName
-     * @param PermissionGroup|null $permissionGroup
+     * @param Group $group
      */
-    public function __construct($name, $displayName, PermissionGroup $permissionGroup = null)
+    public function __construct($name, $displayName, Group $group)
     {
         $this->name = $name;
         $this->displayName = $displayName;
-        $this->permissionGroup = $permissionGroup;
+        $this->group = $group;
 
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
@@ -131,11 +131,11 @@ class Permission implements PermissionContract
     }
 
     /**
-     * @return PermissionGroup
+     * @return Group
      */
-    public function getPermissionGroup()
+    public function getGroup()
     {
-        return $this->permissionGroup;
+        return $this->group;
     }
 
     /**

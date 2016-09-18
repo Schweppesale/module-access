@@ -2,6 +2,8 @@ Schweppesale\Module\Access\Application\Response\PermissionDTO:
     properties:
         dependencies:
             exclude: true
+        group:
+            exclude: true
     relations:
         -
             rel: self
@@ -19,4 +21,8 @@ Schweppesale\Module\Access\Application\Response\PermissionDTO:
                 absolute: true
             exclusion:
                 exclude_if: expr(object.getDependencies() == false)
-
+        -
+            rel: group
+            embedded:
+                content: expr(object.getGroup())
+                xmlElementName: group

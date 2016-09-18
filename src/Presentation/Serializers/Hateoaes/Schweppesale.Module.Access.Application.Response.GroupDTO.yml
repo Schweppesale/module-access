@@ -1,4 +1,4 @@
-Schweppesale\Module\Access\Application\Response\PermissionGroupDTO:
+Schweppesale\Module\Access\Application\Response\GroupDTO:
     properties:
         permissions:
             exclude: true
@@ -8,7 +8,7 @@ Schweppesale\Module\Access\Application\Response\PermissionGroupDTO:
         -
             rel: self
             href:
-                route: permission-groups.show
+                route: groups.show
                 parameters:
                     user: expr(object.getId())
                 absolute: true

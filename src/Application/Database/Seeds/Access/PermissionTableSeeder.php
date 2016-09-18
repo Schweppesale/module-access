@@ -1,5 +1,5 @@
 <?php
-namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Module\Access\Application\Database\Seeds\Access;
 
 use App\Http\Controllers\Backend\Project\Access\ProjectAccessController;
 use Illuminate\Database\Seeder;
@@ -58,7 +58,7 @@ class PermissionTableSeeder extends Seeder
         /**
          * Permission Groups
          */
-        $this->permissionService->create('edit-permission-groups', 'Edit Permission Groups', 4, 2, [$viewId], true);
-        $this->permissionService->create('delete-permission-groups', 'Delete Permission Groups', 4, 3, [$viewId], true);
+        $this->permissionService->create('edit-groups', 'Edit Permission Groups', 4, 2, [$viewId], true);
+        $this->permissionService->create('delete-groups', 'Delete Permission Groups', 4, 3, [$viewId], true);
     }
 }

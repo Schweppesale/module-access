@@ -1,5 +1,5 @@
 <?php
-namespace Schweppesale\Module\Access\Application\Database\Seeders\Access;
+namespace Schweppesale\Module\Access\Application\Database\Seeds\Access;
 
 use Illuminate\Database\Seeder;
 use Schweppesale\Module\Access\Application\Services\Users\UserService;

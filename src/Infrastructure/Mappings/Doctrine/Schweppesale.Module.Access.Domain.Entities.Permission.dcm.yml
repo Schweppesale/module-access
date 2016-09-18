@@ -59,12 +59,12 @@ Schweppesale\Module\Access\Domain\Entities\Permission:
             precision: 0
             column: updated_at
     manyToOne:
-        permissionGroup:
-            targetEntity: Schweppesale\Module\Access\Domain\Entities\PermissionGroup
+        group:
+            targetEntity: Schweppesale\Module\Access\Domain\Entities\Group
             cascade: [ ]
             fetch: EAGER
             mappedBy: null
-            inversedBy: permissions
+            inversedBy: null
             joinColumn:
               name: group_id
               referencedColumnName: id
