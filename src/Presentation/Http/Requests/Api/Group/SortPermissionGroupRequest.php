@@ -1,10 +1,10 @@
-<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group;
 
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class SortGroupRequest
- * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group
  */
 class SortGroupRequest extends Request
 {

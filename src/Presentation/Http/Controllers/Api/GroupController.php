@@ -4,9 +4,9 @@ use Hateoas\HateoasBuilder;
 use Illuminate\Http\Response;
 use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Access\Application\Services\Permissions\GroupService;
-use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\DeleteGroupRequest;
-use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\StoreGroupRequest;
-use Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group\UpdateGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group\DeleteGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group\StoreGroupRequest;
+use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group\UpdateGroupRequest;
 use Schweppesale\Module\Core\Http\Controller;
 
 /**

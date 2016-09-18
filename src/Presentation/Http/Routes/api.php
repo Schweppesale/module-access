@@ -19,7 +19,7 @@ Route::group([
     $router->get('users/{user}/permissions', ['as' => 'users.permissions', 'uses' => 'UserController@permissions']);
 
     /**
-     * Permission Groups
+     * Groups
      */
     $router->resource('groups', 'GroupController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
 

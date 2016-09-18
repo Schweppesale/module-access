@@ -1,12 +1,12 @@
-<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group;
+<?php namespace Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group;
 
 use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
- * Class UpdateGroupRequest
- * @package Schweppesale\Module\Access\Presentation\Http\Requests\Backend\Permission\Group
+ * Class DeleteGroupRequest
+ * @package Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group
  */
-class UpdateGroupRequest extends Request
+class DeleteGroupRequest extends Request
 {
 
     /**
@@ -16,7 +16,7 @@ class UpdateGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('edit-groups');
+        return access()->can('delete-groups');
     }
 
     /**
@@ -27,7 +27,7 @@ class UpdateGroupRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
+            //
         ];
     }
 }
