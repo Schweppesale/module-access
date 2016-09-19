@@ -18,17 +18,17 @@ trait CanBeAuthenticated
     }
 
     /**
-     * @return int
-     */
-    abstract public function getId();
-
-    /**
      * @return string
      */
     public function getAuthPassword()
     {
         return $this->getPassword();
     }
+
+    /**
+     * @return int
+     */
+    abstract public function getId();
 
     /**
      * @return string

@@ -1,5 +1,5 @@
 <?php
-namespace Schweppesale\Module\Access\Domain\Services;
+namespace Schweppesale\Module\Access\Domain\Values;
 
 /**
  * Class HashedPassword
@@ -11,15 +11,15 @@ class HashedPassword
     /**
      * @var string
      */
-    private $value;
+    private $password;
 
     /**
      * HashedPassword constructor.
-     * @param string $value
+     * @param string $password
      */
-    public function __construct(string $value)
+    public function __construct(string $password)
     {
-        $this->value = $value;
+        $this->password = $password;
     }
 
     /**
@@ -35,6 +35,6 @@ class HashedPassword
      */
     public function value()
     {
-        return $this->value;
+        return $this->password;
     }
 }

@@ -40,6 +40,17 @@ class RoleRepositoryDoctrine implements RoleRepository
     }
 
     /**
+     * @param $id
+     * @return bool
+     */
+    public function delete($id): bool
+    {
+        $this->manager->remove($this->getById($id));
+        $this->manager->flush();
+        return true;
+    }
+
+    /**
      * @return Role[]|Collection
      */
     public function findAll(): Collection
@@ -60,17 +71,6 @@ class RoleRepositoryDoctrine implements RoleRepository
     public function findByUserId($userId): Collection
     {
         return new Collection($this->users->getById($userId)->getRoles()->toArray());
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function delete($id): bool
-    {
-        $this->manager->remove($this->getById($id));
-        $this->manager->flush();
-        return true;
     }
 
     /**

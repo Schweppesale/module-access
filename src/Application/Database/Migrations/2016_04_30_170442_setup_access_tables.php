@@ -8,6 +8,48 @@ class SetupAccessTables extends Migration
 {
 
     /**
+     * Reverse the Migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('assigned_roles', function (Blueprint $table) {
+            $table->dropForeign('assigned_roles' . '_user_id_foreign');
+            $table->dropForeign('assigned_roles' . '_role_id_foreign');
+        });
+
+        Schema::table('permission_role', function (Blueprint $table) {
+            $table->dropForeign('permission_role' . '_permission_id_foreign');
+            $table->dropForeign('permission_role' . '_role_id_foreign');
+        });
+
+        Schema::table('user_permissions', function (Blueprint $table) {
+            $table->dropForeign('user_permissions' . '_permission_id_foreign');
+            $table->dropForeign('user_permissions' . '_user_id_foreign');
+        });
+
+        Schema::table('permission_dependencies', function (Blueprint $table) {
+            $table->dropForeign('permission_dependencies_permission_id_foreign');
+            $table->dropForeign('permission_dependencies_dependency_id_foreign');
+        });
+
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->dropForeign('permissions' . '_group_id_foreign');
+        });
+
+        Schema::drop('users');
+        Schema::drop('organisations');
+        Schema::drop('assigned_roles');
+        Schema::drop('permission_role');
+        Schema::drop('user_permissions');
+        Schema::drop('permission_groups');
+        Schema::drop('roles');
+        Schema::drop('permissions');
+        Schema::drop('permission_dependencies');
+    }
+
+    /**
      * Run the Migrations.
      *
      * @return void
@@ -135,47 +177,5 @@ class SetupAccessTables extends Migration
                 ->on('users')
                 ->onDelete('cascade');
         });
-    }
-
-    /**
-     * Reverse the Migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('assigned_roles', function (Blueprint $table) {
-            $table->dropForeign('assigned_roles' . '_user_id_foreign');
-            $table->dropForeign('assigned_roles' . '_role_id_foreign');
-        });
-
-        Schema::table('permission_role', function (Blueprint $table) {
-            $table->dropForeign('permission_role' . '_permission_id_foreign');
-            $table->dropForeign('permission_role' . '_role_id_foreign');
-        });
-
-        Schema::table('user_permissions', function (Blueprint $table) {
-            $table->dropForeign('user_permissions' . '_permission_id_foreign');
-            $table->dropForeign('user_permissions' . '_user_id_foreign');
-        });
-
-        Schema::table('permission_dependencies', function (Blueprint $table) {
-            $table->dropForeign('permission_dependencies_permission_id_foreign');
-            $table->dropForeign('permission_dependencies_dependency_id_foreign');
-        });
-
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->dropForeign('permissions' . '_group_id_foreign');
-        });
-
-        Schema::drop('users');
-        Schema::drop('organisations');
-        Schema::drop('assigned_roles');
-        Schema::drop('permission_role');
-        Schema::drop('user_permissions');
-        Schema::drop('permission_groups');
-        Schema::drop('roles');
-        Schema::drop('permissions');
-        Schema::drop('permission_dependencies');
     }
 }

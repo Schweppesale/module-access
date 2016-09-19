@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Domain\Repositories;
 
 use Schweppesale\Module\Access\Domain\Entities\User;
+use Schweppesale\Module\Access\Domain\Values\EmailAddress;
 use Schweppesale\Module\Core\Collections\Collection;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
@@ -47,11 +48,25 @@ interface UserRepository
     public function findByPermissionId($permissionId): Collection;
 
     /**
-     * @param $email
+     * @param string $code
      * @return User
      * @throws EntityNotFoundException
      */
-    public function getByEmail($email): User;
+    public function getByConfirmationCode($code): User;
+
+    /**
+     * @param $token
+     * @return User
+     * @throws EntityNotFoundException
+     */
+    public function getByAccessToken($token): User;
+
+    /**
+     * @param EmailAddress $email
+     * @return User
+     * @throws EntityNotFoundException
+     */
+    public function getByEmail(EmailAddress $email): User;
 
     /**
      * @param int $id
@@ -59,13 +74,6 @@ interface UserRepository
      * @throws EntityNotFoundException
      */
     public function getById($id): User;
-
-    /**
-     * @param string $code
-     * @return User
-     * @throws EntityNotFoundException
-     */
-    public function getByConfirmationCode($code): User;
 
     /**
      * @param User $user

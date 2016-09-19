@@ -46,6 +46,17 @@ class PermissionController extends Controller
 
     /**
      * @param Request $request
+     * @param $groupId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByGroup(Request $request, $groupId)
+    {
+        $expand = explode(',', $request->get('expand', 'dependencyIds'));
+        return $this->response->format($this->permissionService->findByGroupId($groupId, ['expand' => $expand]));
+    }
+
+    /**
+     * @param Request $request
      * @param $roleId
      * @return \Illuminate\Http\Response
      */
@@ -64,17 +75,6 @@ class PermissionController extends Controller
     {
         $expand = explode(',', $request->get('expand', 'dependencyIds'));
         return $this->response->format($this->permissionService->findByUserId($userId, ['expand' => $expand]));
-    }
-
-    /**
-     * @param Request $request
-     * @param $groupId
-     * @return \Illuminate\Http\Response
-     */
-    public function indexByGroup(Request $request, $groupId)
-    {
-        $expand = explode(',', $request->get('expand', 'dependencyIds'));
-        return $this->response->format($this->permissionService->findByGroupId($groupId, ['expand' => $expand]));
     }
 
     /**

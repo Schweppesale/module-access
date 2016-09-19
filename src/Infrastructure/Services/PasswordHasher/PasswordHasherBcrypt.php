@@ -2,9 +2,9 @@
 namespace Schweppesale\Module\Access\Infrastructure\Services\PasswordHasher;
 
 use Illuminate\Hashing\BcryptHasher;
-use Schweppesale\Module\Access\Domain\Services\HashedPassword;
-use Schweppesale\Module\Access\Domain\Services\Password;
 use Schweppesale\Module\Access\Domain\Services\PasswordHasher;
+use Schweppesale\Module\Access\Domain\Values\HashedPassword;
+use Schweppesale\Module\Access\Domain\Values\Password;
 
 class PasswordHasherBcrypt implements PasswordHasher
 {

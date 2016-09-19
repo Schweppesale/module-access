@@ -86,17 +86,6 @@ class RoleDTO implements JsonSerializable
     }
 
     /**
-     * @param array $permissionIds
-     * @return $this
-     */
-    public function setPermissionIds(array $permissionIds)
-    {
-        $this->permissionIds = $permissionIds;
-
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
     public function getUpdatedAt(): DateTime
@@ -116,5 +105,16 @@ class RoleDTO implements JsonSerializable
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt
         ];
+    }
+
+    /**
+     * @param array $permissionIds
+     * @return $this
+     */
+    public function setPermissionIds(array $permissionIds)
+    {
+        $this->permissionIds = $permissionIds;
+
+        return $this;
     }
 }

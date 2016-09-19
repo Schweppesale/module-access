@@ -27,22 +27,18 @@ class Permission implements PermissionContract
      * @var int
      */
     private $displayName;
-
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
     /**
      * @var Group
      */
     private $group;
-
+    /**
+     * @var int
+     */
+    private $id;
+    /**
+     * @var string
+     */
+    private $name;
     /**
      * @var int
      */
@@ -60,20 +56,32 @@ class Permission implements PermissionContract
 
     /**
      * Permission constructor.
-     * @param $name
-     * @param $displayName
+     * @param string $name
+     * @param string $displayName
      * @param Group $group
-     * @param array $dependencies
+     * @param Permission[] $dependencies
      */
-    public function __construct($name, $displayName, Group $group, $dependencies = [])
+    public function __construct(string $name, string $displayName, Group $group, $dependencies = [])
     {
         $this->name = $name;
-        $this->displayName = $displayName;
-        $this->dependencies = $dependencies;
         $this->group = $group;
+        $this->displayName = $displayName;
+
+        $this->setDependencies($dependencies);
 
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @param Permission $permission
+     * @return $this
+     */
+    public function addDependency(Permission $permission)
+    {
+        $this->dependencies[] = $permission;
+
+        return $this;
     }
 
     /**
@@ -93,26 +101,19 @@ class Permission implements PermissionContract
     }
 
     /**
-     * @param Permission[] $dependencies
-     * @return $this
-     */
-    public function setDependencies(array $dependencies)
-    {
-        foreach ($dependencies as $dependency) {
-            if (!$dependency instanceof Permission) {
-                throw new \InvalidArgumentException('Invalid Permission Entity');
-            }
-        }
-        $this->dependencies = $dependencies;
-        return $this;
-    }
-
-    /**
-     * @return int
+     * @return string
      */
     public function getDisplayName()
     {
         return $this->displayName;
+    }
+
+    /**
+     * @return Group
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 
     /**
@@ -132,30 +133,11 @@ class Permission implements PermissionContract
     }
 
     /**
-     * @return Group
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
-
-    /**
      * @return int
      */
     public function getSort()
     {
         return $this->sort;
-    }
-
-    /**
-     * @param int $sort
-     * @return $this
-     */
-    public function setSort($sort)
-    {
-        $this->sort = $sort;
-
-        return $this;
     }
 
     /**
@@ -175,12 +157,38 @@ class Permission implements PermissionContract
     }
 
     /**
+     * @param Permission[] $dependencies
+     * @return $this
+     */
+    public function setDependencies(array $dependencies)
+    {
+        $this->dependencies = [];
+        array_map(function (Permission $dependency) {
+            $this->addDependency($dependency);
+        }, $dependencies);
+
+        return $this;
+    }
+
+    /**
+     * @param int $sort
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
      * @param boolean $system
      * @return $this
      */
-    public function setSystem($system)
+    public function setSystem(bool $system)
     {
         $this->system = $system;
+
         return $this;
     }
 }

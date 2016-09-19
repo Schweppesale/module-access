@@ -1,5 +1,6 @@
 <?php namespace Schweppesale\Module\Access\Application\Providers;
 
+use LaravelDoctrine\ORM\Auth\DoctrineUserProvider;
 use Papper\Papper;
 use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
@@ -16,11 +17,13 @@ use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository as Org
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository as PermissionRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository as RoleRepositoryInterface;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository as UserRepositoryInterface;
+use Schweppesale\Module\Access\Domain\Services\PasswordHasher;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Group\GroupRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Organisation\OrganisationRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Permission\PermissionRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\Role\RoleRepositoryDoctrine;
 use Schweppesale\Module\Access\Infrastructure\Repositories\User\UserRepositoryDoctrine;
+use Schweppesale\Module\Access\Infrastructure\Services\PasswordHasher\PasswordHasherBcrypt;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 use Schweppesale\Module\Core\Mapper\Papper\Mapper;
 use Schweppesale\Module\Core\Providers\Laravel\ServiceProvider;
@@ -46,6 +49,9 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->registerRepositories();
         $this->registerFacade();
         $this->registerMappings();
+
+        $this->app->bind(PasswordHasher::class, PasswordHasherBcrypt::class);
+        $this->app->bind(\Illuminate\Contracts\Auth\UserProvider::class, DoctrineUserProvider::class);
     }
 
     /**
@@ -66,18 +72,6 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->mergeConfigRecursiveFrom(
             __DIR__ . '/../Config/doctrine.php', 'doctrine'
         );
-    }
-
-    /**
-     * Register service provider bindings
-     */
-    public function registerRepositories()
-    {
-        $this->app->bind(RoleRepositoryInterface::class, RoleRepositoryDoctrine::class);
-        $this->app->bind(OrganisationRepositoryInterface::class, OrganisationRepositoryDoctrine::class);
-        $this->app->bind(GroupRepositoryInterface::class, GroupRepositoryDoctrine::class);
-        $this->app->bind(UserRepositoryInterface::class, UserRepositoryDoctrine::class);
-        $this->app->bind(PermissionRepositoryInterface::class, PermissionRepositoryDoctrine::class);
     }
 
     /**
@@ -152,7 +146,6 @@ class ApplicationServiceProvider extends ServiceProvider
 
         Papper::createMap(User::class, UserDTO::class)
             ->constructUsing(function (User $user) {
-
                 $permissions = $user->getPermissions()->toArray();
                 $permissionIds = array_map(function (Permission $permission) {
                     return $permission->getId();
@@ -167,8 +160,8 @@ class ApplicationServiceProvider extends ServiceProvider
                     $user->getId(),
                     $user->getName(),
                     $user->isConfirmed(),
-                    $user->getEmail(),
-                    $user->getStatus(),
+                    $user->getEmail()->value(),
+                    $user->getStatus()->value(),
                     $permissionIds,
                     $roleIds,
                     $user->getCreatedAt(),
@@ -176,5 +169,17 @@ class ApplicationServiceProvider extends ServiceProvider
                     $user->getUpdatedAt()
                 );
             });
+    }
+
+    /**
+     * Register service provider bindings
+     */
+    public function registerRepositories()
+    {
+        $this->app->bind(RoleRepositoryInterface::class, RoleRepositoryDoctrine::class);
+        $this->app->bind(OrganisationRepositoryInterface::class, OrganisationRepositoryDoctrine::class);
+        $this->app->bind(GroupRepositoryInterface::class, GroupRepositoryDoctrine::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepositoryDoctrine::class);
+        $this->app->bind(PermissionRepositoryInterface::class, PermissionRepositoryDoctrine::class);
     }
 }

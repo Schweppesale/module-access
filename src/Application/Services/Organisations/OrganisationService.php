@@ -15,14 +15,13 @@ class OrganisationService
 {
 
     /**
-     * @var OrganisationRepository
-     */
-    private $organisations;
-
-    /**
      * @var MapperInterface
      */
     private $mapper;
+    /**
+     * @var OrganisationRepository
+     */
+    private $organisations;
 
     /**
      * OrganisationService constructor.
@@ -50,20 +49,20 @@ class OrganisationService
     }
 
     /**
+     * @return OrganisationDTO[]
+     */
+    public function findAll()
+    {
+        return $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class);
+    }
+
+    /**
      * @param $organisationId
      * @return OrganisationDTO
      */
     public function getById($organisationId): OrganisationDTO
     {
         return $this->mapper->map($this->organisations->getById($organisationId), OrganisationDTO::class);
-    }
-
-    /**
-     * @return OrganisationDTO[]
-     */
-    public function findAll()
-    {
-        return $this->mapper->mapArray($this->organisations->findAll()->toArray(), Organisation::class, OrganisationDTO::class);
     }
 
     /**

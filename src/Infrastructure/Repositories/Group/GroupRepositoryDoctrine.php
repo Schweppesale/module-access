@@ -42,6 +42,34 @@ class GroupRepositoryDoctrine implements GroupRepository
     }
 
     /**
+     * @return Group[]|Collection
+     */
+    public function findAll(): Collection
+    {
+        $result = $this->manager->createQueryBuilder()
+            ->select('pg')
+            ->from(Group::class, 'pg')
+            ->getQuery()
+            ->getResult();
+        return new Collection($result);
+    }
+
+    /**
+     * @return Group[]|Collection
+     */
+    public function findAllParents(): Collection
+    {
+        $result = $this->manager->createQueryBuilder()
+            ->select('pg')
+            ->from(Group::class, 'pg')
+            ->where('pg.parent IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
+    }
+
+    /**
      * @param $id
      * @return Group
      * @throws EntityNotFoundException
@@ -83,34 +111,6 @@ class GroupRepositoryDoctrine implements GroupRepository
         } catch (NoResultException $ex) {
             throw new EntityNotFoundException('Permission Group not found!', 0, $ex);
         }
-    }
-
-    /**
-     * @return Group[]|Collection
-     */
-    public function findAll(): Collection
-    {
-        $result = $this->manager->createQueryBuilder()
-            ->select('pg')
-            ->from(Group::class, 'pg')
-            ->getQuery()
-            ->getResult();
-        return new Collection($result);
-    }
-
-    /**
-     * @return Group[]|Collection
-     */
-    public function findAllParents(): Collection
-    {
-        $result = $this->manager->createQueryBuilder()
-            ->select('pg')
-            ->from(Group::class, 'pg')
-            ->where('pg.parent IS NULL')
-            ->getQuery()
-            ->getResult();
-
-        return new Collection($result);
     }
 
     /**

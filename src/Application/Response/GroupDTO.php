@@ -25,31 +25,26 @@ class GroupDTO implements JsonSerializable
      * @var string
      */
     private $name;
-
-    /**
-     * @var mixed
-     */
-    private $parentId;
-
     /**
      * @var int
      */
     private $order;
-
     /**
-     * @var int
+     * @var mixed
      */
-    private $system;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
+    private $parentId;
     /**
      * @var int[]
      */
     private $permissionIds = [];
+    /**
+     * @var int
+     */
+    private $system;
+    /**
+     * @var DateTime
+     */
+    private $updatedAt;
 
     /**
      * GroupDTO constructor.
@@ -70,25 +65,6 @@ class GroupDTO implements JsonSerializable
         $this->order = $order;
         $this->system = $system;
         $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * @return \int[]
-     */
-    public function getPermissionIds(): array
-    {
-        return $this->permissionIds;
-    }
-
-    /**
-     * @param array $permissionIds
-     * @return $this
-     */
-    public function setPermissionIds(array $permissionIds)
-    {
-        $this->permissionIds = $permissionIds;
-
-        return $this;
     }
 
     /**
@@ -116,6 +92,14 @@ class GroupDTO implements JsonSerializable
     }
 
     /**
+     * @return int
+     */
+    public function getOrder(): int
+    {
+        return $this->order;
+    }
+
+    /**
      * @return null|int
      */
     public function getParentId()
@@ -124,11 +108,11 @@ class GroupDTO implements JsonSerializable
     }
 
     /**
-     * @return int
+     * @return \int[]
      */
-    public function getOrder(): int
+    public function getPermissionIds(): array
     {
-        return $this->order;
+        return $this->permissionIds;
     }
 
     /**
@@ -162,5 +146,16 @@ class GroupDTO implements JsonSerializable
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];
+    }
+
+    /**
+     * @param array $permissionIds
+     * @return $this
+     */
+    public function setPermissionIds(array $permissionIds)
+    {
+        $this->permissionIds = $permissionIds;
+
+        return $this;
     }
 }

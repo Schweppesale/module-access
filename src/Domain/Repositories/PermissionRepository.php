@@ -25,10 +25,10 @@ interface PermissionRepository
     public function findAll(): Collection;
 
     /**
-     * @param $userId
+     * @param $groupId
      * @return Permission[]|Collection
      */
-    public function findByUserId($userId): Collection;
+    public function findByGroupId($groupId): Collection;
 
     /**
      * @param $roleId
@@ -37,10 +37,10 @@ interface PermissionRepository
     public function findByRoleId($roleId): Collection;
 
     /**
-     * @param $groupId
+     * @param $userId
      * @return Permission[]|Collection
      */
-    public function findByGroupId($groupId): Collection;
+    public function findByUserId($userId): Collection;
 
     /**
      * @param $id

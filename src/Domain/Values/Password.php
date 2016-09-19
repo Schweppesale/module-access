@@ -1,5 +1,7 @@
 <?php
-namespace Schweppesale\Module\Access\Domain\Services;
+namespace Schweppesale\Module\Access\Domain\Values;
+
+use Schweppesale\Module\Access\Domain\Services\PasswordHasher;
 
 /**
  * Class Password
@@ -9,24 +11,31 @@ class Password
 {
 
     /**
-     * @var string
-     */
-    private $value;
-
-    /**
      * @var PasswordHasher
      */
     private $hasher;
+    /**
+     * @var string
+     */
+    private $password;
 
     /**
      * Password constructor.
-     * @param string $value
+     * @param string $password
      * @param PasswordHasher $hasher
      */
-    public function __construct(string $value, PasswordHasher $hasher)
+    public function __construct(string $password, PasswordHasher $hasher)
     {
-        $this->value = $value;
+        $this->password = $password;
         $this->hasher = $hasher;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->value();
     }
 
     /**
@@ -37,10 +46,7 @@ class Password
         return $this->hasher->hash($this);
     }
 
-    /**
-     * @return string
-     */
-    public function _toString()
+    public function jsonSerialize()
     {
         return $this->value();
     }
@@ -50,7 +56,6 @@ class Password
      */
     public function value(): string
     {
-        return $this->value;
+        return $this->password;
     }
-
 }

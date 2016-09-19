@@ -49,11 +49,6 @@ class Role implements HasPermissionsInterface, RoleContract
     private $updatedAt;
 
     /**
-     * @var User[]
-     */
-    private $users;
-
-    /**
      * Role constructor.
      *
      * @param $name
@@ -71,7 +66,22 @@ class Role implements HasPermissionsInterface, RoleContract
         $this->updatedAt = new DateTime();
     }
 
-    public function can($permission)
+    /**
+     * @param Permission $permission
+     * @return $this
+     */
+    public function addPermission(Permission $permission): Role
+    {
+        $this->permissions[] = $permission;
+
+        return $this;
+    }
+
+    /**
+     * @param $permission
+     * @return bool
+     */
+    public function can($permission): bool
     {
         return $this->hasPermissionTo($permission);
     }
@@ -79,7 +89,7 @@ class Role implements HasPermissionsInterface, RoleContract
     /**
      * @return DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -87,7 +97,7 @@ class Role implements HasPermissionsInterface, RoleContract
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -95,20 +105,9 @@ class Role implements HasPermissionsInterface, RoleContract
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @param $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -120,51 +119,52 @@ class Role implements HasPermissionsInterface, RoleContract
     }
 
     /**
-     * @param Permission[] $permissions
+     * @return int
+     */
+    public function getSort(): int
+    {
+        return $this->sort;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param $name
      * @return $this
      */
-    public function setPermissions(array $permissions)
+    public function setName($name): Role
     {
-        foreach ($permissions as $permission) {
-            if (!$permission instanceof Permission) {
-                throw new \InvalidArgumentException('Invalid Permission Type');
-            }
-        }
-        $this->permissions = $permissions;
+        $this->name = $name;
+
         return $this;
     }
 
     /**
-     * @return int
+     * @param Permission[] $permissions
+     * @return $this
      */
-    public function getSort()
+    public function setPermissions(array $permissions): Role
     {
-        return $this->sort;
+        $this->permissions = [];
+        array_map(function (Permission $permission) {
+            $this->addPermission($permission);
+        }, $permissions);
+        return $this;
     }
 
     /**
      * @param int $sort
      * @return $this
      */
-    public function setSort($sort)
+    public function setSort($sort): Role
     {
         $this->sort = (int)$sort;
         return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @return User[]
-     */
-    public function getUsers()
-    {
-        return $this->users;
     }
 }

@@ -55,7 +55,7 @@ class Group
      * @param bool|false $system
      * @param Group|null $parent
      */
-    public function __construct($name, $system = false, Group $parent = null)
+    public function __construct($name, bool $system = false, Group $parent = null)
     {
         $this->name = $name;
         $this->system = $system;
@@ -67,20 +67,9 @@ class Group
     }
 
     /**
-     * @param $name
-     * @return $this
-     */
-    public function changeName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -88,7 +77,7 @@ class Group
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -96,13 +85,13 @@ class Group
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return mixed
+     * @return Group|null
      */
     public function getParent()
     {
@@ -112,26 +101,15 @@ class Group
     /**
      * @return int
      */
-    public function getSort()
+    public function getSort(): int
     {
         return $this->sort;
     }
 
     /**
-     * @param $sort
-     * @return $this
+     * @return bool
      */
-    public function setSort($sort)
-    {
-        $this->sort = $sort;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSystem()
+    public function getSystem(): bool
     {
         return $this->system;
     }
@@ -139,8 +117,30 @@ class Group
     /**
      * @return DateTime
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function setName($name): Group
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param $sort
+     * @return $this
+     */
+    public function setSort($sort): Group
+    {
+        $this->sort = $sort;
+
+        return $this;
     }
 }

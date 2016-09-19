@@ -21,16 +21,14 @@ class UserController extends Controller
      * @var AuthenticationService
      */
     private $authenticationService;
-
-    /**
-     * @var UserService
-     */
-    private $userService;
-
     /**
      * @var Response|Response
      */
     private $response;
+    /**
+     * @var UserService
+     */
+    private $userService;
 
     /**
      * UserController constructor.
@@ -113,7 +111,6 @@ class UserController extends Controller
                 $request->get('password'),
                 $request->get('assignees_roles'),
                 explode(',', $request->get('permissions')),
-                $request->get('confirmed'),
                 $request->get('confirmation_email'),
                 $request->get('status')
             )
@@ -134,7 +131,6 @@ class UserController extends Controller
                 $request->get('email'),
                 $request->get('assignees_roles'),
                 explode(',', $request->get('permissions')),
-                $request->get('confirmed'),
                 $request->get('status')
             )
         );

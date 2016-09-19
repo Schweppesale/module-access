@@ -25,41 +25,34 @@ class PermissionDTO implements JsonSerializable
      * @var string
      */
     private $displayName;
-
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $system;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
-
     /**
      * @var int|null
      */
     private $groupId;
-
     /**
-     * @var int[]
+     * @var int
      */
-    private $userIds;
-
+    private $id;
+    /**
+     * @var string
+     */
+    private $name;
     /**
      * @var int[]
      */
     private $roleIds;
+    /**
+     * @var bool
+     */
+    private $system;
+    /**
+     * @var DateTime
+     */
+    private $updatedAt;
+    /**
+     * @var int[]
+     */
+    private $userIds;
 
     /**
      * PermissionDTO constructor.
@@ -82,44 +75,6 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @return array
-     */
-    public function getRoleIds(): array
-    {
-        return $this->roleIds;
-    }
-
-    /**
-     * @param array $roleIds
-     * @return $this
-     */
-    public function setRoleIds(array $roleIds)
-    {
-        $this->roleIds = $roleIds;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getUserIds(): array
-    {
-        return $this->userIds;
-    }
-
-    /**
-     * @param array $userIds
-     * @return $this
-     */
-    public function setUserIds(array $userIds)
-    {
-        $this->userIds = $userIds;
-
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
     public function getCreatedAt(): DateTime
@@ -136,22 +91,19 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @param array $dependencyIds
-     * @return $this
-     */
-    public function setDependencyIds(array $dependencyIds)
-    {
-        $this->dependencyIds = $dependencyIds;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getDisplayName(): string
     {
         return $this->displayName;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
     }
 
     /**
@@ -171,11 +123,11 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @return boolean
+     * @return array
      */
-    public function isSystem(): bool
+    public function getRoleIds(): array
     {
-        return $this->system;
+        return $this->roleIds;
     }
 
     /**
@@ -184,6 +136,22 @@ class PermissionDTO implements JsonSerializable
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserIds(): array
+    {
+        return $this->userIds;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSystem(): bool
+    {
+        return $this->system;
     }
 
     /**
@@ -206,11 +174,14 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @return int|null
+     * @param array $dependencyIds
+     * @return $this
      */
-    public function getGroupId()
+    public function setDependencyIds(array $dependencyIds)
     {
-        return $this->groupId;
+        $this->dependencyIds = $dependencyIds;
+
+        return $this;
     }
 
     /**
@@ -219,5 +190,27 @@ class PermissionDTO implements JsonSerializable
     public function setGroupId($groupId)
     {
         $this->groupId = $groupId;
+    }
+
+    /**
+     * @param array $roleIds
+     * @return $this
+     */
+    public function setRoleIds(array $roleIds)
+    {
+        $this->roleIds = $roleIds;
+
+        return $this;
+    }
+
+    /**
+     * @param array $userIds
+     * @return $this
+     */
+    public function setUserIds(array $userIds)
+    {
+        $this->userIds = $userIds;
+
+        return $this;
     }
 }

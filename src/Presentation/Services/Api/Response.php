@@ -13,15 +13,13 @@ class Response
 {
 
     /**
-     * @var LaravelResponse
-     */
-    private $response;
-
-    /**
      * @var LaravelRequest
      */
     private $request;
-
+    /**
+     * @var LaravelResponse
+     */
+    private $response;
     /**
      * @var SerializerInterface
      */

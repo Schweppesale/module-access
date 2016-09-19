@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\User;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Access\Domain\Values\EmailAddress;
+use Schweppesale\Module\Access\Domain\Values\User\Status;
 use Schweppesale\Module\Core\Collections\Collection;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
@@ -49,6 +51,141 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
+     * @return User[]|Collection
+     */
+    public function findAll(): Collection
+    {
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.status.status = ' . Status::ACTIVE)
+            ->andWhere('u.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
+    }
+
+    /**
+     * @return User[]|Collection
+     */
+    public function findAllBanned(): Collection
+    {
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.status.status = ' . Status::BANNED)
+            ->andWhere('u.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
+    }
+
+    /**
+     * @return User[]|Collection
+     */
+    public function findAllDeactivated(): Collection
+    {
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.status.status = ' . Status::DISABLED)
+            ->andWhere('u.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
+    }
+
+    /**
+     * @return User[]|Collection
+     */
+    public function findAllDeleted(): Collection
+    {
+        $result = $this->manager->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->where('u.deletedAt IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+
+        return new Collection($result);
+    }
+
+    /**
+     * @todo implementation
+     *
+     * @param $permissionId
+     * @return User[]|Collection
+     */
+    public function findByPermissionId($permissionId): Collection
+    {
+
+    }
+
+    /**
+     * @param string $code
+     * @return User
+     * @throws EntityNotFoundException
+     */
+    public function getByConfirmationCode($code): User
+    {
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.confirmationCode = :confirmationCode')
+                ->setParameter('confirmationCode', $code)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
+        }
+    }
+
+    /**
+     * @param EmailAddress $email
+     * @return User
+     * @throws EntityNotFoundException
+     */
+    public function getByEmail(EmailAddress $email): User
+    {
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.email.email = :email')
+                ->setParameter('email', $email->value())
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
+        }
+    }
+
+    public function getByAccessToken($token): User
+    {
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.accessToken = :token')
+                ->setParameter('token', $token)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
+        }
+    }
+
+    /**
      * @param int $id
      * @return User
      * @throws EntityNotFoundException
@@ -79,123 +216,5 @@ class UserRepositoryDoctrine implements UserRepository
         $this->manager->persist($user);
         $this->manager->flush();
         return $user;
-    }
-
-    /**
-     * @return User[]|Collection
-     */
-    public function findAll(): Collection
-    {
-        $result = $this->manager->createQueryBuilder()
-            ->select('u')
-            ->from(User::class, 'u')
-            ->where('u.status = ' . User::ACTIVE)
-            ->andWhere('u.deletedAt IS NULL')
-            ->getQuery()
-            ->getResult();
-
-        return new Collection($result);
-    }
-
-    /**
-     * @todo implementation
-     *
-     * @param $permissionId
-     * @return User[]|Collection
-     */
-    public function findByPermissionId($permissionId): Collection
-    {
-
-    }
-
-    /**
-     * @return User[]|Collection
-     */
-    public function findAllBanned(): Collection
-    {
-        $result = $this->manager->createQueryBuilder()
-            ->select('u')
-            ->from(User::class, 'u')
-            ->where('u.status = ' . User::BANNED)
-            ->andWhere('u.deletedAt IS NULL')
-            ->getQuery()
-            ->getResult();
-
-        return new Collection($result);
-    }
-
-    /**
-     * @return User[]|Collection
-     */
-    public function findAllDeactivated(): Collection
-    {
-        $result = $this->manager->createQueryBuilder()
-            ->select('u')
-            ->from(User::class, 'u')
-            ->where('u.status = ' . User::DISABLED)
-            ->andWhere('u.deletedAt IS NULL')
-            ->getQuery()
-            ->getResult();
-
-        return new Collection($result);
-    }
-
-    /**
-     * @return User[]|Collection
-     */
-    public function findAllDeleted(): Collection
-    {
-        $result = $this->manager->createQueryBuilder()
-            ->select('u')
-            ->from(User::class, 'u')
-            ->where('u.deletedAt IS NOT NULL')
-            ->getQuery()
-            ->getResult();
-
-        return new Collection($result);
-    }
-
-    /**
-     * @param $email
-     * @return User
-     * @throws EntityNotFoundException
-     */
-    public function getByEmail($email): User
-    {
-        try {
-
-            return $this->manager->createQueryBuilder()
-                ->select('u')
-                ->from(User::class, 'u')
-                ->where('u.email = :email')
-                ->setParameter('email', $email)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (NoResultException $ex) {
-            throw new EntityNotFoundException('User not found!', 0, $ex);
-        }
-    }
-
-    /**
-     * @param string $code
-     * @return User
-     * @throws EntityNotFoundException
-     */
-    public function getByConfirmationCode($code): User
-    {
-        try {
-
-            return $this->manager->createQueryBuilder()
-                ->select('u')
-                ->from(User::class, 'u')
-                ->where('u.confirmationCode = :confirmationCode')
-                ->setParameter('confirmationCode', $code)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (NoResultException $ex) {
-            throw new EntityNotFoundException('User not found!', 0, $ex);
-        }
     }
 }

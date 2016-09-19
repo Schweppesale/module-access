@@ -20,24 +20,21 @@ use Schweppesale\Module\Core\Mapper\MapperInterface;
 class RoleService
 {
     /**
+     * @var GroupRepository
+     */
+    private $groups;
+    /**
      * @var MapperInterface
      */
     private $mapper;
-
-    /**
-     * @var RoleRepository
-     */
-    private $roles;
-
     /**
      * @var PermissionRepository
      */
     private $permissions;
-
     /**
-     * @var GroupRepository
+     * @var RoleRepository
      */
-    private $groups;
+    private $roles;
 
     /**
      * RoleService constructor.
@@ -56,48 +53,6 @@ class RoleService
         $this->roles = $roles;
         $this->permissions = $permissions;
         $this->groups = $groups;
-    }
-
-    /**
-     * @return Role[]
-     */
-    public function findAll()
-    {
-        $result = $this->roles->findAll();
-        return $this->mapper->mapArray($result->toArray(), Role::class, RoleDTO::class);
-    }
-
-    /**
-     * @param $roleId
-     * @return array
-     */
-    public function editMeta($roleId)
-    {
-        return [
-            'role' => $this->getById($roleId),
-            'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
-            'groups' => $this->mapper->mapArray($this->groups->findAllParents()->toArray(), Group::class, GroupDTO::class),
-        ];
-    }
-
-    /**
-     * @param $roleId
-     * @return RoleDTO
-     */
-    public function getById($roleId): RoleDTO
-    {
-        $role = $this->roles->getById($roleId);
-        return $this->mapper->map($role, RoleDTO::class);
-    }
-
-    /**
-     * @param $userId
-     * @return RoleDTO[]
-     */
-    public function findByUserId($userId)
-    {
-        $result = $this->roles->findByUserId($userId)->toArray();
-        return $this->mapper->mapArray($result, Role::class, RoleDTO::class);
     }
 
     /**
@@ -133,6 +88,37 @@ class RoleService
     }
 
     /**
+     * @param $roleId
+     * @return void
+     */
+    public function delete($roleId)
+    {
+        $this->roles->delete($roleId);
+    }
+
+    /**
+     * @param $roleId
+     * @return array
+     */
+    public function editMeta($roleId)
+    {
+        return [
+            'role' => $this->getById($roleId),
+            'permissions' => $this->mapper->mapArray($this->permissions->findAll()->toArray(), Permission::class, PermissionDTO::class),
+            'groups' => $this->mapper->mapArray($this->groups->findAllParents()->toArray(), Group::class, GroupDTO::class),
+        ];
+    }
+
+    /**
+     * @return Role[]
+     */
+    public function findAll()
+    {
+        $result = $this->roles->findAll();
+        return $this->mapper->mapArray($result->toArray(), Role::class, RoleDTO::class);
+    }
+
+    /**
      * @todo inefficient
      *
      * @param $permissionId
@@ -146,6 +132,26 @@ class RoleService
             return $role->can($permission->getName());
         });
         return $this->mapper->mapArray($result, Role::class, RoleDTO::class);
+    }
+
+    /**
+     * @param $userId
+     * @return RoleDTO[]
+     */
+    public function findByUserId($userId)
+    {
+        $result = $this->roles->findByUserId($userId)->toArray();
+        return $this->mapper->mapArray($result, Role::class, RoleDTO::class);
+    }
+
+    /**
+     * @param $roleId
+     * @return RoleDTO
+     */
+    public function getById($roleId): RoleDTO
+    {
+        $role = $this->roles->getById($roleId);
+        return $this->mapper->map($role, RoleDTO::class);
     }
 
     /**
@@ -173,14 +179,5 @@ class RoleService
 
         $role = $this->roles->save($role);
         return $this->mapper->map($role, RoleDTO::class);
-    }
-
-    /**
-     * @param $roleId
-     * @return void
-     */
-    public function delete($roleId)
-    {
-        $this->roles->delete($roleId);
     }
 }

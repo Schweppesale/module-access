@@ -1,0 +1,4 @@
+Schweppesale\Module\Access\Domain\Values\EmailAddress:
+    type: embeddable
+    fields:
+        email: { type: string }

@@ -17,14 +17,13 @@ class RoleController extends Controller
 {
 
     /**
-     * @var RoleService
-     */
-    private $roleService;
-
-    /**
      * @var Response
      */
     private $response;
+    /**
+     * @var RoleService
+     */
+    private $roleService;
 
     /**
      * RoleController constructor.
@@ -66,21 +65,21 @@ class RoleController extends Controller
     }
 
     /**
-     * @param $userId
-     * @return \Illuminate\Http\Response
-     */
-    public function indexByUser($userId)
-    {
-        return $this->response->format($this->roleService->findByUserId($userId));
-    }
-
-    /**
      * @param $permissionId
      * @return \Illuminate\Http\Response
      */
     public function indexByPermission($permissionId)
     {
         return $this->response->format($this->roleService->findByPermissionId($permissionId));
+    }
+
+    /**
+     * @param $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByUser($userId)
+    {
+        return $this->response->format($this->roleService->findByUserId($userId));
     }
 
     /**

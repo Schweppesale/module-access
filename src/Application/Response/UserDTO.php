@@ -89,14 +89,6 @@ class UserDTO implements JsonSerializable
     }
 
     /**
-     * @return boolean
-     */
-    public function isConfirmed(): bool
-    {
-        return $this->confirmed;
-    }
-
-    /**
      * @return DateTime
      */
     public function getCreatedAt(): DateTime
@@ -166,6 +158,14 @@ class UserDTO implements JsonSerializable
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isConfirmed(): bool
+    {
+        return $this->confirmed;
     }
 
     /**

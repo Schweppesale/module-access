@@ -40,6 +40,14 @@ Schweppesale\Module\Access\Domain\Entities\User:
             nullable: false
             precision: 0
             column: created_at
+        accessToken:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: access_token
         deletedAt:
             type: datetime
             scale: 0
@@ -48,25 +56,11 @@ Schweppesale\Module\Access\Domain\Entities\User:
             nullable: false
             precision: 0
             column: deleted_at
-        email:
-            type: string
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
         name:
             type: string
             scale: 0
             length: null
             unique: false
-            nullable: false
-            precision: 0
-        password:
-            type: string
-            scale: 0
-            length: null
-            unique: true
             nullable: false
             precision: 0
         rememberToken:
@@ -77,13 +71,6 @@ Schweppesale\Module\Access\Domain\Entities\User:
             nullable: false
             precision: 0
             column: remember_token
-        status:
-            type: integer
-            scale: 0
-            length: null
-            unique: false
-            nullable: false
-            precision: 0
         updatedAt:
             type: datetime
             scale: 0
@@ -92,6 +79,16 @@ Schweppesale\Module\Access\Domain\Entities\User:
             nullable: false
             precision: 0
             column: updated_at
+    embedded:
+        email:
+            class: Schweppesale\Module\Access\Domain\Values\EmailAddress
+            columnPrefix: false
+        status:
+            class: Schweppesale\Module\Access\Domain\Values\User\Status
+            columnPrefix: false
+        password:
+            class: Schweppesale\Module\Access\Domain\Values\HashedPassword
+            columnPrefix: false
     manyToMany:
         permissions:
             targetEntity: Schweppesale\Module\Access\Domain\Entities\Permission
@@ -124,7 +121,7 @@ Schweppesale\Module\Access\Domain\Entities\User:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: users
+            inversedBy: null
             joinTable:
                 name: assigned_roles
                 schema: null

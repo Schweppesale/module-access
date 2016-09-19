@@ -19,29 +19,25 @@ use Schweppesale\Module\Core\Mapper\MapperInterface;
 class PermissionService
 {
     /**
-     * @var MapperInterface
-     */
-    private $mapper;
-
-    /**
      * @var GroupRepository
      */
     private $groups;
-
     /**
-     * @var UserService
+     * @var MapperInterface
      */
-    private $userService;
-
-    /**
-     * @var RoleService
-     */
-    private $roleService;
-
+    private $mapper;
     /**
      * @var PermissionRepository
      */
     private $permissions;
+    /**
+     * @var RoleService
+     */
+    private $roleService;
+    /**
+     * @var UserService
+     */
+    private $userService;
 
     /**
      * PermissionService constructor.
@@ -111,30 +107,6 @@ class PermissionService
     }
 
     /**
-     * @param array $options
-     * @return PermissionDTO[]
-     */
-    public function findAll(array $options = [])
-    {
-        $permissions = $this->mapper->mapArray(
-            $this->permissions->findAll()->toArray(),
-            Permission::class,
-            PermissionDTO::class
-        );
-
-        if (array_key_exists('expand', $options)) {
-            $permissions = array_map(
-                function (PermissionDTO $permission) use ($options) {
-                    return $this->expand($permission, (array)$options['expand']);
-                },
-                $permissions
-            );
-        }
-
-        return $permissions;
-    }
-
-    /**
      * Appends additional data to the PermissionDTO
      *
      * @param PermissionDTO $permission
@@ -169,23 +141,37 @@ class PermissionService
     }
 
     /**
-     * @param $permissionId
-     * @return PermissionDTO[]
-     */
-    public function findDependenciesById($permissionId)
-    {
-        $result = $this->permissions->getById($permissionId)->getDependencies()->toArray();
-        return $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
-    }
-
-    /**
-     * @param $roleId
      * @param array $options
      * @return PermissionDTO[]
      */
-    public function findByRoleId($roleId, array $options = [])
+    public function findAll(array $options = [])
     {
-        $result = $this->permissions->findByRoleId($roleId)->toArray();
+        $permissions = $this->mapper->mapArray(
+            $this->permissions->findAll()->toArray(),
+            Permission::class,
+            PermissionDTO::class
+        );
+
+        if (array_key_exists('expand', $options)) {
+            $permissions = array_map(
+                function (PermissionDTO $permission) use ($options) {
+                    return $this->expand($permission, (array)$options['expand']);
+                },
+                $permissions
+            );
+        }
+
+        return $permissions;
+    }
+
+    /**
+     * @param $groupId
+     * @param array $options
+     * @return PermissionDTO[]
+     */
+    public function findByGroupId($groupId, array $options = [])
+    {
+        $result = $this->permissions->findByGroupId($groupId)->toArray();
         $result = $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
         if (array_key_exists('expand', $options)) {
             $result = array_map(
@@ -199,13 +185,13 @@ class PermissionService
     }
 
     /**
-     * @param $groupId
+     * @param $roleId
      * @param array $options
      * @return PermissionDTO[]
      */
-    public function findByGroupId($groupId, array $options = [])
+    public function findByRoleId($roleId, array $options = [])
     {
-        $result = $this->permissions->findByGroupId($groupId)->toArray();
+        $result = $this->permissions->findByRoleId($roleId)->toArray();
         $result = $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
         if (array_key_exists('expand', $options)) {
             $result = array_map(
@@ -236,6 +222,16 @@ class PermissionService
             );
         }
         return $result;
+    }
+
+    /**
+     * @param $permissionId
+     * @return PermissionDTO[]
+     */
+    public function findDependenciesById($permissionId)
+    {
+        $result = $this->permissions->getById($permissionId)->getDependencies()->toArray();
+        return $this->mapper->mapArray($result, Permission::class, PermissionDTO::class);
     }
 
     /**

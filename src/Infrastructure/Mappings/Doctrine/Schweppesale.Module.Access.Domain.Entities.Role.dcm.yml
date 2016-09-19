@@ -70,30 +70,4 @@ Schweppesale\Module\Access\Domain\Entities\Role:
                         columnDefinition: null
                         referencedColumnName: id
             orderBy: null
-        users:
-            targetEntity: Schweppesale\Module\Access\Domain\Entities\User
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: roles
-            inversedBy: null
-            joinTable:
-                name: assigned_roles
-                schema: null
-                joinColumns:
-                    -
-                        name: role_id
-                        unique: false
-                        nullable: true
-                        onDelete: null
-                        columnDefinition: null
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    -
-                        name: user_id
-                        unique: true
-                        nullable: true
-                        onDelete: null
-                        columnDefinition: null
-                        referencedColumnName: id
-            orderBy: null
     lifecycleCallbacks: {  }

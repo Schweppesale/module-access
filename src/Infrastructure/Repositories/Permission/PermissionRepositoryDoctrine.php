@@ -23,24 +23,21 @@ class PermissionRepositoryDoctrine implements PermissionRepository
 {
 
     /**
+     * @var GroupRepository
+     */
+    private $groups;
+    /**
      * @var EntityManagerInterface
      */
     private $manager;
-
     /**
      * @var RoleRepository
      */
     private $roles;
-
     /**
      * @var UserRepository
      */
     private $users;
-
-    /**
-     * @var GroupRepository
-     */
-    private $groups;
 
     /**
      * PermissionRepositoryDoctrine constructor.
@@ -73,43 +70,17 @@ class PermissionRepositoryDoctrine implements PermissionRepository
     }
 
     /**
-     * @param $id
-     * @return Permission
-     * @throws EntityNotFoundException
-     */
-    public function getById($id): Permission
-    {
-        try {
-
-            return $this->manager->createQueryBuilder()
-                ->select('p')
-                ->from(Permission::class, 'p')
-                ->where('p.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (NoResultException $ex) {
-            throw new EntityNotFoundException('Permission not found!', 0, $ex);
-        }
-    }
-
-    /**
-     * @param $userId
      * @return Permission[]|Collection
      */
-    public function findByUserId($userId): Collection
+    public function findAll(): Collection
     {
-        return new Collection($this->users->getById($userId)->getPermissions()->toArray());
-    }
+        $result = $this->manager->createQueryBuilder()
+            ->select('p')
+            ->from(Permission::class, 'p')
+            ->getQuery()
+            ->getResult();
 
-    /**
-     * @param $roleId
-     * @return Permission[]|Collection
-     */
-    public function findByRoleId($roleId): Collection
-    {
-        return new Collection($this->roles->getById($roleId)->getPermissions()->toArray());
+        return new Collection($result);
     }
 
     public function findByGroupId($groupId): Collection
@@ -131,17 +102,43 @@ class PermissionRepositoryDoctrine implements PermissionRepository
     }
 
     /**
+     * @param $roleId
      * @return Permission[]|Collection
      */
-    public function findAll(): Collection
+    public function findByRoleId($roleId): Collection
     {
-        $result = $this->manager->createQueryBuilder()
-            ->select('p')
-            ->from(Permission::class, 'p')
-            ->getQuery()
-            ->getResult();
+        return new Collection($this->roles->getById($roleId)->getPermissions()->toArray());
+    }
 
-        return new Collection($result);
+    /**
+     * @param $userId
+     * @return Permission[]|Collection
+     */
+    public function findByUserId($userId): Collection
+    {
+        return new Collection($this->users->getById($userId)->getPermissions()->toArray());
+    }
+
+    /**
+     * @param $id
+     * @return Permission
+     * @throws EntityNotFoundException
+     */
+    public function getById($id): Permission
+    {
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('p')
+                ->from(Permission::class, 'p')
+                ->where('p.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Permission not found!', 0, $ex);
+        }
     }
 
     /**

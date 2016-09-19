@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
+use Schweppesale\Module\Access\Domain\Exceptions\UnauthorizedException;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 use Schweppesale\Module\Core\Providers\Laravel\ServiceProvider;
 
@@ -51,6 +52,13 @@ class PresentationServiceProvider extends ServiceProvider
         $this->getExceptionHandler()->addModuleExceptionHandler(
             EntityNotFoundException::class,
             function (Request $request, EntityNotFoundException $exception, Response $response) {
+                return $response->setStatusCode(404)->setContent(['error' => $exception->getMessage()]);
+            }
+        );
+
+        $this->getExceptionHandler()->addModuleExceptionHandler(
+            UnauthorizedException::class,
+            function (Request $request, UnauthorizedException $exception, Response $response) {
                 return $response->setStatusCode(404)->setContent(['error' => $exception->getMessage()]);
             }
         );

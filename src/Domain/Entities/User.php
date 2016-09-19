@@ -9,6 +9,11 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
 use LaravelDoctrine\ACL\Mappings as ACL;
 use Schweppesale\Module\Access\Domain\Entities\Traits\CanBeAuthenticated;
+use Schweppesale\Module\Access\Domain\Exceptions\UnauthorizedException;
+use Schweppesale\Module\Access\Domain\Values\EmailAddress;
+use Schweppesale\Module\Access\Domain\Values\HashedPassword;
+use Schweppesale\Module\Access\Domain\Values\Password;
+use Schweppesale\Module\Access\Domain\Values\User\Status;
 
 /**
  * Class User
@@ -17,12 +22,6 @@ use Schweppesale\Module\Access\Domain\Entities\Traits\CanBeAuthenticated;
  */
 class User implements HasPermissionsInterface, Authenticatable
 {
-
-    const ACTIVE = 0x01;
-
-    const BANNED = 0x02;
-
-    const DISABLED = 0x00;
 
     use CanBeAuthenticated;
 
@@ -47,7 +46,7 @@ class User implements HasPermissionsInterface, Authenticatable
     private $deletedAt;
 
     /**
-     * @var string $email
+     * @var EmailAddress $email
      */
     private $email;
 
@@ -62,7 +61,7 @@ class User implements HasPermissionsInterface, Authenticatable
     private $name;
 
     /**
-     * @var string $password
+     * @var HashedPassword $password
      */
     private $password;
 
@@ -82,9 +81,14 @@ class User implements HasPermissionsInterface, Authenticatable
     private $roles;
 
     /**
-     * @var int $status
+     * @var Status $status
      */
     private $status;
+
+    /**
+     * @var string
+     */
+    private $accessToken;
 
     /**
      * @var DateTime $updated_at
@@ -102,50 +106,61 @@ class User implements HasPermissionsInterface, Authenticatable
      * @param $permissions
      * @param $roles
      */
-    public function __construct($name, $email, $password, $status, $confirmed, $permissions, $roles)
+    public function __construct($name, EmailAddress $email, Password $password, Status $status, bool $confirmed, $permissions, $roles)
     {
         $this->name = $name;
-        $this->email = $email;
+        $this->confirmed = $confirmed;
+        $this->createdAt = new DateTime();
         $this->confirmed = $confirmed;
 
         if ($this->confirmationCode === null) {
             $this->confirmationCode = md5(uniqid(mt_rand(), true));
         }
 
+        $this->updateEmail($email);
         $this->setUpdatedAt(new DateTime());
-        $this->setCreatedAt(new DateTime());
-        $this->setConfirmed($confirmed);
         $this->changePassword($password);
-        $this->setStatus($status);
+        $this->updateStatus($status);
         $this->setPermissions($permissions);
         $this->setRoles($roles);
     }
 
     /**
-     * @param $password
+     * @return string
+     */
+    public function generateToken()
+    {
+        $this->accessToken = md5(uniqid(mt_rand(), true));
+        return $this->accessToken;
+    }
+
+    /**
+     * @param Permission $permission
      * @return $this
      */
-    public function changePassword($password)
+    public function addPermission(Permission $permission): User
     {
-        $this->password = bcrypt($password);
+        $this->permissions[] = $permission;
 
         return $this;
     }
 
     /**
-     * @param string $permission
-     * @return bool
+     * @param Role $role
+     * @return $this
      */
-    public function hasPermissionTo($permission)
+    public function addRole(Role $role): User
     {
-        return $this->can($permission);
+        $this->roles[] = $role;
+
+        return $this;
     }
 
     /**
      * @param $permission
      * @return bool
      */
-    public function can($permission)
+    public function can($permission): bool
     {
         foreach ($this->getRoles() as $role) {
             if ($role->can($permission) === true) {
@@ -156,129 +171,11 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
-     * @return Role[]|Collection
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param Role[] $roles
-     * @return $this
-     */
-    public function setRoles(array $roles)
-    {
-        foreach ($roles as $role) {
-            if (!$role instanceof Role) {
-                throw new \InvalidArgumentException('Invalid Role Type');
-            }
-        }
-
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAuthIdentifierName()
-    {
-        return $this->getEmail();
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param $email
-     * @return $this
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function ban()
-    {
-        $this->status = self::BANNED;
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function disable()
-    {
-        $this->status = self::DISABLED;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function enable()
-    {
-        $this->status = self::ACTIVE;
-
-        $this->deletedAt = null;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmailForPasswordReset()
-    {
-        return $this->getEmail();
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * @param array $permissions
      * @param bool|false $strict
      * @return bool
      */
-    public function canMultiple(array $permissions, $strict = true)
+    public function canMultiple(array $permissions, $strict = true): bool
     {
         $ourPermissions = $this->getPermissions()->map(function (Role $role) {
             return $role->getName();
@@ -292,6 +189,118 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
+     * @param Password $password
+     * @return $this
+     */
+    public function changePassword(Password $password)
+    {
+        $this->password = $password->hash();
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function confirm(): User
+    {
+        $this->confirmed = true;
+
+        return $this;
+    }
+
+    /**
+     * @return EmailAddress
+     */
+    public function getAuthIdentifierName(): EmailAddress
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRememberToken(): string
+    {
+        return $this->rememberToken;
+    }
+
+    /**
+     * @param $rememberToken
+     * @return $this
+     */
+    public function setRememberToken($rememberToken): User
+    {
+        $this->rememberToken = $rememberToken;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmationCode(): string
+    {
+        return $this->confirmationCode;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @return EmailAddress
+     */
+    public function getEmail(): EmailAddress
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return EmailAddress
+     */
+    public function getEmailForPasswordReset(): EmailAddress
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return HashedPassword
+     */
+    public function getPassword(): HashedPassword
+    {
+        return $this->password;
+    }
+
+    /**
      * @return Permission[]|Collection
      */
     public function getPermissions()
@@ -300,30 +309,46 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
-     * @param Permission[] $permissions
-     * @return $this
+     * @param string $permission
+     * @return bool
      */
-    public function setPermissions(array $permissions)
+    public function hasPermissionTo($permission): bool
     {
-        foreach ($permissions as $permission) {
-            if (!$permission instanceof Permission) {
-                throw new \InvalidArgumentException('Invalid Permission Type');
-            }
-        }
-
-        $this->permissions = $permissions;
-
-        return $this;
+        return $this->can($permission);
     }
 
     /**
-     * @param $role
+     * @return Role[]|Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @return Status
+     */
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param string $name
      * @return bool
      */
-    public function hasRole($role)
+    public function hasRole(string $name): bool
     {
-        foreach ($this->getRoles() as $ourRole) {
-            if ($ourRole->getName() === $role) {
+        foreach ($this->getRoles() as $role) {
+            if ($role->getName() === $name) {
                 return true;
             }
         }
@@ -332,11 +357,11 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
-     * @param $roles
+     * @param array $roles
      * @param bool|true $strict
      * @return bool
      */
-    public function hasRoles($roles, $strict = true)
+    public function hasRoles(array $roles, $strict = true): bool
     {
         $ourRoles = $this->getRoles()->map(function (Role $role) {
             return $role->getName();
@@ -350,165 +375,32 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
-     * @return string
-     */
-    public function getRememberToken()
-    {
-        return $this->rememberToken;
-    }
-
-    /**
-     * @param $rememberToken
-     * @return $this
-     */
-    public function setRememberToken($rememberToken)
-    {
-        $this->rememberToken = $rememberToken;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param int $status
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime $updatedAt
-     * @return $this
-     */
-    public function setUpdatedAt(DateTime $updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getConfirmationCode()
-    {
-        return $this->confirmationCode;
-    }
-
-    /**
-     * @param $confirmationCode
-     * @return $this
-     */
-    public function setConfirmationCode($confirmationCode)
-    {
-        $this->confirmationCode = $confirmationCode;
-
-        return $this;
-    }
-
-    /**
      * @return boolean
      */
-    public function isConfirmed()
+    public function isConfirmed(): bool
     {
         return $this->confirmed;
     }
 
     /**
-     * @param $confirmed
      * @return $this
      */
-    public function setConfirmed($confirmed)
-    {
-        $this->confirmed = $confirmed;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param DateTime $createdAt
-     * @return $this
-     */
-    public function setCreatedAt(DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param DateTime $deletedAt
-     * @return $this
-     */
-    public function setDeletedAt(DateTime $deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function markAsDeleted()
+    public function markAsDeleted(): User
     {
         $this->deletedAt = new DateTime();
 
         return $this;
+    }
+
+    /**
+     * @param $permission
+     * @throws UnauthorizedException
+     */
+    public function must($permission)
+    {
+        if($this->can($permission) === false) {
+            throw new UnauthorizedException('Unauthorized');
+        }
     }
 
     /**
@@ -517,5 +409,73 @@ class User implements HasPermissionsInterface, Authenticatable
     public function preUpdate()
     {
         $this->setUpdatedAt(new DateTime());
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function setName($name): User
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param Permission[] $permissions
+     * @return $this
+     */
+    public function setPermissions(array $permissions): User
+    {
+        $this->permissions = [];
+
+        array_map([$this, 'addPermission'], $permissions);
+
+        return $this;
+    }
+
+    /**
+     * @param Role[] $roles
+     * @return $this
+     */
+    public function setRoles(array $roles): User
+    {
+        $this->roles = [];
+        array_map([$this, 'addRole'], $roles);
+        return $this;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     * @return $this
+     */
+    protected function setUpdatedAt(DateTime $updatedAt): User
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @param EmailAddress $email
+     * @return $this
+     */
+    public function updateEmail(EmailAddress $email): User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @param Status $status
+     * @return $this
+     */
+    public function updateStatus(Status $status): User
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

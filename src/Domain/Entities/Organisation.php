@@ -53,81 +53,41 @@ class Organisation implements OrganisationContract
     /**
      * @return DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
     /**
-     * @param DateTime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return DateTime
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTime|int $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -136,5 +96,35 @@ class Organisation implements OrganisationContract
     public function onUpdate()
     {
         $this->setUpdatedAt(new DateTime());
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description): Organisation
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name): Organisation
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param DateTime|int $updatedAt
+     */
+    protected function setUpdatedAt(DateTime $updatedAt): Organisation
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

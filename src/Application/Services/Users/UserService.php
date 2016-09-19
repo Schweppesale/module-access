@@ -16,6 +16,11 @@ use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
+use Schweppesale\Module\Access\Domain\Services\PasswordHasher;
+use Schweppesale\Module\Access\Domain\Values\EmailAddress;
+use Schweppesale\Module\Access\Domain\Values\Password;
+use Schweppesale\Module\Access\Domain\Values\User\Status;
+use Schweppesale\Module\Access\Domain\Values\UserStatus;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
@@ -25,43 +30,42 @@ use Schweppesale\Module\Core\Mapper\MapperInterface;
 class UserService
 {
     /**
-     * @var OrganisationRepository
+     * @var AuthenticationService
      */
-    private $organisations;
-
+    private $authenticationService;
     /**
      * @var GroupRepository
      */
     private $groups;
-
+    /**
+     * @var PasswordHasher
+     */
+    private $hasher;
+    /**
+     * @var MapperInterface
+     */
+    private $mapper;
+    /**
+     * @var OrganisationRepository
+     */
+    private $organisations;
     /**
      * @var PermissionRepository
      */
     private $permissions;
-
     /**
      * @var RoleRepository
      */
     private $roles;
-
     /**
      * @var UserRepository
      */
     private $users;
 
     /**
-     * @var AuthenticationService
-     */
-    private $authenticationService;
-
-    /**
-     * @var MapperInterface
-     */
-    private $mapper;
-
-    /**
      * UserService constructor.
      * @param MapperInterface $mapper
+     * @param PasswordHasher $hasher
      * @param UserRepository $users
      * @param OrganisationRepository $organisations
      * @param RoleRepository $roles
@@ -71,6 +75,7 @@ class UserService
      */
     public function __construct(
         MapperInterface $mapper,
+        PasswordHasher $hasher,
         UserRepository $users,
         OrganisationRepository $organisations,
         RoleRepository $roles,
@@ -79,6 +84,7 @@ class UserService
         AuthenticationService $authenticationService
     )
     {
+        $this->hasher = $hasher;
         $this->authenticationService = $authenticationService;
         $this->mapper = $mapper;
         $this->users = $users;
@@ -95,7 +101,7 @@ class UserService
     public function ban($userId): UserDTO
     {
         $user = $this->users->getById($userId);
-        $user = $this->users->save($user->ban());
+        $user = $this->users->save($user->updateStatus(new Status(Status::BANNED)));
         return $this->mapper->map($user, UserDTO::class);
     }
 
@@ -124,26 +130,22 @@ class UserService
      */
     public function create($name, $emailAddress, $password, array $roleIds = [], array $permissionIds = [], $confirmed = false, $sendConfirmationEmail = true, $status = null): UserDTO
     {
-        $status = $status == true ?: User::DISABLED;
+        $status = $status == true ? Status::ACTIVE : Status::DISABLED;
 
-        $roles = [];
-        foreach ($roleIds as $roleId) {
-            $roles[] = $this->roles->getById($roleId);
-        }
+        $roles = array_map(function ($roleId) {
+            return $this->roles->getById($roleId);
+        }, $roleIds);
 
-        $permissions = [];
-        if (count($permissionIds) > 0) {
-            foreach ($permissionIds as $permissionId) {
-                $permissions[] = $this->permissions->getById($permissionId);
-            }
-        }
+        $permissions = array_map(function ($permissionId) {
+            return $this->permissions->getById($permissionId);
+        }, $permissionIds);
 
         $user = $this->users->save(
             new User(
                 $name,
-                $emailAddress,
-                $password,
-                $status,
+                new EmailAddress($emailAddress),
+                new Password($password, $this->hasher),
+                new Status($status),
                 $confirmed,
                 $permissions,
                 $roles
@@ -177,7 +179,7 @@ class UserService
     public function deactive($userId): UserDTO
     {
         $user = $this->users->getById($userId);
-        $this->users->save($user->disable());
+        $this->users->save($user->updateStatus(new Status(Status::DISABLED)));
         return $this->mapper->map($user, UserDTO::class);
     }
 
@@ -210,10 +212,29 @@ class UserService
      * @param $userId
      * @return UserDTO
      */
-    public function getById($userId) : UserDTO
+    public function enable($userId): UserDTO
     {
         $user = $this->users->getById($userId);
+        $user = $this->users->save($user->updateStatus(new Status(Status::ACTIVE)));
         return $this->mapper->map($user, UserDTO::class);
+    }
+
+    /**
+     * @return UserDTO[]
+     */
+    public function findAll()
+    {
+        $result = $this->users->findAll();
+        return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
+    }
+
+    /**
+     * @return UserDTO[]
+     */
+    public function findBanned()
+    {
+        $result = $this->users->findAllBanned();
+        return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
     }
 
     /**
@@ -230,44 +251,6 @@ class UserService
             return $user->can($permission->getName());
         });
         return $this->mapper->mapArray($result, User::class, UserDTO::class);
-    }
-
-    /**
-     * @param $userId
-     * @return UserDTO
-     */
-    public function enable($userId): UserDTO
-    {
-        $user = $this->users->getById($userId);
-        $user = $this->users->save($user->enable());
-        return $this->mapper->map($user, UserDTO::class);
-    }
-
-    /**
-     * @return UserDTO[]
-     */
-    public function findAll()
-    {
-        $result = $this->users->findAll();
-        return $this->mapArray($result->toArray());
-    }
-
-    /**
-     * @param User[] $users
-     * @return UserDTO[]
-     */
-    private function mapArray($users)
-    {
-        return $this->mapper->mapArray($users, User::class, UserDTO::class);
-    }
-
-    /**
-     * @return UserDTO[]
-     */
-    public function findBanned()
-    {
-        $result = $this->users->findAllBanned();
-        return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
     }
 
     /**
@@ -294,7 +277,17 @@ class UserService
      */
     public function getByEmail($email): UserDTO
     {
-        $user = $this->users->getByEmail($email);
+        $user = $this->users->getByEmail(new EmailAddress($email));
+        return $this->mapper->map($user, UserDTO::class);
+    }
+
+    /**
+     * @param $userId
+     * @return UserDTO
+     */
+    public function getById($userId) : UserDTO
+    {
+        $user = $this->users->getById($userId);
         return $this->mapper->map($user, UserDTO::class);
     }
 
@@ -308,29 +301,24 @@ class UserService
      * @param null $status
      * @return UserDTO
      */
-    public function update($userId, $name, $email, array $roleIds = [], array $permissionIds = [], $confirmed = false, $status = null): UserDTO
+    public function update($userId, $name, $email, array $roleIds = [], array $permissionIds = [], $status = null): UserDTO
     {
         $user = $this->users->getById($userId);
-        $status = $status == true ?: User::DISABLED;
+        $status = $status == true ? Status::ACTIVE : Status::DISABLED;
 
-        $userRoles = [];
-        foreach ($roleIds as $roleId) {
-            $userRoles[] = $this->roles->getById($roleId);
-        }
+        $roles = array_map(function ($roleId) {
+            return $this->roles->getById($roleId);
+        }, $roleIds);
 
-        $permissions = [];
-        if (count($permissionIds) > 0) {
-            foreach ($permissionIds as $permissionId) {
-                $permissions[] = $this->permissions->getById($permissionId);
-            }
-        }
+        $permissions = array_map(function ($permissionId) {
+            return $this->permissions->getById($permissionId);
+        }, $permissionIds);
 
         $user->setName($name)
-            ->setEmail($email)
-            ->setRoles($userRoles)
-            ->setStatus($status)
-            ->setConfirmed($confirmed)
-            ->setPermissions($permissions);
+            ->setRoles($roles)
+            ->setPermissions($permissions)
+            ->updateEmail(new EmailAddress($email))
+            ->updateStatus(new Status($status));
 
         $user = $this->users->save($user);
         return $this->mapper->map($user, UserDTO::class);

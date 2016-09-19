@@ -1,0 +1,4 @@
+Schweppesale\Module\Access\Domain\Values\User\Status:
+    type: embeddable
+    fields:
+        status: { type: string }

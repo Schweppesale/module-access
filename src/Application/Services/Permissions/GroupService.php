@@ -73,6 +73,25 @@ class GroupService
     }
 
     /**
+     * Appends additional data to the PermissionDTO
+     *
+     * @param GroupDTO $group
+     * @param array $options
+     * @return GroupDTO
+     */
+    private function expand(GroupDTO $group, array $options = [])
+    {
+        $options = array_flip(array_map('strtolower', array_map('trim', $options)));
+        if (array_key_exists('all', $options) || array_key_exists('permissionids', $options)) {
+            $permissionIds = array_map(function (PermissionDTO $permission) {
+                return $permission->getId();
+            }, $this->permissionService->findByGroupId($group->getId()));
+            $group->setPermissionIds($permissionIds);
+        }
+        return $group;
+    }
+
+    /**
      * @param array $options
      * @return GroupDTO[]
      */
@@ -90,25 +109,6 @@ class GroupService
         }
 
         return $result;
-    }
-
-    /**
-     * Appends additional data to the PermissionDTO
-     *
-     * @param GroupDTO $group
-     * @param array $options
-     * @return GroupDTO
-     */
-    private function expand(GroupDTO $group, array $options = [])
-    {
-        $options = array_flip(array_map('strtolower', array_map('trim', $options)));
-        if (array_key_exists('all', $options) || array_key_exists('permissionids', $options)) {
-            $permissionIds = array_map(function (PermissionDTO $permission) {
-                return $permission->getId();
-            }, $this->permissionService->findByGroupId($group->getId()));
-            $group->setPermissionIds($permissionIds);
-        }
-        return $group;
     }
 
     /**
@@ -148,7 +148,7 @@ class GroupService
     public function update($groupId, $name): GroupDTO
     {
         $group = $this->groups->getById($groupId);
-        $group = $this->groups->save($group->changeName($name));
+        $group = $this->groups->save($group->setName($name));
         return $this->mapper->map($group, GroupDTO::class);
     }
 }

@@ -37,6 +37,16 @@ class GroupController extends Controller
     }
 
     /**
+     * @param $id
+     * @param DeleteGroupRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id, DeleteGroupRequest $request)
+    {
+        return $this->response->format($this->groupService->delete($id));
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -53,16 +63,6 @@ class GroupController extends Controller
     public function show($id)
     {
         return $this->response->format($this->groupService->getById($id));
-    }
-
-    /**
-     * @param $id
-     * @param DeleteGroupRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, DeleteGroupRequest $request)
-    {
-        return $this->response->format($this->groupService->delete($id));
     }
 
     /**
