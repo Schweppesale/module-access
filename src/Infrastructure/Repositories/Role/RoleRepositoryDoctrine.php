@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 use Schweppesale\Module\Core\Collections\Collection;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
@@ -23,12 +24,19 @@ class RoleRepositoryDoctrine implements RoleRepository
     private $manager;
 
     /**
-     * UserRepositoryDoctrine constructor.
-     * @param ManagerRegistry $registry
+     * @var UserRepository
      */
-    public function __construct(ManagerRegistry $registry)
+    private $users;
+
+    /**
+     * RoleRepositoryDoctrine constructor.
+     * @param ManagerRegistry $registry
+     * @param UserRepository $users
+     */
+    public function __construct(ManagerRegistry $registry, UserRepository $users)
     {
         $this->manager = $registry->getManagerForClass(Role::class);
+        $this->users = $users;
     }
 
     /**
@@ -43,6 +51,15 @@ class RoleRepositoryDoctrine implements RoleRepository
             ->getResult();
 
         return new Collection($result);
+    }
+
+    /**
+     * @param $userId
+     * @return Role[]|Collection
+     */
+    public function findByUserId($userId): Collection
+    {
+        return new Collection($this->users->getById($userId)->getRoles()->toArray());
     }
 
     /**

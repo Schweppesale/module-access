@@ -1,11 +1,11 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Roles;
 
-use Schweppesale\Module\Access\Application\Response\PermissionDTO;
 use Schweppesale\Module\Access\Application\Response\GroupDTO;
+use Schweppesale\Module\Access\Application\Response\PermissionDTO;
 use Schweppesale\Module\Access\Application\Response\RoleDTO;
-use Schweppesale\Module\Access\Domain\Entities\Permission;
 use Schweppesale\Module\Access\Domain\Entities\Group;
+use Schweppesale\Module\Access\Domain\Entities\Permission;
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
@@ -80,11 +80,24 @@ class RoleService
         ];
     }
 
-
-    public function getById($roleId)
+    /**
+     * @param $roleId
+     * @return RoleDTO
+     */
+    public function getById($roleId): RoleDTO
     {
         $role = $this->roles->getById($roleId);
         return $this->mapper->map($role, RoleDTO::class);
+    }
+
+    /**
+     * @param $userId
+     * @return RoleDTO[]
+     */
+    public function findByUserId($userId)
+    {
+        $result = $this->roles->findByUserId($userId)->toArray();
+        return $this->mapper->mapArray($result, Role::class, RoleDTO::class);
     }
 
     /**
@@ -98,8 +111,7 @@ class RoleService
 
         $permissions = [];
         if (!empty($criteria['permissions'])) {
-            $perms = trim($criteria['permissions']);
-            $perms = explode(',', $perms);
+            $perms = $criteria['permissions'];
             foreach ($perms as $permId) {
                 $permissions[] = $this->permissions->getById($permId);
             }
@@ -121,6 +133,22 @@ class RoleService
     }
 
     /**
+     * @todo inefficient
+     *
+     * @param $permissionId
+     * @return RoleDTO[]
+     */
+    public function findByPermissionId($permissionId)
+    {
+        $permission = $this->permissions->getById($permissionId);
+        $roles = $this->roles->findAll()->toArray();
+        $result = array_filter($roles, function (Role $role) use ($permission) {
+            return $role->can($permission->getName());
+        });
+        return $this->mapper->mapArray($result, Role::class, RoleDTO::class);
+    }
+
+    /**
      * @param $roleId
      * @param array $criteria
      * @return Role
@@ -131,8 +159,6 @@ class RoleService
         $role = $this->roles->getById($roleId);
         $name = $criteria['name'];
         $sort = $criteria['sort'];
-        $allPermission = (!empty($criteria['associated-permissions']) && strtolower($criteria['associated-permissions']) === 'all') ? true : false;
-
         $permissions = [];
         if ($perms = trim($criteria['permissions'])) {
             $perms = explode(',', $perms);
@@ -143,8 +169,7 @@ class RoleService
 
         $role->setName($name)
             ->setSort($sort)
-            ->setPermissions($permissions)
-            ->setAll($allPermission);
+            ->setPermissions($permissions);
 
         $role = $this->roles->save($role);
         return $this->mapper->map($role, RoleDTO::class);

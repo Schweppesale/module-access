@@ -27,9 +27,9 @@ class RoleDTO implements JsonSerializable
     private $name;
 
     /**
-     * @var Permission[]
+     * @var int[]
      */
-    private $permissions;
+    private $permissionIds;
 
     /**
      * @var DateTime
@@ -40,16 +40,16 @@ class RoleDTO implements JsonSerializable
      * Role constructor.
      * @param $id
      * @param $name
-     * @param array $permissions
+     * @param int[] $permissionIds
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, array $permissions, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, array $permissionIds, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->createdAt = $createdAt;
         $this->id = $id;
         $this->name = $name;
-        $this->permissions = $permissions;
+        $this->permissionIds = $permissionIds;
         $this->updatedAt = $updatedAt;
     }
 
@@ -78,11 +78,22 @@ class RoleDTO implements JsonSerializable
     }
 
     /**
-     * @return Permission[]
+     * @return int[]
      */
-    public function getPermissions(): array
+    public function getPermissionIds(): array
     {
-        return $this->permissions;
+        return $this->permissionIds;
+    }
+
+    /**
+     * @param array $permissionIds
+     * @return $this
+     */
+    public function setPermissionIds(array $permissionIds)
+    {
+        $this->permissionIds = $permissionIds;
+
+        return $this;
     }
 
     /**
@@ -101,7 +112,7 @@ class RoleDTO implements JsonSerializable
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'permissions' => $this->permissions,
+            'permissionIds' => $this->permissionIds,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt
         ];

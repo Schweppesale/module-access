@@ -98,7 +98,18 @@ class UserRepositoryDoctrine implements UserRepository
     }
 
     /**
-     * @return User[]
+     * @todo implementation
+     *
+     * @param $permissionId
+     * @return User[]|Collection
+     */
+    public function findByPermissionId($permissionId): Collection
+    {
+
+    }
+
+    /**
+     * @return User[]|Collection
      */
     public function findAllBanned(): Collection
     {

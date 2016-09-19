@@ -16,7 +16,7 @@ class CreatePermissionRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('create-permissions');
+        return true;
     }
 
     /**

@@ -1,13 +1,11 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Hateoas\HateoasBuilder;
-use Illuminate\Http\Response;
-use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Access\Application\Services\Roles\RoleService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\DeleteRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\EditRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\StoreRoleRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Role\UpdateRoleRequest;
+use Schweppesale\Module\Access\Presentation\Services\Api\Response;
 use Schweppesale\Module\Core\Http\Controller;
 
 /**
@@ -29,89 +27,87 @@ class RoleController extends Controller
     private $response;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * RoleController constructor.
      * @param Response $response
-     * @param SerializerInterface $serializer
      * @param RoleService $roleService
      */
-    public function __construct(Response $response, SerializerInterface $serializer, RoleService $roleService)
+    public function __construct(Response $response, RoleService $roleService)
     {
         $this->response = $response;
-        $this->serializer = $serializer;
         $this->roleService = $roleService;
     }
 
     /**
      * @param $id
      * @param DeleteRoleRequest $request
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id, DeleteRoleRequest $request)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->roleService->delete($id), 'json')
-        );
+        return $this->response->format($this->roleService->delete($id));
     }
 
     /**
      * @param $id
      * @param EditRoleRequest $request
-     * @return mixed
-     * @internal param GroupRepositoryContract $group
+     * @return \Illuminate\Http\Response
      */
     public function edit($id, EditRoleRequest $request)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer>serialize($this->roleService->editMeta($id), 'json')
-        );
+        return $this->response->format($this->roleService->editMeta($id));
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->roleService->findAll(), 'json')
-        );
+        return $this->response->format($this->roleService->findAll());
+    }
+
+    /**
+     * @param $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByUser($userId)
+    {
+        return $this->response->format($this->roleService->findByUserId($userId));
+    }
+
+    /**
+     * @param $permissionId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByPermission($permissionId)
+    {
+        return $this->response->format($this->roleService->findByPermissionId($permissionId));
     }
 
     /**
      * @param $id
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->roleService->getById($id), 'json')
-        );
+        return $this->response->format($this->roleService->getById($id));
     }
 
     /**
      * @param StoreRoleRequest $request
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreRoleRequest $request)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->roleService->create($request->all()), 'json')
-        );
+        return $this->response->format($this->roleService->create($request->all()));
     }
 
     /**
      * @param $id
      * @param UpdateRoleRequest $request
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function update($id, UpdateRoleRequest $request)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->roleService->update($id, $request->all()), 'json')
-        );
+        return $this->response->format($this->roleService->update($id, $request->all()));
     }
 }

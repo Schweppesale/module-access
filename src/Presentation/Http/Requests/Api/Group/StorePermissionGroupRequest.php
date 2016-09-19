@@ -16,7 +16,7 @@ class StoreGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('create-groups');
+        return true;
     }
 
     /**

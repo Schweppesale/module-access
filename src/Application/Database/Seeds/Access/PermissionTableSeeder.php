@@ -1,7 +1,6 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Database\Seeds\Access;
 
-use App\Http\Controllers\Backend\Project\Access\ProjectAccessController;
 use Illuminate\Database\Seeder;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
 

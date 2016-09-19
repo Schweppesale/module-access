@@ -2,13 +2,13 @@
 namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Illuminate\Contracts\Auth\Authenticatable;
 use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
 use LaravelDoctrine\ACL\Mappings as ACL;
 use Schweppesale\Module\Access\Domain\Entities\Traits\CanBeAuthenticated;
-use Schweppesale\Module\Access\Domain\Entities\Traits\HasPermissions;
 
 /**
  * Class User
@@ -25,8 +25,6 @@ class User implements HasPermissionsInterface, Authenticatable
     const DISABLED = 0x00;
 
     use CanBeAuthenticated;
-
-    use HasPermissions;
 
     /**
      * @var string $confirmation_code
@@ -134,6 +132,57 @@ class User implements HasPermissionsInterface, Authenticatable
         return $this;
     }
 
+    /**
+     * @param string $permission
+     * @return bool
+     */
+    public function hasPermissionTo($permission)
+    {
+        return $this->can($permission);
+    }
+
+    /**
+     * @param $permission
+     * @return bool
+     */
+    public function can($permission)
+    {
+        foreach ($this->getRoles() as $role) {
+            if ($role->can($permission) === true) {
+                return true;
+            }
+        }
+        return $this->hasPermissionTo($permission);
+    }
+
+    /**
+     * @return Role[]|Collection
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param Role[] $roles
+     * @return $this
+     */
+    public function setRoles(array $roles)
+    {
+        foreach ($roles as $role) {
+            if (!$role instanceof Role) {
+                throw new \InvalidArgumentException('Invalid Role Type');
+            }
+        }
+
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getAuthIdentifierName()
     {
         return $this->getEmail();
@@ -225,7 +274,25 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
-     * @return Permission[]
+     * @param array $permissions
+     * @param bool|false $strict
+     * @return bool
+     */
+    public function canMultiple(array $permissions, $strict = true)
+    {
+        $ourPermissions = $this->getPermissions()->map(function (Role $role) {
+            return $role->getName();
+        })->toArray();
+
+        if ($strict === true) {
+            return count(array_intersect($permissions, $ourPermissions)) == count($roles);
+        } else {
+            return count(array_intersect($permissions, $ourPermissions)) > 0;
+        }
+    }
+
+    /**
+     * @return Permission[]|Collection
      */
     public function getPermissions()
     {
@@ -250,6 +317,39 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
+     * @param $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        foreach ($this->getRoles() as $ourRole) {
+            if ($ourRole->getName() === $role) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $roles
+     * @param bool|true $strict
+     * @return bool
+     */
+    public function hasRoles($roles, $strict = true)
+    {
+        $ourRoles = $this->getRoles()->map(function (Role $role) {
+            return $role->getName();
+        })->toArray();
+
+        if ($strict === true) {
+            return count(array_intersect($roles, $ourRoles)) == count($roles);
+        } else {
+            return count(array_intersect($roles, $ourRoles)) > 0;
+        }
+    }
+
+    /**
      * @return string
      */
     public function getRememberToken()
@@ -264,31 +364,6 @@ class User implements HasPermissionsInterface, Authenticatable
     public function setRememberToken($rememberToken)
     {
         $this->rememberToken = $rememberToken;
-
-        return $this;
-    }
-
-    /**
-     * @return Role[]
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param Role[] $roles
-     * @return $this
-     */
-    public function setRoles(array $roles)
-    {
-        foreach ($roles as $role) {
-            if (!$role instanceof Role) {
-                throw new \InvalidArgumentException('Invalid Role Type');
-            }
-        }
-
-        $this->roles = $roles;
 
         return $this;
     }

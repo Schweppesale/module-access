@@ -2,7 +2,7 @@
 namespace Schweppesale\Module\Access\Domain\Services;
 
 /**
- * Interface Blowfish
+ * Interface PasswordHasher
  * @package Schweppesale\Module\Access\Domain\Services
  */
 interface PasswordHasher

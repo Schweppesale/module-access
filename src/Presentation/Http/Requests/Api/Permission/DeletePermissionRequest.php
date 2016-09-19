@@ -16,7 +16,7 @@ class DeletePermissionRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('delete-permissions');
+        return true;
     }
 
     /**

@@ -29,12 +29,7 @@ class GroupDTO implements JsonSerializable
     /**
      * @var mixed
      */
-    private $parent;
-
-    /**
-     * @var RoleDTO[]
-     */
-    private $permissions;
+    private $parentId;
 
     /**
      * @var int
@@ -52,25 +47,48 @@ class GroupDTO implements JsonSerializable
     private $updatedAt;
 
     /**
+     * @var int[]
+     */
+    private $permissionIds = [];
+
+    /**
      * GroupDTO constructor.
      * @param $id
      * @param $name
      * @param $order
      * @param $system
-     * @param null|GroupDTO $parent
-     * @param array $permissions
+     * @param null $parentId
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $order, $system, GroupDTO $parent = null, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $order, $system, $parentId = null, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->createdAt = $createdAt;
         $this->id = $id;
         $this->name = $name;
-        $this->parent = $parent;
+        $this->parentId = $parentId;
         $this->order = $order;
         $this->system = $system;
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return \int[]
+     */
+    public function getPermissionIds(): array
+    {
+        return $this->permissionIds;
+    }
+
+    /**
+     * @param array $permissionIds
+     * @return $this
+     */
+    public function setPermissionIds(array $permissionIds)
+    {
+        $this->permissionIds = $permissionIds;
+
+        return $this;
     }
 
     /**
@@ -98,19 +116,11 @@ class GroupDTO implements JsonSerializable
     }
 
     /**
-     * @return null|GroupDTO
+     * @return null|int
      */
-    public function getParent()
+    public function getParentId()
     {
-        return $this->parent;
-    }
-
-    /**
-     * @return RoleDTO[]
-     */
-    public function getPermissions(): array
-    {
-        return $this->permissions;
+        return $this->parentId;
     }
 
     /**
@@ -147,8 +157,8 @@ class GroupDTO implements JsonSerializable
             'name' => $this->name,
             'order' => $this->order,
             'system' => $this->system,
-            'parent' => $this->parent,
-            'permissions' => $this->permissions,
+            'parentId' => $this->parentId,
+            'permissionIds' => $this->permissionIds,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];

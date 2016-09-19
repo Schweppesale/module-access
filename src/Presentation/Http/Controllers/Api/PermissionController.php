@@ -1,11 +1,9 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Hateoas\HateoasBuilder;
-use Illuminate\Http\Response;
-use JMS\Serializer\SerializerInterface;
+use Illuminate\Http\Request;
 use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
+use Schweppesale\Module\Access\Presentation\Services\Api\Response;
 use Schweppesale\Module\Core\Http\Controller;
-use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class PermissionController
@@ -26,60 +24,91 @@ class PermissionController extends Controller
     private $response;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * PermissionController constructor.
      * @param Response $response
-     * @param SerializerInterface $serializer
      * @param PermissionService $permissionService
      */
-    public function __construct(Response $response, SerializerInterface $serializer, PermissionService $permissionService)
+    public function __construct(Response $response, PermissionService $permissionService)
     {
         $this->response = $response;
-        $this->serializer = $serializer;
         $this->permissionService = $permissionService;
     }
 
     /**
-     * @return mixed
+     * @param Request $request
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->permissionService->findAll(), 'json')
-        );
+        $expand = explode(',', $request->get('expand', 'dependencyIds'));
+        return $this->response->format($this->permissionService->findAll(['expand' => $expand]));
     }
 
+    /**
+     * @param Request $request
+     * @param $roleId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByRole(Request $request, $roleId)
+    {
+        $expand = explode(',', $request->get('expand', 'dependencyIds'));
+        return $this->response->format($this->permissionService->findByRoleId($roleId, ['expand' => $expand]));
+    }
+
+    /**
+     * @param Request $request
+     * @param $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByUser(Request $request, $userId)
+    {
+        $expand = explode(',', $request->get('expand', 'dependencyIds'));
+        return $this->response->format($this->permissionService->findByUserId($userId, ['expand' => $expand]));
+    }
+
+    /**
+     * @param Request $request
+     * @param $groupId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexByGroup(Request $request, $groupId)
+    {
+        $expand = explode(',', $request->get('expand', 'dependencyIds'));
+        return $this->response->format($this->permissionService->findByGroupId($groupId, ['expand' => $expand]));
+    }
+
+    /**
+     * @param $permissionId
+     * @return \Illuminate\Http\Response
+     */
+    public function indexDependencies($permissionId)
+    {
+        return $this->response->format($this->permissionService->findDependenciesById($permissionId));
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->permissionService->getById($id), 'json')
-        );
+        return $this->response->format($this->permissionService->getById($id));
     }
 
-    public function dependencies($id)
-    {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->permissionService->getById($id)->getDependencies(), 'json')
-        );
-    }
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $hateoas = HateoasBuilder::create()->build();
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize(
-                $this->permissionService->create(
-                    $request->get('name'),
-                    $request->get('label'),
-                    $request->get('groupId'),
-                    $request->get('sort'),
-                    explode(',', $request->get('dependencyIds')),
-                    (bool)$request->get('system')
-                ), 'json'
+        return $this->response->format(
+            $this->permissionService->create(
+                $request->get('name'),
+                $request->get('label'),
+                $request->get('groupId'),
+                $request->get('sort'),
+                explode(',', $request->get('dependencyIds')),
+                (bool)$request->get('system')
             )
         );
     }

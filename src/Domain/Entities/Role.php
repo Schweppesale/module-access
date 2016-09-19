@@ -3,15 +3,17 @@ namespace Schweppesale\Module\Access\Domain\Entities;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use LaravelDoctrine\ACL\Contracts\HasPermissions as HasPermissionsInterface;
 use LaravelDoctrine\ACL\Contracts\Role as RoleContract;
 use LaravelDoctrine\ACL\Permissions\HasPermissions;
+
 
 /**
  * Class Role
  *
  * @package Schweppesale\Domain\Entities
  */
-class Role implements RoleContract
+class Role implements HasPermissionsInterface, RoleContract
 {
 
     use HasPermissions;
@@ -67,7 +69,11 @@ class Role implements RoleContract
 
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
+    }
 
+    public function can($permission)
+    {
+        return $this->hasPermissionTo($permission);
     }
 
     /**

@@ -1,11 +1,9 @@
 <?php
 namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Hateoas\HateoasBuilder;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Access\Application\Services\Organisations\OrganisationService;
+use Schweppesale\Module\Access\Presentation\Services\Api\Response;
 use Schweppesale\Module\Core\Http\Controller;
 
 /**
@@ -27,75 +25,58 @@ class OrganisationController extends Controller
     private $response;
 
     /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * OrganisationController constructor.
      * @param Response $response
-     * @param SerializerInterface $serializer
      * @param OrganisationService $organisationService
      */
-    public function __construct(Response $response, SerializerInterface $serializer, OrganisationService $organisationService)
+    public function __construct(Response $response, OrganisationService $organisationService)
     {
         $this->response = $response;
-        $this->serializer = $serializer;
         $this->organisationService = $organisationService;
     }
 
     /**
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->organisationService->findAll(), 'json')
-        );
+        return $this->response->format($this->organisationService->findAll());
     }
 
     /**
      * @param $organisationId
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function show($organisationId)
     {
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize($this->organisationService->getById($organisationId), 'json')
-        );
+        return $this->response->format($this->organisationService->getById($organisationId));
     }
 
     /**
      * @param Request $request
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $organisationName = $request->get('name');
         $description = $request->get('description');
-        $hateoas = HateoasBuilder::create()->build();
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $hateoas->serialize($this->organisationService->create($organisationName, $description), 'json')
-        );
+        return $this->response->format($this->organisationService->create($organisationName, $description));
     }
 
     /**
      * @param $organisationId
      * @param Request $request
-     * @param OrganisationService $organisationService
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
     public function update($organisationId, Request $request)
     {
         $organisationName = $request->get('name');
         $description = $request->get('description');
-        return $this->response->header('Content-Type', 'application/json')->setContent(
-            $this->serializer->serialize(
-                $this->organisationService->update(
-                    $organisationId,
-                    $organisationName,
-                    $description
-                ), 'json'
+        return $this->response->format(
+            $this->organisationService->update(
+                $organisationId,
+                $organisationName,
+                $description
             )
         );
     }

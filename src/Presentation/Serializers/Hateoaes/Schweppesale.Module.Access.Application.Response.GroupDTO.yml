@@ -1,8 +1,8 @@
 Schweppesale\Module\Access\Application\Response\GroupDTO:
     properties:
-        permissions:
+        parentId:
             exclude: true
-        parent:
+        permissionIds:
             exclude: true
     relations:
         -
@@ -14,9 +14,20 @@ Schweppesale\Module\Access\Application\Response\GroupDTO:
                 absolute: true
         -
             rel: parent
-            embedded:
-                content: expr(object.getParent())
-                xmlElementName: role
+            href:
+                route: groups.show
+                parameters:
+                    group: expr(object.getParentId())
+                absolute: true
             exclusion:
-                exclude_if: expr(object.getParent() == false)
+                exclude_if: expr(object.getParentId() == false)
+        -
+            rel: permissions
+            href:
+                route: permissions.group.index
+                parameters:
+                    group: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getPermissionIds() == false)
         -

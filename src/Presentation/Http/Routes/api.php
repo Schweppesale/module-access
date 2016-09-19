@@ -12,11 +12,47 @@ Route::group([
     $router->resource('token', 'TokenController', ['only' => ['store', 'destroy']]);
 
     /**
+     * Permissions
+     */
+    $router->get('permissions/{permission}/dependencies', [
+        'as' => 'dependencies.permission.index',
+        'uses' => 'PermissionController@indexDependencies'
+    ]);
+    $router->get('users/{user}/permissions', [
+        'as' => 'permissions.user.index',
+        'uses' => 'PermissionController@indexByUser'
+    ]);
+    $router->get('roles/{role}/permissions', [
+        'as' => 'permissions.role.index',
+        'uses' => 'PermissionController@indexByRole'
+    ]);
+    $router->get('groups/{group}/permissions', [
+        'as' => 'permissions.group.index',
+        'uses' => 'PermissionController@indexByGroup'
+    ]);
+    $router->resource('permissions', 'PermissionController');
+
+    /**
+     * Roles
+     */
+    $router->get('users/{user}/roles', [
+        'as' => 'roles.user.index',
+        'uses' => 'RoleController@indexByUser'
+    ]);
+    $router->get('permissions/{permission}/roles', [
+        'as' => 'roles.permission.index',
+        'uses' => 'RoleController@indexByPermission'
+    ]);
+    $router->resource('roles', 'RoleController');
+
+    /**
      * Users
      */
+    $router->get('permissions/{permission}/users', [
+        'as' => 'users.permission.index',
+        'uses' => 'UserController@indexByPermission'
+    ]);
     $router->resource('users', 'UserController');
-    $router->get('users/{user}/roles', ['as' => 'users.roles', 'uses' => 'UserController@roles']);
-    $router->get('users/{user}/permissions', ['as' => 'users.permissions', 'uses' => 'UserController@permissions']);
 
     /**
      * Groups
@@ -24,19 +60,8 @@ Route::group([
     $router->resource('groups', 'GroupController', ['only' => ['index', 'show', 'update', 'store', 'destroy']]);
 
     /**
-     * Permissions
-     */
-    $router->resource('permissions', 'PermissionController');
-    $router->get('permissions/{user}/dependencies', ['as' => 'permissions.dependencies', 'uses' => 'PermissionController@dependencies']);
-
-    /**
      * Organisations
      */
     $router->resource('organisations', 'OrganisationController');
-
-    /**
-     * Roles
-     */
-    $router->resource('roles', 'RoleController');
 
 });

@@ -41,6 +41,12 @@ interface UserRepository
     public function findAllDeleted(): Collection;
 
     /**
+     * @param $permissionId
+     * @return User[]|Collection
+     */
+    public function findByPermissionId($permissionId): Collection;
+
+    /**
      * @param $email
      * @return User
      * @throws EntityNotFoundException

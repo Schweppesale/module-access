@@ -16,7 +16,7 @@ class RestoreUserRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('restore-users');
+        return true;
     }
 
     /**

@@ -16,7 +16,7 @@ class SortGroupRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('sort-groups');
+        return true;
     }
 
     /**

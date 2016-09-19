@@ -1,19 +1,18 @@
 <?php
 namespace Schweppesale\Module\Access\Application\Services\Users;
 
+use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\OrganisationDTO;
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
-use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\RoleDTO;
 use Schweppesale\Module\Access\Application\Response\UserDTO;
-use Schweppesale\Module\Access\Application\Services\Access;
+use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Entities\Organisation;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
-use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Entities\Role;
 use Schweppesale\Module\Access\Domain\Entities\User;
-use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
+use Schweppesale\Module\Access\Domain\Repositories\OrganisationRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
 use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
 use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
@@ -218,6 +217,22 @@ class UserService
     }
 
     /**
+     * @todo inefficient
+     *
+     * @param $permissionId
+     * @return UserDTO[]
+     */
+    public function findByPermissionId($permissionId)
+    {
+        $permission = $this->permissions->getById($permissionId);
+        $users = $this->users->findAll()->toArray();
+        $result = array_filter($users, function (User $user) use ($permission) {
+            return $user->can($permission->getName());
+        });
+        return $this->mapper->mapArray($result, User::class, UserDTO::class);
+    }
+
+    /**
      * @param $userId
      * @return UserDTO
      */
@@ -234,7 +249,16 @@ class UserService
     public function findAll()
     {
         $result = $this->users->findAll();
-        return $this->mapper->mapArray($result->toArray(), User::class, UserDTO::class);
+        return $this->mapArray($result->toArray());
+    }
+
+    /**
+     * @param User[] $users
+     * @return UserDTO[]
+     */
+    private function mapArray($users)
+    {
+        return $this->mapper->mapArray($users, User::class, UserDTO::class);
     }
 
     /**

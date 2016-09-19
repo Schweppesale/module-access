@@ -2,6 +2,7 @@
 namespace Schweppesale\Module\Access\Application\Services\Permissions;
 
 use Schweppesale\Module\Access\Application\Response\GroupDTO;
+use Schweppesale\Module\Access\Application\Response\PermissionDTO;
 use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
@@ -25,14 +26,21 @@ class GroupService
     private $mapper;
 
     /**
+     * @var PermissionService
+     */
+    private $permissionService;
+
+    /**
      * GroupService constructor.
      * @param MapperInterface $mapper
      * @param GroupRepository $groups
+     * @param PermissionService $permissionService
      */
-    public function __construct(MapperInterface $mapper, GroupRepository $groups)
+    public function __construct(MapperInterface $mapper, GroupRepository $groups, PermissionService $permissionService)
     {
         $this->mapper = $mapper;
         $this->groups = $groups;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -65,12 +73,42 @@ class GroupService
     }
 
     /**
+     * @param array $options
      * @return GroupDTO[]
      */
-    public function findAll()
+    public function findAll(array $options = [])
     {
         $result = $this->groups->findAll()->toArray();
-        return $this->mapper->mapArray($result, Group::class, GroupDTO::class);
+        $result = $this->mapper->mapArray($result, Group::class, GroupDTO::class);
+        if (array_key_exists('expand', $options)) {
+            $result = array_map(
+                function (GroupDTO $group) use ($options) {
+                    return $this->expand($group, (array)$options['expand']);
+                },
+                $result
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Appends additional data to the PermissionDTO
+     *
+     * @param GroupDTO $group
+     * @param array $options
+     * @return GroupDTO
+     */
+    private function expand(GroupDTO $group, array $options = [])
+    {
+        $options = array_flip(array_map('strtolower', array_map('trim', $options)));
+        if (array_key_exists('all', $options) || array_key_exists('permissionids', $options)) {
+            $permissionIds = array_map(function (PermissionDTO $permission) {
+                return $permission->getId();
+            }, $this->permissionService->findByGroupId($group->getId()));
+            $group->setPermissionIds($permissionIds);
+        }
+        return $group;
     }
 
     /**

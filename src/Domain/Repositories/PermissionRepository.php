@@ -25,6 +25,24 @@ interface PermissionRepository
     public function findAll(): Collection;
 
     /**
+     * @param $userId
+     * @return Permission[]|Collection
+     */
+    public function findByUserId($userId): Collection;
+
+    /**
+     * @param $roleId
+     * @return Permission[]|Collection
+     */
+    public function findByRoleId($roleId): Collection;
+
+    /**
+     * @param $groupId
+     * @return Permission[]|Collection
+     */
+    public function findByGroupId($groupId): Collection;
+
+    /**
      * @param $id
      * @return Permission
      * @throws EntityNotFoundException

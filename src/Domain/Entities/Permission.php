@@ -60,15 +60,16 @@ class Permission implements PermissionContract
 
     /**
      * Permission constructor.
-     *
      * @param $name
      * @param $displayName
      * @param Group $group
+     * @param array $dependencies
      */
-    public function __construct($name, $displayName, Group $group)
+    public function __construct($name, $displayName, Group $group, $dependencies = [])
     {
         $this->name = $name;
         $this->displayName = $displayName;
+        $this->dependencies = $dependencies;
         $this->group = $group;
 
         $this->createdAt = new DateTime();

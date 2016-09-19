@@ -1,4 +1,7 @@
 Schweppesale\Module\Access\Application\Response\RoleDTO:
+    properties:
+        permissionIds:
+            exclude: true
     relations:
         -
             rel: self
@@ -8,3 +11,11 @@ Schweppesale\Module\Access\Application\Response\RoleDTO:
                     user: expr(object.getId())
                 absolute: true
         -
+            rel: permissions
+            href:
+                route: permissions.role.index
+                parameters:
+                    role: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getPermissionIds() == false)

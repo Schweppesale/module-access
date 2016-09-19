@@ -1,8 +1,12 @@
 Schweppesale\Module\Access\Application\Response\PermissionDTO:
     properties:
-        dependencies:
+        dependencyIds:
             exclude: true
-        group:
+        groupId:
+            exclude: true
+        userIds:
+            exclude: true
+        roleIds:
             exclude: true
     relations:
         -
@@ -15,14 +19,36 @@ Schweppesale\Module\Access\Application\Response\PermissionDTO:
         -
             rel: dependencies
             href:
-                route: permissions.dependencies
+                route: dependencies.permission.index
                 parameters:
                     permission: expr(object.getId())
                 absolute: true
             exclusion:
-                exclude_if: expr(object.getDependencies() == false)
+                exclude_if: expr(object.getDependencyIds() == false)
         -
             rel: group
-            embedded:
-                content: expr(object.getGroup())
-                xmlElementName: group
+            href:
+                route: groups.show
+                parameters:
+                    user: expr(object.getGroupId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getGroupId() == false)
+        -
+            rel: users
+            href:
+                route: users.permission.index
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getUserIds() == false)
+        -
+            rel: roles
+            href:
+                route: roles.permission.index
+                parameters:
+                    user: expr(object.getId())
+                absolute: true
+            exclusion:
+                exclude_if: expr(object.getRoleIds() == false)

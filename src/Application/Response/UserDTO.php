@@ -42,14 +42,14 @@ class UserDTO implements JsonSerializable
     private $name;
 
     /**
-     * @var PermissionDTO[]
+     * @var int[]
      */
-    private $permissions;
+    private $permissionIds;
 
     /**
-     * @var RoleDTO[]
+     * @var int[]
      */
-    private $roles;
+    private $roleIds;
 
     /**
      * @var int $status
@@ -68,13 +68,13 @@ class UserDTO implements JsonSerializable
      * @param $confirmed
      * @param $email
      * @param $status
-     * @param array $permissions
-     * @param array $roles
+     * @param int[] $permissionIds
+     * @param int[] $roleIds
      * @param DateTime $createdAt
      * @param mixed $deletedAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $confirmed, $email, $status, array $permissions, array $roles, DateTime $createdAt, $deletedAt, DateTime $updatedAt)
+    public function __construct($id, $name, $confirmed, $email, $status, array $permissionIds, array $roleIds, DateTime $createdAt, $deletedAt, DateTime $updatedAt)
     {
         $this->confirmed = $confirmed;
         $this->createdAt = $createdAt;
@@ -82,8 +82,8 @@ class UserDTO implements JsonSerializable
         $this->email = $email;
         $this->id = $id;
         $this->name = $name;
-        $this->permissions = $permissions;
-        $this->roles = $roles;
+        $this->permissionIds = $permissionIds;
+        $this->roleIds = $roleIds;
         $this->status = $status;
         $this->updatedAt = $updatedAt;
     }
@@ -137,19 +137,19 @@ class UserDTO implements JsonSerializable
     }
 
     /**
-     * @return Permission[]
+     * @return int[]
      */
-    public function getPermissions(): array
+    public function getPermissionIds(): array
     {
-        return $this->permissions;
+        return $this->permissionIds;
     }
 
     /**
-     * @return Role[]
+     * @return int[]
      */
-    public function getRoles(): array
+    public function getRoleIds(): array
     {
-        return $this->roles;
+        return $this->roleIds;
     }
 
     /**
@@ -179,8 +179,8 @@ class UserDTO implements JsonSerializable
             'emailAddress' => $this->email,
             'status' => $this->status,
             'confirmed' => $this->confirmed,
-            'roles' => $this->roles,
-            'permissions' => $this->permissions,
+            'roleIds' => $this->roleIds,
+            'permissionIds' => $this->permissionIds,
             'createdAt' => $this->createdAt,
             'deletedAt' => $this->deletedAt,
             'updatedAt' => $this->updatedAt,

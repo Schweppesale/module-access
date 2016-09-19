@@ -4,8 +4,13 @@ namespace Schweppesale\Module\Access\Infrastructure\Repositories\Permission;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Expr\Join;
+use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Entities\Permission;
+use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Access\Domain\Repositories\PermissionRepository;
+use Schweppesale\Module\Access\Domain\Repositories\RoleRepository;
+use Schweppesale\Module\Access\Domain\Repositories\UserRepository;
 use Schweppesale\Module\Core\Collections\Collection;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
 
@@ -23,12 +28,38 @@ class PermissionRepositoryDoctrine implements PermissionRepository
     private $manager;
 
     /**
-     * UserRepositoryDoctrine constructor.
-     * @param ManagerRegistry $registry
+     * @var RoleRepository
      */
-    public function __construct(ManagerRegistry $registry)
+    private $roles;
+
+    /**
+     * @var UserRepository
+     */
+    private $users;
+
+    /**
+     * @var GroupRepository
+     */
+    private $groups;
+
+    /**
+     * PermissionRepositoryDoctrine constructor.
+     * @param ManagerRegistry $registry
+     * @param RoleRepository $roles
+     * @param UserRepository $users
+     * @param GroupRepository $groups
+     */
+    public function __construct(
+        ManagerRegistry $registry,
+        RoleRepository $roles,
+        UserRepository $users,
+        GroupRepository $groups
+    )
     {
         $this->manager = $registry->getManagerForClass(Permission::class);
+        $this->roles = $roles;
+        $this->users = $users;
+        $this->groups = $groups;
     }
 
     /**
@@ -60,6 +91,42 @@ class PermissionRepositoryDoctrine implements PermissionRepository
 
         } catch (NoResultException $ex) {
             throw new EntityNotFoundException('Permission not found!', 0, $ex);
+        }
+    }
+
+    /**
+     * @param $userId
+     * @return Permission[]|Collection
+     */
+    public function findByUserId($userId): Collection
+    {
+        return new Collection($this->users->getById($userId)->getPermissions()->toArray());
+    }
+
+    /**
+     * @param $roleId
+     * @return Permission[]|Collection
+     */
+    public function findByRoleId($roleId): Collection
+    {
+        return new Collection($this->roles->getById($roleId)->getPermissions()->toArray());
+    }
+
+    public function findByGroupId($groupId): Collection
+    {
+        try {
+            $qb = $this->manager->createQueryBuilder();
+            $result = $qb->select('p')
+                ->from(Permission::class, 'p')
+                ->join(Group::class, 'g', Join::INNER_JOIN, $qb->expr()->eq('(p.group)', ':groupId'))
+                ->setParameter('groupId', $groupId)
+                ->getQuery()
+                ->getResult();
+
+            return new Collection($result);
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('Group not found!', 0, $ex);
         }
     }
 

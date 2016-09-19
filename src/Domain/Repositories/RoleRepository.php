@@ -25,6 +25,12 @@ interface RoleRepository
     public function findAll(): Collection;
 
     /**
+     * @param $userId
+     * @return Role[]|Collection
+     */
+    public function findByUserId($userId): Collection;
+
+    /**
      * @param $id
      * @return Role
      * @throws EntityNotFoundException

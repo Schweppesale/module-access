@@ -50,12 +50,12 @@ class OrganisationService
     }
 
     /**
-     * @param $id
+     * @param $organisationId
      * @return OrganisationDTO
      */
-    public function getById($organisationid): OrganisationDTO
+    public function getById($organisationId): OrganisationDTO
     {
-        return $this->mapper->map($this->organisations->getById($organisationid), OrganisationDTO::class);
+        return $this->mapper->map($this->organisations->getById($organisationId), OrganisationDTO::class);
     }
 
     /**
@@ -67,14 +67,14 @@ class OrganisationService
     }
 
     /**
-     * @param $organisationid
+     * @param $organisationId
      * @param $organisationName
      * @param null $description
      * @return OrganisationDTO
      */
-    public function update($organisationid, $organisationName, $description = null): OrganisationDTO
+    public function update($organisationId, $organisationName, $description = null): OrganisationDTO
     {
-        $organisation = $this->organisations->getById($organisationid);
+        $organisation = $this->organisations->getById($organisationId);
         $organisation->setName($organisationName);
         $organisation->setDescription($description);
         $organisation = $this->organisations->save($organisation);

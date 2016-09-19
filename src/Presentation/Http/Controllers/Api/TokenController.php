@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Response;
-use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Token\LoginRequest;
 use Schweppesale\Module\Core\Exceptions\Exception;
@@ -39,7 +38,7 @@ class TokenController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @param $token
      */
     public function destroy($token)
     {

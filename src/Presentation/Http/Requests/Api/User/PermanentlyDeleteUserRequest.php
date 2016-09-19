@@ -16,7 +16,7 @@ class PermanentlyDeleteUserRequest extends Request
      */
     public function authorize()
     {
-        return access()->can('permanently-delete-users');
+        return true;
     }
 
     /**

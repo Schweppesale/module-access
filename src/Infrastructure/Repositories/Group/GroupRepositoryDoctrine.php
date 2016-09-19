@@ -66,6 +66,7 @@ class GroupRepositoryDoctrine implements GroupRepository
     /**
      * @param $name
      * @return Group
+     * @throws EntityNotFoundException
      */
     public function getByName($name): Group
     {

@@ -17,9 +17,9 @@ class PermissionDTO implements JsonSerializable
     private $createdAt;
 
     /**
-     * @var PermissionDTO[]
+     * @var int[]
      */
-    private $dependencies;
+    private $dependencyIds;
 
     /**
      * @var string
@@ -47,31 +47,76 @@ class PermissionDTO implements JsonSerializable
     private $updatedAt;
 
     /**
-     * @var GroupDTO
+     * @var int|null
      */
-    private $group;
+    private $groupId;
 
     /**
-     * Permission constructor.
+     * @var int[]
+     */
+    private $userIds;
+
+    /**
+     * @var int[]
+     */
+    private $roleIds;
+
+    /**
+     * PermissionDTO constructor.
      * @param $id
      * @param $name
      * @param $displayName
-     * @param null|GroupDTO $group
-     * @param PermissionDTO[] $dependencies
      * @param $system
      * @param DateTime $createdAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $displayName, $group = null, array $dependencies, $system, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct($id, $name, $displayName, $system, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->createdAt = $createdAt;
-        $this->dependencies = $dependencies;
         $this->displayName = $displayName;
         $this->id = $id;
         $this->name = $name;
-        $this->group = $group;
         $this->system = $system;
         $this->updatedAt = $updatedAt;
+        $this->dependencyIds = $this->groupId = $this->userIds = $this->roleIds = [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoleIds(): array
+    {
+        return $this->roleIds;
+    }
+
+    /**
+     * @param array $roleIds
+     * @return $this
+     */
+    public function setRoleIds(array $roleIds)
+    {
+        $this->roleIds = $roleIds;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserIds(): array
+    {
+        return $this->userIds;
+    }
+
+    /**
+     * @param array $userIds
+     * @return $this
+     */
+    public function setUserIds(array $userIds)
+    {
+        $this->userIds = $userIds;
+
+        return $this;
     }
 
     /**
@@ -83,11 +128,22 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @return PermissionDTO[]
+     * @return int[]
      */
-    public function getDependencies(): array
+    public function getDependencyIds(): array
     {
-        return $this->dependencies;
+        return $this->dependencyIds;
+    }
+
+    /**
+     * @param array $dependencyIds
+     * @return $this
+     */
+    public function setDependencyIds(array $dependencyIds)
+    {
+        $this->dependencyIds = $dependencyIds;
+
+        return $this;
     }
 
     /**
@@ -131,14 +187,6 @@ class PermissionDTO implements JsonSerializable
     }
 
     /**
-     * @return GroupDTO
-     */
-    public function getGroup(): GroupDTO
-    {
-        return $this->group;
-    }
-
-    /**
      * @return array
      */
     public function jsonSerialize()
@@ -147,11 +195,29 @@ class PermissionDTO implements JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'displayName' => $this->displayName,
-            'dependencies' => $this->dependencies,
-            'group' => $this->getGroup(),
+            'dependencyIds' => $this->dependencyIds,
+            'groupId' => $this->getGroupId(),
+            'userIds' => $this->userIds,
+            'roleIds' => $this->roleIds,
             'system' => $this->system,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ];
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
+    }
+
+    /**
+     * @param int|null $groupId
+     */
+    public function setGroupId($groupId)
+    {
+        $this->groupId = $groupId;
     }
 }

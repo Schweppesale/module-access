@@ -24,7 +24,7 @@ class RoleTableSeeder extends Seeder
 
     public function run()
     {
-        $this->roleService->create(['name' => 'Administrator', 'sort' => 1, 'associated-permissions' => 'all']);
+        $this->roleService->create(['name' => 'Administrator', 'permissions' => range(1, 17), 'sort' => 1]);
         $this->roleService->create(['name' => 'User', 'sort' => 2]);
         $this->roleService->create(['name' => 'Client', 'sort' => 3]);
     }

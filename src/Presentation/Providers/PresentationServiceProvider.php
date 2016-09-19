@@ -1,19 +1,14 @@
 <?php
 namespace Schweppesale\Module\Access\Presentation\Providers;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Hateoas\Hateoas;
 use Hateoas\HateoasBuilder;
-use Hateoas\Serializer\JMSSerializerMetadataAwareInterface;
 use Hateoas\UrlGenerator\CallableUrlGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializerInterface;
 use Schweppesale\Module\Core\Exceptions\EntityNotFoundException;
-use Schweppesale\Module\Core\Exceptions\ModuleExceptionHandler;
 use Schweppesale\Module\Core\Providers\Laravel\ServiceProvider;
-use Metadata\Driver\FileLocator;
-use Hateoas\Configuration\Metadata\Driver\YamlDriver;
 
 class PresentationServiceProvider extends ServiceProvider
 {
@@ -32,12 +27,13 @@ class PresentationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(\JMS\Serializer\SerializerInterface::class, function() {
+        $this->app->bind(SerializerInterface::class, function () {
             $metadata = realpath(__DIR__ . '/../Serializers/Hateoaes');
             $serializer = SerializerBuilder::create()->addMetadataDir($metadata);
             return HateoasBuilder::create($serializer)
                 ->addMetadataDir($metadata)
-                ->setDebug(env('DEBUG_MODE', false))
+                ->setDebug(env('APP_DEBUG', false))
+//                ->setCacheDir(storage_path())
                 ->setUrlGenerator(null, new CallableUrlGenerator(function ($route, array $parameters, $absolute) {
                     return route($route, $parameters, $absolute);
                 }))
