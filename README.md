@@ -1,4 +1,4 @@
-#Description: 
+#Description 
 
 Provides a RESTful API service which allows for basic authentication.
 
