@@ -52,6 +52,8 @@ class AuthenticationService
     }
 
     /**
+     * @todo code duplication
+     *
      * @param User $user
      * @throws UnauthorizedException
      */
@@ -68,60 +70,6 @@ class AuthenticationService
         if ($user->isConfirmed() === false) {
             throw new UnauthorizedException("Your account is not confirmed. Please click the confirmation link in your e-mail, or " . '<a href="' . route('account.confirm.resend', $user_id) . '">click here</a>' . " to resend the confirmation e-mail.");
         }
-    }
-
-    /**
-     * @param $email
-     * @param $password
-     * @param $token
-     * @return bool
-     * @throws UnauthorizedException
-     */
-    public function destroyApiToken($email, $password, $token)
-    {
-        if ($this->guard->validate(['email.email' => $email, 'password' => $password]) === false) {
-            throw new UnauthorizedException('These credentials do not match our records.');
-        }
-
-        $user = $this->users->getByEmail(new EmailAddress($email));
-        $this->checkUserStatus($user);
-        $this->users->save($user->destroyApiToken());
-
-        return true;
-    }
-
-    /**
-     * @param $email
-     * @param $password
-     * @return string
-     * @throws UnauthorizedException
-     */
-    public function generateApiToken($email, $password)
-    {
-        if ($this->guard->validate(['email.email' => $email, 'password' => $password]) === false) {
-            throw new UnauthorizedException('These credentials do not match our records.');
-        }
-
-        $user = $this->users->getByEmail(new EmailAddress($email));
-        $this->checkUserStatus($user);
-        $this->users->save($user->generateApiToken());
-
-        return $user->getApiToken();
-    }
-
-    /**
-     * @param $email
-     * @param $password
-     * @return string
-     * @throws UnauthorizedException
-     */
-    public function getApiToken($email, $password)
-    {
-        if ($this->guard->validate(['email.email' => $email, 'password' => $password]) === false) {
-            throw new UnauthorizedException('These credentials do not match our records.');
-        }
-
-        return $this->users->getByEmail(new EmailAddress($email))->getApiToken();
     }
 
     /**

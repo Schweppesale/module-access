@@ -1,6 +1,7 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
+use Schweppesale\Module\Access\Application\Services\Users\TokenService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Token\LoginRequest;
 use Schweppesale\Module\Access\Presentation\Services\Api\Response;
 use Schweppesale\Module\Core\Http\Controller;
@@ -14,9 +15,9 @@ class TokenController extends Controller
 {
 
     /**
-     * @var AuthenticationService
+     * @var TokenService
      */
-    private $auth;
+    private $tokenService;
 
     /**
      * @var Response
@@ -26,11 +27,11 @@ class TokenController extends Controller
     /**
      * TokenController constructor.
      * @param Response $response
-     * @param AuthenticationService $auth
+     * @param TokenService $tokenService
      */
-    public function __construct(Response $response, AuthenticationService $auth)
+    public function __construct(Response $response, TokenService $tokenService)
     {
-        $this->auth = $auth;
+        $this->tokenService = $tokenService;
         $this->response = $response;
     }
 
@@ -41,7 +42,7 @@ class TokenController extends Controller
     public function destroy(Request $request)
     {
         return $this->response->format(
-            $this->auth->destroyApiToken(
+            $this->tokenService->destroyToken(
                 $request->get('email'),
                 $request->get('password'),
                 $request->get('token')
@@ -56,7 +57,7 @@ class TokenController extends Controller
     public function show(Request $request)
     {
         return $this->response->format(
-            $this->auth->getApiToken($request->get('email'), $request->get('password'))
+            $this->tokenService->getToken($request->get('email'), $request->get('password'))
         );
     }
 
@@ -67,7 +68,7 @@ class TokenController extends Controller
     public function store(LoginRequest $request)
     {
         return $this->response->format(
-            $this->auth->generateApiToken($request->get('email'), $request->get('password'))
+            $this->tokenService->generateToken($request->get('email'), $request->get('password'))
         );
     }
 }
