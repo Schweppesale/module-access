@@ -152,8 +152,11 @@ class UserService
             )
         );
 
+        /**
+         * @todo
+         */
         if ($confirmed == false && $sendConfirmationEmail == true) {
-            $this->authenticationService->sendConfirmationEmail($user->getId());
+//            $this->authenticationService->sendConfirmationEmail($user->getId());
         }
 
         return $this->mapper->map($user, UserDTO::class);
