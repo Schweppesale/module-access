@@ -1,16 +1,16 @@
 <?php
-namespace Schweppesale\Module\Access\Application\Services\Permissions;
+namespace Schweppesale\Module\Access\Application\Services\Groups;
 
 use Schweppesale\Module\Access\Application\Response\GroupDTO;
 use Schweppesale\Module\Access\Application\Response\PermissionDTO;
+use Schweppesale\Module\Access\Application\Services\Permissions\PermissionService;
 use Schweppesale\Module\Access\Domain\Entities\Group;
 use Schweppesale\Module\Access\Domain\Repositories\GroupRepository;
 use Schweppesale\Module\Core\Mapper\MapperInterface;
 
 /**
- * Class PermissionService
- *
- * @package Schweppesale\Module\Access\Application\Services\Permissions
+ * Class GroupService
+ * @package Schweppesale\Module\Access\Application\Services\Groups
  */
 class GroupService
 {

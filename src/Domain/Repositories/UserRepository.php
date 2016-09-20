@@ -48,18 +48,18 @@ interface UserRepository
     public function findByPermissionId($permissionId): Collection;
 
     /**
-     * @param string $code
-     * @return User
-     * @throws EntityNotFoundException
-     */
-    public function getByConfirmationCode($code): User;
-
-    /**
      * @param $token
      * @return User
      * @throws EntityNotFoundException
      */
     public function getByAccessToken($token): User;
+
+    /**
+     * @param string $code
+     * @return User
+     * @throws EntityNotFoundException
+     */
+    public function getByConfirmationCode($code): User;
 
     /**
      * @param EmailAddress $email

@@ -1,7 +1,7 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Schweppesale\Module\Access\Application\Services\Permissions\GroupService;
+use Schweppesale\Module\Access\Application\Services\Groups\GroupService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group\DeleteGroupRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group\StoreGroupRequest;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Group\UpdateGroupRequest;

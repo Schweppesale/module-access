@@ -40,14 +40,14 @@ Schweppesale\Module\Access\Domain\Entities\User:
             nullable: false
             precision: 0
             column: created_at
-        accessToken:
+        api_token:
             type: string
             scale: 0
             length: null
             unique: true
             nullable: false
             precision: 0
-            column: access_token
+            column: api_token
         deletedAt:
             type: datetime
             scale: 0

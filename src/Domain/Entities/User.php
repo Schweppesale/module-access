@@ -26,70 +26,57 @@ class User implements HasPermissionsInterface, Authenticatable
     use CanBeAuthenticated;
 
     /**
+     * @var string
+     */
+    private $api_token;
+    /**
      * @var string $confirmation_code
      */
     private $confirmationCode;
-
     /**
      * @var boolean $confirmed
      */
     private $confirmed;
-
     /**
      * @var DateTime
      */
     private $createdAt;
-
     /**
      * @var mixed
      */
     private $deletedAt;
-
     /**
      * @var EmailAddress $email
      */
     private $email;
-
     /**
      * @var int $id
      */
     private $id;
-
     /**
      * @var string $id
      */
     private $name;
-
     /**
      * @var HashedPassword $password
      */
     private $password;
-
     /**
      * @var Permission[]
      */
     private $permissions;
-
     /**
      * @var string $remember_token
      */
     private $rememberToken;
-
     /**
      * @var Role[]
      */
     private $roles;
-
     /**
      * @var Status $status
      */
     private $status;
-
-    /**
-     * @var string
-     */
-    private $accessToken;
-
     /**
      * @var DateTime $updated_at
      */
@@ -123,15 +110,6 @@ class User implements HasPermissionsInterface, Authenticatable
         $this->updateStatus($status);
         $this->setPermissions($permissions);
         $this->setRoles($roles);
-    }
-
-    /**
-     * @return string
-     */
-    public function generateToken()
-    {
-        $this->accessToken = md5(uniqid(mt_rand(), true));
-        return $this->accessToken;
     }
 
     /**
@@ -207,6 +185,33 @@ class User implements HasPermissionsInterface, Authenticatable
         $this->confirmed = true;
 
         return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function destroyApiToken(): User
+    {
+        $this->api_token = null;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function generateApiToken(): User
+    {
+        $this->api_token = md5(uniqid(mt_rand(), true));
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiToken(): string
+    {
+        return $this->api_token;
     }
 
     /**
@@ -398,7 +403,7 @@ class User implements HasPermissionsInterface, Authenticatable
      */
     public function must($permission)
     {
-        if($this->can($permission) === false) {
+        if ($this->can($permission) === false) {
             throw new UnauthorizedException('Unauthorized');
         }
     }

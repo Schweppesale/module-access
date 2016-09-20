@@ -2,7 +2,7 @@
 namespace Schweppesale\Module\Access\Application\Database\Seeds\Access;
 
 use Illuminate\Database\Seeder;
-use Schweppesale\Module\Access\Application\Services\Permissions\GroupService;
+use Schweppesale\Module\Access\Application\Services\Groups\GroupService;
 
 class GroupTableSeeder extends Seeder
 {

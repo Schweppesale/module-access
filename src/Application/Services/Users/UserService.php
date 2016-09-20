@@ -101,7 +101,7 @@ class UserService
     public function ban($userId): UserDTO
     {
         $user = $this->users->getById($userId);
-        $user = $this->users->save($user->updateStatus(new Status(Status::BANNED)));
+        $user = $this->users->save($user->updateStatus(Status::banned()));
         return $this->mapper->map($user, UserDTO::class);
     }
 
@@ -130,7 +130,7 @@ class UserService
      */
     public function create($name, $emailAddress, $password, array $roleIds = [], array $permissionIds = [], $confirmed = false, $sendConfirmationEmail = true, $status = null): UserDTO
     {
-        $status = $status == true ? Status::ACTIVE : Status::DISABLED;
+        $status = $status == true ? Status::active() : Status::disabled();
 
         $roles = array_map(function ($roleId) {
             return $this->roles->getById($roleId);
@@ -145,7 +145,7 @@ class UserService
                 $name,
                 new EmailAddress($emailAddress),
                 new Password($password, $this->hasher),
-                new Status($status),
+                $status,
                 $confirmed,
                 $permissions,
                 $roles
@@ -179,7 +179,7 @@ class UserService
     public function deactive($userId): UserDTO
     {
         $user = $this->users->getById($userId);
-        $this->users->save($user->updateStatus(new Status(Status::DISABLED)));
+        $this->users->save($user->updateStatus(Status::disabled()));
         return $this->mapper->map($user, UserDTO::class);
     }
 
@@ -215,7 +215,7 @@ class UserService
     public function enable($userId): UserDTO
     {
         $user = $this->users->getById($userId);
-        $user = $this->users->save($user->updateStatus(new Status(Status::ACTIVE)));
+        $user = $this->users->save($user->updateStatus(Status::active()));
         return $this->mapper->map($user, UserDTO::class);
     }
 
@@ -304,7 +304,7 @@ class UserService
     public function update($userId, $name, $email, array $roleIds = [], array $permissionIds = [], $status = null): UserDTO
     {
         $user = $this->users->getById($userId);
-        $status = $status == true ? Status::ACTIVE : Status::DISABLED;
+        $status = $status == true ? Status::active() : Status::disabled();
 
         $roles = array_map(function ($roleId) {
             return $this->roles->getById($roleId);
@@ -317,8 +317,8 @@ class UserService
         $user->setName($name)
             ->setRoles($roles)
             ->setPermissions($permissions)
-            ->updateEmail(new EmailAddress($email))
-            ->updateStatus(new Status($status));
+            ->updateStatus($status)
+            ->updateEmail(new EmailAddress($email));
 
         $user = $this->users->save($user);
         return $this->mapper->map($user, UserDTO::class);

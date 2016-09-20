@@ -1,11 +1,10 @@
 <?php namespace Schweppesale\Module\Access\Presentation\Http\Controllers\Api;
 
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Schweppesale\Module\Access\Application\Services\Users\AuthenticationService;
 use Schweppesale\Module\Access\Presentation\Http\Requests\Api\Token\LoginRequest;
 use Schweppesale\Module\Access\Presentation\Services\Api\Response;
-use Schweppesale\Module\Core\Exceptions\Exception;
 use Schweppesale\Module\Core\Http\Controller;
+use Schweppesale\Module\Core\Http\Laravel\Request;
 
 /**
  * Class TokenController
@@ -36,13 +35,39 @@ class TokenController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        return $this->response->format(
+            $this->auth->destroyApiToken(
+                $request->get('email'),
+                $request->get('password'),
+                $request->get('token')
+            )
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        return $this->response->format(
+            $this->auth->getApiToken($request->get('email'), $request->get('password'))
+        );
+    }
+
+    /**
      * @param LoginRequest $request
      * @return mixed
      */
     public function store(LoginRequest $request)
     {
         return $this->response->format(
-            $this->auth->generateToken($request->get('email'), $request->get('password'))
+            $this->auth->generateApiToken($request->get('email'), $request->get('password'))
         );
     }
 }

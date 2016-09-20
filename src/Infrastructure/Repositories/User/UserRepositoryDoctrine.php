@@ -124,6 +124,23 @@ class UserRepositoryDoctrine implements UserRepository
 
     }
 
+    public function getByAccessToken($token): User
+    {
+        try {
+
+            return $this->manager->createQueryBuilder()
+                ->select('u')
+                ->from(User::class, 'u')
+                ->where('u.accessToken = :token')
+                ->setParameter('token', $token)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (NoResultException $ex) {
+            throw new EntityNotFoundException('User not found!', 0, $ex);
+        }
+    }
+
     /**
      * @param string $code
      * @return User
@@ -160,23 +177,6 @@ class UserRepositoryDoctrine implements UserRepository
                 ->from(User::class, 'u')
                 ->where('u.email.email = :email')
                 ->setParameter('email', $email->value())
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (NoResultException $ex) {
-            throw new EntityNotFoundException('User not found!', 0, $ex);
-        }
-    }
-
-    public function getByAccessToken($token): User
-    {
-        try {
-
-            return $this->manager->createQueryBuilder()
-                ->select('u')
-                ->from(User::class, 'u')
-                ->where('u.accessToken = :token')
-                ->setParameter('token', $token)
                 ->getQuery()
                 ->getSingleResult();
 

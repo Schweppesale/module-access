@@ -39,9 +39,28 @@ class Status
         return $this->value();
     }
 
-    public function jsonSerialize()
+    /**
+     * @return Status
+     */
+    public static function active(): Status
     {
-        return $this->value();
+        return new self(self::ACTIVE);
+    }
+
+    /**
+     * @return Status
+     */
+    public static function banned(): Status
+    {
+        return new self(self::BANNED);
+    }
+
+    /**
+     * @return Status
+     */
+    public static function disabled(): Status
+    {
+        return new self(self::DISABLED);
     }
 
     /**

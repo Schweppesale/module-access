@@ -75,7 +75,7 @@ class SetupAccessTables extends Migration
             $table->tinyInteger('status')->default(1);
             $table->string('confirmation_code');
             $table->boolean('confirmed')->default(false);
-            $table->string('access_token')->nullable();
+            $table->string('api_token')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

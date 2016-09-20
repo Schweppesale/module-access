@@ -46,11 +46,6 @@ class Password
         return $this->hasher->hash($this);
     }
 
-    public function jsonSerialize()
-    {
-        return $this->value();
-    }
-
     /**
      * @return string
      */
