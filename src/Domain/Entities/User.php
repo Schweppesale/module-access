@@ -442,7 +442,9 @@ class User implements HasPermissionsInterface, Authenticatable
     public function setRoles(array $roles): User
     {
         $this->roles = [];
+
         array_map([$this, 'addRole'], $roles);
+
         return $this;
     }
 
