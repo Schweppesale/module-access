@@ -20,7 +20,7 @@ class Status
     private $status;
 
     /**
-     * UserStatus constructor.
+     * Status constructor.
      * @param string $status
      */
     public function __construct(string $status)
