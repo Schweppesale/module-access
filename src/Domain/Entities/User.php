@@ -207,9 +207,9 @@ class User implements HasPermissionsInterface, Authenticatable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getApiToken(): string
+    public function getApiToken()
     {
         return $this->api_token;
     }

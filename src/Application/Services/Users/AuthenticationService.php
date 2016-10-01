@@ -2,6 +2,7 @@
 
 namespace Schweppesale\Module\Access\Application\Services\Users;
 
+use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Contracts\Auth\Guard;
 use Schweppesale\Module\Access\Application\Response\UserDTO;
 use Schweppesale\Module\Access\Domain\Entities\User;
@@ -21,9 +22,9 @@ class AuthenticationService
 {
 
     /**
-     * @var Guard
+     * @var Auth
      */
-    private $guard;
+    private $auth;
     /**
      * @var MapperInterface
      */
@@ -36,17 +37,17 @@ class AuthenticationService
 
     /**
      * AuthenticationService constructor.
-     * @param Guard $guard
+     * @param Auth  $auth
      * @param UserRepository $users
      * @param MapperInterface $mapper
      */
     public function __construct(
-        Guard $guard,
+        Auth $auth,
         UserRepository $users,
         MapperInterface $mapper
     )
     {
-        $this->guard = $guard;
+        $this->auth = $auth;
         $this->users = $users;
         $this->mapper = $mapper;
     }
@@ -77,7 +78,9 @@ class AuthenticationService
      */
     public function getUser(): UserDTO
     {
-        $user = $this->guard->user();
+
+        $user = $this->auth->guard()->user();
+
         if (!$user instanceof User) {
             throw new \UnexpectedValueException('User not logged in!');
         }
@@ -92,13 +95,13 @@ class AuthenticationService
      */
     public function setUserWithCredentials($email, $password)
     {
-        if ($this->guard->validate(['email.email' => $email, 'password' => $password]) === false) {
+        if ($this->auth->guard()->validate(['email.email' => $email, 'password' => $password]) === false) {
             throw new UnauthorizedException('These credentials do not match our records.');
         }
 
         $user = $this->users->getByEmail(new EmailAddress($email));
         $this->checkUserStatus($user);
-        $this->guard->setUser($user);
+        $this->auth->guard()->setUser($user);
     }
 
     /**
@@ -109,7 +112,7 @@ class AuthenticationService
     public function setUserWithToken($token)
     {
         try {
-            $this->guard->setUser($this->users->getByAccessToken($token));
+            $this->auth->guard()->setUser($this->users->getByAccessToken($token));
         } catch (EntityNotFoundException $ex) {
             throw new UnauthorizedException('Invalid token', 0, $ex);
         }

@@ -62,19 +62,26 @@ class UserDTO implements JsonSerializable
     private $updatedAt;
 
     /**
-     * User constructor.
+     * @var string|null
+     */
+    private $apiToken;
+
+
+    /**
+     * UserDTO constructor.
      * @param $id
      * @param $name
+     * @param $apiToken
      * @param $confirmed
      * @param $email
      * @param $status
-     * @param int[] $permissionIds
-     * @param int[] $roleIds
+     * @param array $permissionIds
+     * @param array $roleIds
      * @param DateTime $createdAt
-     * @param mixed $deletedAt
+     * @param $deletedAt
      * @param DateTime $updatedAt
      */
-    public function __construct($id, $name, $confirmed, $email, $status, array $permissionIds, array $roleIds, DateTime $createdAt, $deletedAt, DateTime $updatedAt)
+    public function __construct($id, $name, $apiToken, $confirmed, $email, $status, array $permissionIds, array $roleIds, DateTime $createdAt, $deletedAt, DateTime $updatedAt)
     {
         $this->confirmed = $confirmed;
         $this->createdAt = $createdAt;
@@ -85,7 +92,16 @@ class UserDTO implements JsonSerializable
         $this->permissionIds = $permissionIds;
         $this->roleIds = $roleIds;
         $this->status = $status;
+        $this->apiToken = $apiToken;
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
     }
 
     /**

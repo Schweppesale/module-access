@@ -36,17 +36,13 @@ class TokenController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param $tokenId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($token)
     {
         return $this->response->format(
-            $this->tokenService->destroyToken(
-                $request->get('email'),
-                $request->get('password'),
-                $request->get('token')
-            )
+            $this->tokenService->destroyToken($token)
         );
     }
 

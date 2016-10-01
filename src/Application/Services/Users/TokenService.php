@@ -71,14 +71,10 @@ class TokenService
      * @return bool
      * @throws UnauthorizedException
      */
-    public function destroyToken($email, $password, $token)
+    public function destroyToken($token)
     {
-        if ($this->guard->validate(['email.email' => $email, 'password' => $password]) === false) {
-            throw new UnauthorizedException('These credentials do not match our records.');
-        }
-
-        $user = $this->users->getByEmail(new EmailAddress($email));
-        $this->checkUserStatus($user);
+        $user = $this->users->getByAccessToken($token);
+        $user->destroyApiToken();
         $this->users->save($user->destroyApiToken());
 
         return true;

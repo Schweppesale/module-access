@@ -131,7 +131,7 @@ class UserRepositoryDoctrine implements UserRepository
             return $this->manager->createQueryBuilder()
                 ->select('u')
                 ->from(User::class, 'u')
-                ->where('u.accessToken = :token')
+                ->where('u.api_token = :token')
                 ->setParameter('token', $token)
                 ->getQuery()
                 ->getSingleResult();

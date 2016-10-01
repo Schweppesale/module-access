@@ -52,8 +52,9 @@ class Response
             $format = 'xml';
         }
 
-        return $this->response->header('Content-Type', $contentType)->setContent(
-            $this->serializer->serialize($payload, $format)
-        );
+        return $this->response->header('Content-Type', $contentType)
+            ->setContent(
+                $this->serializer->serialize($payload, $format)
+            );
     }
 }

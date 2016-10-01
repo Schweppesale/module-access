@@ -159,6 +159,7 @@ class ApplicationServiceProvider extends ServiceProvider
                 return new UserDTO(
                     $user->getId(),
                     $user->getName(),
+                    $user->getApiToken(),
                     $user->isConfirmed(),
                     $user->getEmail()->value(),
                     $user->getStatus()->value(),
